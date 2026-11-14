@@ -4,7 +4,7 @@
 **Badziejek**, **Marewik** i **Łysa** — przebija się przez zaślimaczoną Piwnicę
 aż do **Agenta B.R.S** i jego mechanicznych ramion.
 
-![wersja](https://img.shields.io/badge/wersja-v0.19.2-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
+![wersja](https://img.shields.io/badge/wersja-v0.19.3-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
 
 ## Zagraj
 
@@ -80,7 +80,7 @@ liczba klatek lub ich szerokość — popraw `n` / `fw` w `src/data.js`.
 
 ## Podziękowania
 
-Specjalne podziękowania dla społeczności discordowego serwera **WUJASOWO** za inspirację: BrS, Natalia, Błażejek, Maverick, Gucio, Blizzu, Loki, Sosna, Ghost Ripper, Miciia, Frostii, Swifty. Oddzielne podziękowania dla Ev za bezustanne wsparcie.
+Specjalne podziękowania dla społeczności discordowego serwera **WUJASOWO** za inspirację: BrS, Natalia, Błażejek, Maverick, Gucio, Blizzu, Loki, Sosna, Ghost Ripper, Miciia, Frostii, Swifty, Miodkova, Decooo, Barto, Makaronik. Oddzielne podziękowania dla Ev za bezustanne wsparcie.
 
 ## Licencje
 

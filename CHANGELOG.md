@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.19.3] — 2026-11-15
+### Zmienione
+- AUTORZY: do podziękowań dopisani Miodkova, Decooo, Barto i Makaronik.
+
 ## [0.19.2] — 2026-11-15
 ### Dodane
 - AUTORZY: podziękowania dla społeczności discordowego serwera WUJASOWO, dla Ev i dla wszystkich graczy.
@@ -268,7 +272,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.19.2...HEAD
+[Unreleased]: ../../compare/v0.19.3...HEAD
+[0.19.3]: ../../releases/tag/v0.19.3
 [0.19.2]: ../../releases/tag/v0.19.2
 [0.19.1]: ../../releases/tag/v0.19.1
 [0.19.0]: ../../releases/tag/v0.19.0
