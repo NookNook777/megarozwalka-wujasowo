@@ -181,10 +181,13 @@ const DIALOG={
  l:[['brs','Fiu fiu! A kto to mnie nawiedził?'],['hero','Wiesz kim jestem. Nie świruj pawiana, Brys.'],['brs','Mam wszystko w kajecie.'],['hero','Zaraz ci ten kajet wsadzę w dupę!'],['brs','Próbuj szczęścia, koleżanko!']],
  b:[['brs','Fiu fiu! A kto to mnie nawiedził?'],['hero','Nie poznajesz mnie, kumplu niemyty?'],['brs','Kiedyś tam coś tam ten... Ale nie wiem w sumie...'],['hero','To ci zara przypomnę. ŁUTUTUTUTU!'],['brs','Próbuj szczęścia. "Kumplu".']],
  m:[['brs','Fiu fiu! A kto mnie nawiedził?'],['hero','Nie poznajesz, kumplu?'],['brs','Nie.'],['hero','Zaraz se przypomnisz.'],['brs','To pociągnie za sobą cały szereg złych decyzji.']]};
-function startDialog(){const g=G_;state='dialog';g.dlg={i:0,t:0};g.P.vx=0;g.P.anim='idle';g.P.face=1;whistleBlip();}
+function startDialog(){const g=G_;state='dialog';g.dlg={i:0,t:0,pan:true};g.boss.face=-1;g.P.vx=0;g.P.anim='idle';g.P.face=1;whistleBlip();}
 function whistleBlip(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+.12);o.frequency.linearRampToValueAtTime(1600,t+.3);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.32);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.35);}
 function bossStart(){const g=G_,bs=g.boss;bs.active=true;bs.cd=170;g.banner=110;fiuFiu();msgShow('FIU FIU! AGENT BRS NADCHODZI!',120);}
-function updDialog(){const g=G_,d=g.dlg,L=DIALOG[g.hero];d.t++;const line=L[d.i][1],shown=Math.floor(d.t*1.2);
+function updDialog(){const g=G_,d=g.dlg,L=DIALOG[g.hero];
+  // najpierw kamera dojeżdża tak, żeby obaj byli w kadrze twarzą w twarz
+  if(d.pan){g.camX+=(ARENA-g.camX)*.15;if(Math.abs(ARENA-g.camX)<.6){g.camX=ARENA;d.pan=false;}g.P.face=1;return;}
+  d.t++;const line=L[d.i][1],shown=Math.floor(d.t*1.2);
   if(shown<line.length&&d.t%3===0)beep(L[d.i][0]==='brs'?520:760,null,.025,.025,'square');
   if(I.jp||I.xp||I.pp||(I.f&&!d.held)){if(shown<line.length)d.t=Math.ceil(line.length/1.2)+1;else{d.i++;d.t=0;if(d.i>=L.length){state='play';g.dialogSeen=true;bossStart();return;}}}
   d.held=I.f;}

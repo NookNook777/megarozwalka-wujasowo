@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.5] — 2026-11-14
+### Zmienione
+- Scenka przed bossem zawsze „twarzą w twarz”: najpierw kamera dojeżdża do areny, B.R.S stoi w pełni w kadrze i patrzy na bohatera,
+  a okno dialogu jest u góry ekranu (nad HUD-em), więc obie postacie na ziemi są widoczne.
+- Wraca poprzednia poza zwycięstwa Badziejka (selfie z telefonem i V, 8 klatek, flesz) — czytelniej wyglądała jak selfie.
+
 ## [0.17.4] — 2026-11-14
 ### Poprawione
 - „Teleport” B.R.S: po skoku lądował bliżej niż pozwalał limit podchodzenia i był natychmiast przestawiany — teraz po prostu przestaje iść dalej, a cel skoku respektuje limit.
@@ -203,7 +209,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.4...HEAD
+[Unreleased]: ../../compare/v0.17.5...HEAD
+[0.17.5]: ../../releases/tag/v0.17.5
 [0.17.4]: ../../releases/tag/v0.17.4
 [0.17.3]: ../../releases/tag/v0.17.3
 [0.17.2]: ../../releases/tag/v0.17.2

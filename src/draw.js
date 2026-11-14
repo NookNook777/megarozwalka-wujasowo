@@ -83,7 +83,6 @@ function draw(){
   drawDnum();
   ctx.restore();ctx.restore();
   if(state==='ultcut')drawCut();
-  if(state==='dialog')drawDialog();
   if(g.flash>0){ctx.fillStyle=`rgba(255,255,255,${g.flash/14})`;ctx.fillRect(0,0,W,H);}
   // HUD
   ctx.font='8px "Press Start 2P",monospace';ctx.textBaseline='top';
@@ -102,6 +101,7 @@ function draw(){
   if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
     const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
   if(g.msgT>0&&state!=='win'&&state!=='dialog'){if(g.msg2){ctx.font='12px "Press Start 2P",monospace';shO(g.msg,W/2,98,'#ffd040');ctx.font='8px "Press Start 2P",monospace';shO(g.msg2,W/2,116,'#fff3dc');}else{ctx.font='10px "Press Start 2P",monospace';shO(g.msg,W/2,104,'#ffd040');}}
+  if(state==='dialog')drawDialog();
   if(state==='pause'){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('PAUZA',W/2,140,'#fff','center');ctx.font='8px "Press Start 2P",monospace';sh('Enter / Esc: wróć do gry',W/2,176,'#c8c0d8','center');}
   if(state==='win')drawVictory(g);
   if(state==='over'){ctx.fillStyle=`rgba(0,0,0,${Math.min(.7,g.t/40)})`;ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('GAME OVER',W/2,130,'#ff3a5a','center');
@@ -194,11 +194,11 @@ function drawHeart(M,tick,x0,y0,sc,dir){if(!M.heart)return;const L=M.n*8,age=((t
 
 const PORT={};
 function wrapText(t,maxW){const w=t.split(' '),lines=[];let cur='';for(const x of w){const tr=cur?cur+' '+x:x;if(ctx.measureText(tr).width>maxW&&cur){lines.push(cur);cur=x;}else cur=tr;}if(cur)lines.push(cur);return lines;}
-function drawDialog(){const g=G_,d=g.dlg;if(!d)return;const L=DIALOG[g.hero],[who,txt]=L[d.i];const shown=txt.slice(0,Math.floor(d.t*1.2));
+function drawDialog(){const g=G_,d=g.dlg;if(!d)return;if(d.pan){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#000';ctx.fillRect(0,0,W,22);return;}const L=DIALOG[g.hero],[who,txt]=L[d.i];const shown=txt.slice(0,Math.floor(d.t*1.2));
   ctx.setTransform(1,0,0,1,0,0);
   // przyciemnienie + pasy kinowe
   ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#000';ctx.fillRect(0,0,W,22);
-  const bx=14,by=H-96,bw=W-28,bh=84;
+  const bx=14,by=28,bw=W-28,bh=84; // u góry: bohater i B.R.S stoją widoczni na ziemi pod spodem
   ctx.fillStyle='#0b0a18';ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle='#fff3dc';ctx.lineWidth=2;ctx.strokeRect(bx+1,by+1,bw-2,bh-2);ctx.strokeStyle='#4a3f7a';ctx.strokeRect(bx+5,by+5,bw-10,bh-10);
   // portret
   const px=bx+12,py=by+12,ps=60;ctx.fillStyle='#1c1830';ctx.fillRect(px,py,ps,ps);ctx.strokeStyle=who==='brs'?'#ff5ad0':HEROES[g.hero].c;ctx.strokeRect(px-1,py-1,ps+2,ps+2);

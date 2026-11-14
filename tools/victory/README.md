@@ -5,7 +5,7 @@ Skrypty zmieniają tylko przednią rękę i mimikę, reszta sylwetki zostaje pik
 dzięki czemu poza „wskakuje” w miejsce idle bez przeskoku.
 
 - `surgery.py` — wspólne funkcje (wymazanie ręki, rysowanie przedramienia, stemple pikselowe, składanie arkusza)
-- `badziejek.py` — selfie z telefonem (flesz rysuje gra)
+- `badziejek.py` — wariant „chirurgiczny” selfie (obecnie nieużywany; w grze jest wersja animowana z SpriteCook, 8 klatek)
 - `marewik.py` — filiżanka kawy przy ustach, zamknięte oczy
 - `lysa.py` — środkowy palec, wredny uśmieszek
 
