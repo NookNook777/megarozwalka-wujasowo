@@ -198,16 +198,16 @@ function drawDialog(){const g=G_,d=g.dlg;if(!d)return;if(d.pan){ctx.setTransform
   ctx.setTransform(1,0,0,1,0,0);
   // przyciemnienie + pasy kinowe
   ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#000';ctx.fillRect(0,0,W,22);
-  const bx=14,by=28,bw=W-28,bh=84; // u góry: bohater i B.R.S stoją widoczni na ziemi pod spodem
+  const bx=14,by=G+3,bw=W-28,bh=H-G-9; // na dole, ale poniżej linii podłogi — postacie zostają w pełni widoczne
   ctx.fillStyle='#0b0a18';ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle='#fff3dc';ctx.lineWidth=2;ctx.strokeRect(bx+1,by+1,bw-2,bh-2);ctx.strokeStyle='#4a3f7a';ctx.strokeRect(bx+5,by+5,bw-10,bh-10);
   // portret
-  const px=bx+12,py=by+12,ps=60;ctx.fillStyle='#1c1830';ctx.fillRect(px,py,ps,ps);ctx.strokeStyle=who==='brs'?'#ff5ad0':HEROES[g.hero].c;ctx.strokeRect(px-1,py-1,ps+2,ps+2);
+  const px=bx+10,py=by+9,ps=bh-18;ctx.fillStyle='#1c1830';ctx.fillRect(px,py,ps,ps);ctx.strokeStyle=who==='brs'?'#ff5ad0':HEROES[g.hero].c;ctx.strokeRect(px-1,py-1,ps+2,ps+2);
   if(who==='brs'){const im=BA.walk;if(im.complete){ctx.save();ctx.beginPath();ctx.rect(px,py,ps,ps);ctx.clip();ctx.drawImage(im,78,30,52,52,px+((d.t>>4)&1?0:0),py+2,ps,ps);ctx.restore();}}
   else{let im=PORT[g.hero];if(!im){im=PORT[g.hero]=new Image();im.src=A.por[g.hero];}if(im.complete)ctx.drawImage(im,px,py,ps,ps);}
-  const name=who==='brs'?'AGENT B.R.S':HEROES[g.hero].name;ctx.font='8px "Press Start 2P",monospace';sh(name,px+ps+14,by+20,who==='brs'?'#ff8ad0':HEROES[g.hero].c);
-  ctx.font='10px "Press Start 2P",monospace';const lines=wrapText(shown,bw-ps-48);lines.forEach((l,i)=>sh(l,px+ps+14,by+40+i*16,'#fff3dc'));
+  const name=who==='brs'?'AGENT B.R.S':HEROES[g.hero].name;ctx.font='8px "Press Start 2P",monospace';sh(name,px+ps+14,by+18,who==='brs'?'#ff8ad0':HEROES[g.hero].c);
+  ctx.font='10px "Press Start 2P",monospace';const lines=wrapText(shown,bw-ps-48);lines.forEach((l,i)=>sh(l,px+ps+14,by+36+i*15,'#fff3dc'));
   if(shown.length>=txt.length&&(g.t>>4)&1){ctx.font='8px "Press Start 2P",monospace';sh('▶',bx+bw-20,by+bh-14,'#ffd040');}
-  ctx.font='7px "Press Start 2P",monospace';sh((d.i+1)+'/'+L.length,bx+bw-40,by+20,'#6a628a');}
+  ctx.font='7px "Press Start 2P",monospace';sh((d.i+1)+'/'+L.length,bx+bw-40,by+18,'#6a628a');}
 
 /* napis z czarnym obrysem i cieniem — czytelny na każdym tle, bez prostokąta pod spodem */
 function shO(t,x,y,c){ctx.textAlign='center';ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillText(t,x+2,y+2);ctx.fillStyle='#0a0610';
