@@ -54,15 +54,16 @@ function bossTalk(bs,txt){bs.talk={txt,t:150};}
 function bossAI(g,bs,P){bs.stT++;
   const ph=bs.hp<bs.max/3?3:(bs.hp<bs.max*2/3||bs.fa.dead||bs.ba.dead)?2:1;
   if(ph>bs.phase){bs.phase=ph;bs.st='stagger';bs.stT=0;g.shake=14;S.big();bossTalk(bs,(ph===2?TALK2:TALK3)[Math.floor(Math.random()*2)]);msgShow(ph===2?'B.R.S SIĘ CHWIEJE! CELUJ W GŁOWĘ!':'B.R.S WPADA W SZAŁ!',100);}
+  if(bs.st!=='leap'&&(bs.yo<0||bs.vy)){bs.vy=(bs.vy||0)+.5;bs.yo=Math.min(0,bs.yo+bs.vy);if(bs.yo>=0){bs.yo=0;bs.vy=0;g.shake=Math.max(g.shake,8);}} // np. faza zmieniła się w trakcie skoku
   const enr=bs.phase>=3;armsAI(g,bs,P,enr);if(bs.fa.flash>0)bs.fa.flash--;if(bs.ba.flash>0)bs.ba.flash--;if(bs.talk&&--bs.talk.t<=0)bs.talk=null;
   const SEQ=bs.phase===1?['walk','shoot','walk','lob','walk','whistle']:['walk','shoot','leap','walk','lob','walk','whistle'];
-  const next=()=>{bs.step=(bs.step+1)%SEQ.length;bs.st=SEQ[bs.step];bs.stT=0;if(bs.st==='whistle'){whistleS();msgShow('UWAGA! CZAJNIK SIĘ GOTUJE!',90);}if(bs.st==='leap'){bs.lx=Math.max(ARENA+150,Math.min(LEN-180,P.x-86));beep(160,320,.5,.08,'sawtooth');}};
+  const next=()=>{bs.step=(bs.step+1)%SEQ.length;bs.st=SEQ[bs.step];bs.stT=0;if(bs.st==='whistle'){whistleS();msgShow('UWAGA! CZAJNIK SIĘ GOTUJE!',90);}if(bs.st==='leap'){bs.lx=Math.max(Math.max(ARENA+150,(bs.minX||ARENA+150)-60),Math.min(LEN-180,P.x-86));beep(160,320,.5,.08,'sawtooth');}};
   const fast=bs.phase===1?1:bs.phase===2?1.25:1.5;
   if(bs.st==='stagger'){for(let i=0;i<2;i++)if((bs.stT&3)===0)g.parts.push({x:bs.x+40+Math.random()*100,y:G-60-Math.random()*90,vx:(Math.random()-.5)*2,vy:-Math.random()*2,life:16,c:Math.random()<.5?'#ffd060':'#fff',s:1});
     if(bs.stT>=100){bs.st='walk';bs.stT=0;bs.step=0;}}
   else if(bs.st==='walk'){const want=P.x-(bs.x+86);if(Math.abs(want)>40&&bs.stT%20===0)bs.face=want<0?-1:1;
     bs.minX=Math.max(ARENA+140,(bs.minX===undefined?LEN-300:bs.minX)-.09*fast); // stopniowe skracanie dystansu
-    if(Math.abs(want)>170)bs.dir=want<0?-1:1;else if((bs.stT%60)===0)bs.dir=-bs.dir;bs.x+=.6*fast*bs.dir;if(bs.x<bs.minX){bs.x=bs.minX;bs.dir=1;}if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
+    if(Math.abs(want)>170)bs.dir=want<0?-1:1;else if((bs.stT%60)===0)bs.dir=-bs.dir;if(bs.x<=bs.minX&&bs.dir<0)bs.dir=1;bs.x+=.6*fast*bs.dir;if(bs.x<ARENA+140)bs.x=ARENA+140;if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
   else if(bs.st==='shoot'){const per=Math.round(26/fast),n=bs.phase===1?2:3;const p=bs.stT%per;if(p===Math.round(10/fast)){const sx=bmx(bs,bs.x+8),sy=G-96;const tx=P.x,ty=P.y-30;const d=Math.hypot(tx-sx,ty-sy)||1;g.eb.push({x:sx,y:sy,vx:(tx-sx)/d*4.6,vy:(ty-sy)/d*4.6,g:0,r:8,k:'tea',dmg:20});noise(.2,.25,1400,200);beep(220,90,.15,.1,'triangle');g.shake=4;}
     if(enr&&bs.stT===12&&!bs.ba.dead&&bs.ba.t<0){bs.ba.t=0;}
     if(bs.stT>=per*n)next();}

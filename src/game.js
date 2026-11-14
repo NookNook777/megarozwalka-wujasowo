@@ -145,6 +145,7 @@ function update(){
   if(!bs.dead&&!bs.active&&P.x>ARENA+40&&P.ground){if(!g.dialogSeen){startDialog();return;}bossStart();}
   if(g.banner>0)g.banner--;
   if(bs.active&&!bs.dead&&g.banner<=0)bossAI(g,bs,P);
+  if(bs.dead&&bs.yo<0){bs.vy=(bs.vy||0)+.5;bs.yo=Math.min(0,bs.yo+bs.vy);if(bs.yo>=0){bs.yo=0;bs.vy=0;}} // pokonany w powietrzu też spada
   if(bs.dead&&bs.t<170){bs.t++;if(bs.t%6===0&&bs.t<110){boom(bs.x+20+Math.random()*140,G-20-Math.random()*140,2);}if(bs.t===170){state='win';g.t=0;}}
   if(bs.flash>0)bs.flash--;
   for(const e of g.eb){e.vy+=e.g;e.x+=e.vx;e.y+=e.vy;

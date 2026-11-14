@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.4] — 2026-11-14
+### Poprawione
+- „Teleport” B.R.S: po skoku lądował bliżej niż pozwalał limit podchodzenia i był natychmiast przestawiany — teraz po prostu przestaje iść dalej, a cel skoku respektuje limit.
+- Zawisanie B.R.S w powietrzu: gdy skok przerwała zmiana fazy (zachwianie) albo boss zginął w locie, zostawał nad ziemią — teraz zawsze spada i ląduje.
+
 ## [0.17.3] — 2026-11-14
 ### Zmienione
 - Napisy znajdziek i komunikaty bez ciemnego prostokąta — zamiast tego czarny obrys liter i lekki cień, czytelne na każdym tle.
@@ -198,7 +203,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.3...HEAD
+[Unreleased]: ../../compare/v0.17.4...HEAD
+[0.17.4]: ../../releases/tag/v0.17.4
 [0.17.3]: ../../releases/tag/v0.17.3
 [0.17.2]: ../../releases/tag/v0.17.2
 [0.17.1]: ../../releases/tag/v0.17.1
