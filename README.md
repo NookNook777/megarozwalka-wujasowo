@@ -4,7 +4,7 @@
 **Badziejek**, **Marewik** i **Łysa** — przebija się przez zaślimaczoną Piwnicę
 aż do **Agenta B.R.S** i jego mechanicznych ramion.
 
-![wersja](https://img.shields.io/badge/wersja-v0.15.5-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
+![wersja](https://img.shields.io/badge/wersja-v0.15.6-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
 
 ## Zagraj
 
@@ -45,6 +45,7 @@ tools/
   build.py          skleja wszystko w jeden plik dist/index.html (grafiki jako base64)
   bump.py           podbija numer wersji na ekranie tytułowym
   facelock.py       blokada twarzy w arkuszach animacji (stałe oczy/fryzura między klatkami)
+  victory/          skrypty pikselowych póz zwycięstwa (na bazie klatki idle)
 .github/workflows/  automatyczny deploy na GitHub Pages
 ```
 

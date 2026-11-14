@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.15.6] — 2026-11-14
+### Zmienione
+- Ujednolicone pozy zwycięstwa: wszystkie trzy robione na klatce idle z gry (sylwetka piksel w piksel ta sama, zmienia się tylko przednia ręka i mimika, 4 klatki, bez przeskoku):
+  - Badziejek — wyciąga telefon przed twarz do selfie (szeroki uśmiech bez zmian), błysk flesza,
+  - Marewik — filiżanka przy ustach, oczy przymknięte z błogości,
+  - Łysa — środkowy palec i wredny uśmieszek (bez zmian).
+- Mniejszy błysk flesza na ekranie wygranej.
+- Skrypty póz przeniesione do `tools/victory/`.
+
 ## [0.15.5] — 2026-11-14
 ### Zmienione
 - Poza Łysej zrobiona „chirurgicznie” na klatce idle z gry: głowa, ciało, nogi i minigun są piksel w piksel te same,
@@ -145,7 +154,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.15.5...HEAD
+[Unreleased]: ../../compare/v0.15.6...HEAD
+[0.15.6]: ../../releases/tag/v0.15.6
 [0.15.5]: ../../releases/tag/v0.15.5
 [0.15.4]: ../../releases/tag/v0.15.4
 [0.15.3]: ../../releases/tag/v0.15.3

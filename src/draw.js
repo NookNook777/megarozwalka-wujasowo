@@ -171,7 +171,7 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   const S2=2,f=Math.floor(t/8)%M.n,x0=Math.round(cx-M.fw*S2/2),y0=fy-M.fh*S2+2;
   if(im.complete)ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw*S2,M.fh*S2);
   {const ga=ctx.globalAlpha;drawHeart(M,t,x0,y0,S2,1);ctx.globalAlpha=ga;}
-  if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0]*S2,fy2=y0+M.flash[1]*S2,ph=(t%8);const r=6+ph*3;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy2,r,0,6.3);ctx.fill();
+  if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0]*S2,fy2=y0+M.flash[1]*S2,ph=(t%8);const r=3+ph*1.6;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy2,r,0,6.3);ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(fx-r*2.2,fy2-1,r*4.4,3);ctx.fillRect(fx-1,fy2-r*2.2,3,r*4.4);if(ph===0){ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(0,0,W,H);}}
   ctx.font='14px "Press Start 2P",monospace';sh('PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
   ctx.font='8px "Press Start 2P",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,'#ff8ad0','center');

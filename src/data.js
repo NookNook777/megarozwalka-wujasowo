@@ -359,13 +359,15 @@ const A={
      "fw": 128
     },
     "victory": {
-     "fw": 63,
-     "fh": 85,
-     "n": 8,
+     "fw": 52,
+     "fh": 67,
+     "n": 4,
+     "ox": -20,
+     "oy": -66,
      "flash": [
-      58,
-      30,
-      4
+      48,
+      20,
+      2
      ]
     }
    },
@@ -722,9 +724,11 @@ const A={
      "fw": 128
     },
     "victory": {
-     "fw": 57,
-     "fh": 78,
-     "n": 8
+     "fw": 51,
+     "fh": 76,
+     "n": 4,
+     "ox": -20,
+     "oy": -75
     }
    },
    "idle": "assets/heroes/marewik/idle.png",
