@@ -120,7 +120,7 @@ function update(){
     if(!e.active){if(e.x<g.camX+W+30){e.active=true;e.face=P.x<e.x?-1:1;}else continue;}
     e.t++;if(e.flash>0)e.flash--;const dx=P.x-e.x;
     if(e.at<0&&e.k!=='rat')e.face=dx<0?-1:1;
-    if(e.k==='rat'){if(e.turnT>0)e.turnT--;if(e.ground&&e.turnT<=0&&(isPit(e.x+e.face*14)||e.x+e.face*14>ARENA-12||e.x+e.face*14<16)){e.face*=-1;e.turnT=20;}if(e.ground&&e.cd<=0&&Math.abs(dx)<70&&Math.sign(dx)===e.face){e.vy=-3.6;e.vx=3.8*e.face;e.ground=false;e.cd=90;beep(900,1400,.06,.04);}else if(e.ground)e.vx=2.8*e.face;e.cd--;}
+    if(e.k==='rat'){if(e.turnT>0)e.turnT--;if(e.ground&&e.turnT<=0&&(isPit(e.x+e.face*14)||e.x+e.face*14>ARENA-12||e.x+e.face*14<16)){e.face*=-1;e.turnT=20;}if(e.ground&&e.cd<=0&&Math.abs(dx)<70&&Math.sign(dx)===e.face&&safeHop(e.x,e.face,90)){e.vy=-3.6;e.vx=3.8*e.face;e.ground=false;e.cd=90;beep(900,1400,.06,.04);}else if(e.ground)e.vx=2.8*e.face;e.cd--;}
     else if(e.k==='robol'||e.k==='kan'){const near=e.k==='robol'?90:150;e.vx=(e.at<0&&Math.abs(dx)>near)?(e.k==='robol'?.45:.35)*e.face:0;if(e.ground&&isPit(e.x+e.vx*10))e.vx=0;
       if(e.k==='robol'&&!e.seen&&e.x<g.camX+W-16&&e.x>g.camX+16){e.seen=true;e.cd=Math.min(e.cd,8);}
       e.cd--;if(e.cd<=0&&e.at<0&&(e.k==='robol'?(e.x<g.camX+W-16&&e.x>g.camX+16):Math.abs(dx)<340)&&e.x<g.camX+W-10){e.at=0;e.cd=e.k==='robol'?90:100;}
@@ -130,7 +130,7 @@ function update(){
           else{const sx=e.x+e.face*40,sy=e.y-42;if(up){const T=56,gg=.2,dx=P.x-sx,dy=(P.y-20)-sy;sp={x:sx,y:sy,vx:dx/T,vy:(dy-.5*gg*T*T)/T,g:gg,r:8,dmg:25};}else sp={x:sx,y:sy,vx:e.face*3.2,vy:-.5,g:.04,r:8,dmg:25};}
           g.eb.push(Object.assign(sp,{k:'slime'}));noise(.15,.15,900,200);}
         if(e.at>=24)e.at=-1;}}
-    else if(e.k==='barrel'){if(e.ground){e.vx=0;e.cd--;if(e.cd<=0&&Math.abs(dx)<320){e.vy=-6.6;e.vx=e.face*1.5;e.ground=false;e.cd=60;beep(200,500,.08,.05,'triangle');}}}
+    else if(e.k==='barrel'){if(e.ground){e.vx=0;e.cd--;if(e.cd<=0&&Math.abs(dx)<320&&safeHop(e.x,e.face,70)){e.vy=-6.6;e.vx=e.face*1.5;e.ground=false;e.cd=60;beep(200,500,.08,.05,'triangle');}}}
     e.vy=Math.min(8,e.vy+GRAV);const ey=e.y;e.x+=e.vx;e.y+=e.vy;
     if(e.x>ARENA-12)e.x=ARENA-12;
     if(e.vy>=0){const gy=groundAt(e.x,ey,e.y,false);if(gy!==null){e.y=gy;e.vy=0;e.ground=true;}else e.ground=false;}else e.ground=false;
@@ -165,3 +165,6 @@ function microBoom(x,y,k){const g=G_;const C=k==='slime'?['#9aff5a','#3cc42a','#
   g.puffs=g.puffs||[];g.puffs.push({x,y,t:0,k});
   for(let i=0;i<10;i++){const a=Math.PI+Math.random()*Math.PI,v=.8+Math.random()*2.2;g.parts.push({x:x+(Math.random()-.5)*6,y:y-1,vx:Math.cos(a)*v,vy:Math.sin(a)*v*1.2,life:10+Math.random()*12,c:C[i%4],s:1+(i%3===0?1:0)});}
   noise(.12,.12,2200,300);}
+
+/* czy skok/rzut wroga nie skończy się w przepaści (próbkowanie co 6 px na całej długości lotu) */
+function safeHop(x,dir,dist){for(let d=0;d<=dist;d+=6)if(isPit(x+dir*d)||x+dir*d>ARENA-12)return false;return true;}
