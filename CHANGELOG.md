@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.12.5] — 2026-11-14
+### Poprawione
+- Marewik, broń poz. 3: wcześniej dawała tylko przebijanie, które w praktyce nic nie zmieniało (poz. 3 = poz. 2), a przy bossie pocisk przebijający „zużywał się” na ramieniu i nie trafiał w ciało.
+### Zmienione
+- Marewik poz. 3: ciężkie pociski przebijające (+1.2 obrażeń, większe, z pomarańczową smugą); przebijają ramię bossa i trafiają dalej w ciało.
+
 ## [0.12.4] — 2026-11-14
 ### Poprawione
 - Agent B.R.S nie dostawał obrażeń w trakcie chodzenia i dymków — „niewidzialna ściana”:
@@ -58,7 +64,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.12.4...HEAD
+[Unreleased]: ../../compare/v0.12.5...HEAD
+[0.12.5]: ../../releases/tag/v0.12.5
 [0.12.4]: ../../releases/tag/v0.12.4
 [0.12.3]: ../../releases/tag/v0.12.3
 [0.12.2]: ../../releases/tag/v0.12.2

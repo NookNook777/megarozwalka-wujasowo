@@ -107,7 +107,7 @@ function fire(){const g=G_,P=g.P,h=g.h;let dx=P.face,dy=0;
   const fury=g.ultT>0&&g.hero==='l';const wl=fury?3:g.wl;
   const base=Math.atan2(dy,dx);const add=(a,o)=>g.bullets.push(Object.assign({x:sx,y:sy,vx:Math.cos(a)*h.spd,vy:Math.sin(a)*h.spd,life:90,dmg:h.dmg,sc:1},o));
   if(g.hero==='b'){if(wl===1)add(base);else if(wl===2){const nx=-Math.sin(base)*3,ny=Math.cos(base)*3;add(base,{x:sx+nx,y:sy+ny});add(base,{x:sx-nx,y:sy-ny});}else[-.12,0,.12].forEach(d=>add(base+d));}
-  else if(g.hero==='m'){add(base,{pierce:wl>=3});}
+  else if(g.hero==='m'){if(wl>=3)add(base,{pierce:true,dmg:h.dmg+1.2,sc:1.45});else add(base);}
   else{if(wl===1)add(base);else if(wl===2)add(base,{dmg:h.dmg+1,sc:1.4});else[-.16,0,.16].forEach(d=>add(base+d,{dmg:h.dmg+.5,sc:1.2}));}
   P.flashT=3;beep(h.snd[0],h.snd[1],.06,.05,h.snd[2]);}
 function spark(x,y,c){for(let i=0;i<4;i++)G_.parts.push({x,y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:8+Math.random()*6,c,s:1});}

@@ -92,8 +92,8 @@ function update(){
     for(const e of g.en){if(e.dead||!e.active||(b.hit&&b.hit.has(e))||e.x<g.camX+10||e.x>g.camX+W-14)continue;const T=ET[e.k];if(Math.abs(b.x-e.x)<T.w/2+3&&b.y>e.y-T.h&&b.y<e.y+2){hitEnemy(e,b.dmg*(g.ultT>0&&g.hero==='m'?2:1));spark(b.x,b.y,'#9aff5a');if(b.pierce)(b.hit=b.hit||new Set()).add(e);else{b.dead=1;break;}}}
     if(b.dead)continue;
     for(const c of g.capsA){if(c.dead)continue;if(Math.abs(b.x-c.x)<18&&Math.abs(b.y-c.y)<12){b.dead=1;c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}}
-    const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20&&!(b.hit&&b.hit.has(bs))){const mul=(g.ultT>0&&g.hero==='m'?2:1);const ah=armHit(bs,b);
-      if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}else{const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>bs.x+48&&b.x<bs.x+118&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
+    const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
+      if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>bs.x+48&&b.x<bs.x+118&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
       else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)b.dead=1;}
