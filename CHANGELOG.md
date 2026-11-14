@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.12.9] — 2026-11-14
+### Poprawione
+- „Nieskończony” ult Łysej: w trakcie działania ulta pasek ULT już się nie ładuje.
+- Ładowanie ulta na bossie liczone od zadanych obrażeń, a nie od liczby trafień — wcześniej postacie z wieloma pociskami (Łysa, Badziejek) ładowały się dużo szybciej niż Marewik.
+  Teraz tempo zależy od siły ognia (poz. 1: ~30 s ostrzału, poz. 3: ~11 s).
+- Zniszczenie ramienia bossa daje ult tylko raz (przez obrażenia), bez dodatkowego bonusu.
+
 ## [0.12.8] — 2026-11-14
 ### Poprawione
 - Ściana tła kończyła się 6 px nad podłogą (widać było czarną szczelinę, zwłaszcza nad dziurami) — dodany kamienny cokół domykający ścianę do linii podłogi.
@@ -79,7 +86,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.12.8...HEAD
+[Unreleased]: ../../compare/v0.12.9...HEAD
+[0.12.9]: ../../releases/tag/v0.12.9
 [0.12.8]: ../../releases/tag/v0.12.8
 [0.12.7]: ../../releases/tag/v0.12.7
 [0.12.6]: ../../releases/tag/v0.12.6

@@ -158,7 +158,7 @@ function update(){
   if(bs.active&&!bs.dead){g.camX+=(ARENA-g.camX)*.08;if(Math.abs(ARENA-g.camX)<1)g.camX=ARENA;}
   if(g.msgT>0)g.msgT--;if(g.flash>0)g.flash--;if(g.shake>0)g.shake--;
 }
-function addUlt(v){G_.ult=Math.min(100,G_.ult+v);}
+function addUlt(v){if(G_.ultT>0||state==='ultcut')return;G_.ult=Math.min(100,G_.ult+v);}// w trakcie ulta pasek się nie ładuje
 function microBoom(x,y,k){const g=G_;const C=k==='slime'?['#9aff5a','#3cc42a','#d8ff90','#1e7a18']:['#ff6ab8','#ffd0ec','#fff','#ff3a90'];
   g.puffs=g.puffs||[];g.puffs.push({x,y,t:0,k});
   for(let i=0;i<10;i++){const a=Math.PI+Math.random()*Math.PI,v=.8+Math.random()*2.2;g.parts.push({x:x+(Math.random()-.5)*6,y:y-1,vx:Math.cos(a)*v,vy:Math.sin(a)*v*1.2,life:10+Math.random()*12,c:C[i%4],s:1+(i%3===0?1:0)});}
