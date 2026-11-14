@@ -8,6 +8,17 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.13.0] — 2026-11-14
+### Dodane
+- Nowy ult Łysej — **plazmowy promień**: 4 s ciągłego promienia przez cały ekran (można się obracać, nie można chodzić).
+  Przebija wszystko, kasuje wrogie pociski, Łysa w tym czasie nietykalna.
+  Balans: ~40 HP bossa (25% — tyle co granat Badziejka), ramionom ~36 HP (samo nie rozwala ramienia), zwykłych wrogów topi.
+### Zmienione
+- Wolniejsze ładowanie ulta na bossie: ~60–70 s ostrzału na broni poz. 1, ~25–28 s na poz. 3 (wcześniej ~11 s → ult prawie non stop).
+  W walce z bossem pasek dodatkowo ładuje się powoli sam (0,5%/s).
+### Usunięte
+- Stary ult Łysej (szybszy ogień + broń poz. 3), który dublował dopałkę.
+
 ## [0.12.9] — 2026-11-14
 ### Poprawione
 - „Nieskończony” ult Łysej: w trakcie działania ulta pasek ULT już się nie ładuje.
@@ -86,7 +97,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.12.9...HEAD
+[Unreleased]: ../../compare/v0.13.0...HEAD
+[0.13.0]: ../../releases/tag/v0.13.0
 [0.12.9]: ../../releases/tag/v0.12.9
 [0.12.8]: ../../releases/tag/v0.12.8
 [0.12.7]: ../../releases/tag/v0.12.7

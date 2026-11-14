@@ -32,7 +32,7 @@ function groundAt(x,py,y,drop){if(!isPit(x)&&py<=G+.5&&y>=G)return G;if(!drop)fo
 function onPlatY(P){let best=null;if(!isPit(P.x)&&P.y<=G+1)best=G;for(const p of plats){if(P.x>=p.x+4&&P.x<=p.x+PLW-4&&P.y<=p.y+1&&(best===null||p.y<best))best=p.y;}return best;}
 function onPlat(P){return plats.some(p=>P.x>=p.x+4&&P.x<=p.x+PLW-4&&Math.abs(P.y-p.y)<1);}
 const DIFF=1;
-function hurt(dmg,fromX){const g=G_,P=g.P;dmg=(dmg||15)*DIFF;if(P.dead||P.inv>0||g.barrier>0||(g.ultT>0&&g.hero==='m'))return;
+function hurt(dmg,fromX){const g=G_,P=g.P;dmg=(dmg||15)*DIFF;if(P.dead||P.inv>0||g.barrier>0||(g.ultT>0&&(g.hero==='m'||g.hero==='l')))return;
   if(g.armor>0){g.armor--;dmg*=.5;}
   g.hp-=dmg;g.dmgFlash=10;S.hurt();g.shake=6;P.inv=42;P.hitT=24;const dir=fromX!==undefined?(P.x<fromX?-1:1):-P.face;P.kb=2.4*dir;
   if(g.hp<=0){g.hp=0;g.lives--;g.shake=12;g.wl=Math.max(1,g.wl-1);P.hitT=0;P.dead=true;P.deathT=0;P.kb=1.8*dir;P.vy=Math.min(P.vy,-2);}}
@@ -52,9 +52,10 @@ function update(){
     if(P.deathT>=95){if(g.lives<=0){state='over';g.t=0;return;}P.dead=false;P.inv=130;g.hp=100;P.vx=0;P.vy=0;P.y=Math.min(P.y,G);if(P.y>G||isPit(P.x)){while(isPit(P.x))P.x+=20;P.y=-20;}msgShow('ZOSTAŁO ŻYĆ: '+g.lives,70);}
     return;}
   if(P.hitT>0){P.hitT--;P.x+=P.kb;P.kb*=.85;}
-  const mx=(I.r?1:0)-(I.l?1:0);if(mx)P.face=mx;
+  const beam=g.hero==='l'&&g.ultT>0;
+  const mx0=(I.r?1:0)-(I.l?1:0);if(mx0)P.face=mx0;const mx=beam?0:mx0;
   P.vx=mx*(g.fast?3.3:2.6);
-  if(I.jp)P.buf=7;if(P.buf>0)P.buf--;
+  if(I.jp&&!beam)P.buf=7;if(P.buf>0)P.buf--;
   if(P.ground)P.coyote=6;else if(P.coyote>0)P.coyote--;
   let drop=false;
   if(P.buf>0&&P.coyote>0){if(I.d&&onPlat(P)){drop=true;P.y+=2;P.ground=false;P.buf=0;P.dropT=10;}else{P.vy=-9.4;P.ground=false;P.coyote=0;P.buf=0;S.jump();}}
@@ -66,7 +67,7 @@ function update(){
   if(P.y>H+60){P.x=Math.max(g.camX+80,P.x-160);while(isPit(P.x))P.x+=20;P.y=-20;P.vy=0;if(!killFall())return;P.inv=Math.max(P.inv,120);}
   if(P.inv>0)P.inv--;if(g.barrier>0)g.barrier--;
   // anim
-  let an;if(P.hitT>0)an='hit';else if(!P.ground)an='jump';else if(mx)an=I.u?'up':I.d?'down':'run';else an=I.u?'up':(I.f||P.shotT>0)?'shoot':'idle';
+  let an;if(P.hitT>0)an='hit';else if(!P.ground)an='jump';else if(mx)an=I.u?'up':I.d?'down':'run';else an=beam?'shoot':I.u?'up':(I.f||P.shotT>0)?'shoot':'idle';
   const M=META(an);
   if(an!==P.anim){P.anim=an;P.fi=0;P.fr=M.order[0];P.ft=0;}
   const spd={idle:11,run:5,shoot:4,up:5,down:5}[an];
@@ -75,10 +76,11 @@ function update(){
   else if(++P.ft>=spd){P.ft=0;P.fi=(P.fi+1)%M.order.length;P.fr=M.order[P.fi];}
   // fire
   if(P.cd>0)P.cd--;if(P.shotT>0)P.shotT--;
-  const fury=g.ultT>0&&g.hero==='l';
-  if(I.f&&P.cd<=0){fire();P.cd=Math.max(3,Math.round((h.cd-(g.wl>=2&&g.hero==='m'?3:0))*(fury?.5:1)));P.shotT=11;}
+  if(beam)beamTick(g,P);
+  else if(I.f&&P.cd<=0){fire();P.cd=Math.max(3,Math.round(h.cd-(g.wl>=2&&g.hero==='m'?3:0)));P.shotT=11;}
   // ult
-  if(g.ultT>0)g.ultT--;
+  if(g.ultT>0){g.ultT--;if(g.ultT===0&&g.hero==='l')beamStop();}
+  if(g.boss.active&&!g.boss.dead)addUlt(.5/60); // powolne ładowanie w trakcie walki z bossem
   if(I.xp&&g.ult>=100&&P.ground){g.ult=0;state='ultcut';g.cut={t:0};P.vx=0;
     if(g.hero==='b'){S.ult();}else if(g.hero==='m'){beep(1200,1600,.08,.05,'sine');}else{spinUp();}}
   // flashbang grenade (Badziejek ult)

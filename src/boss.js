@@ -83,7 +83,7 @@ function updCut(){const g=G_,c=g.cut;c.t++;
   if(g.hero==='b'&&c.t>18)stepGren();
   if(g.hero==='l'){g.shake=3;}
   if(c.t>=CUT[g.hero]){state='play';const P=g.P;P.inv=Math.max(P.inv,20);
-    if(g.hero==='m'){g.ultT=300;}else{g.ultT=360;g.shake=8;}}}
+    if(g.hero==='m'){g.ultT=300;}else if(g.hero==='l'){g.ultT=BEAM_T;beamStart();}else{g.ultT=360;g.shake=8;}}}
 function flashBang(x,y){const g=G_;g.flash=18;g.shake=12;S.big();boom(x,y,3);
   for(const b of g.barrels)if(!b.dead&&b.x>g.camX-20&&b.x<g.camX+W+20){b.dead=true;boom(b.x,b.y-18,2);dropCoins(b.x,b.y-20,2);}
   for(const e of g.en)if(!e.dead&&e.active&&e.x>g.camX-20&&e.x<g.camX+W+20)hitEnemy(e,e.k==='kan'?10:99);
@@ -91,7 +91,7 @@ function flashBang(x,y){const g=G_;g.flash=18;g.shake=12;S.big();boom(x,y,3);
 function fiuFiu(){if(!ac)return;[0,.32].forEach(d=>{const t=ac.currentTime+d,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(900,t);o.frequency.exponentialRampToValueAtTime(2200,t+.12);o.frequency.exponentialRampToValueAtTime(1100,t+.26);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.12,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.28);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.3);});
   setTimeout(()=>{noise(.5,.3,1800,90);beep(140,60,.5,.2,'triangle');},800);}
 function spinUp(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sawtooth';o.frequency.setValueAtTime(60,t);o.frequency.exponentialRampToValueAtTime(900,t+.8);gg.gain.setValueAtTime(.001,t);gg.gain.linearRampToValueAtTime(.09,t+.6);gg.gain.exponentialRampToValueAtTime(.0001,t+.9);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.95);}
-function dmgBoss(d,head,x,y){const bs=G_.boss;bs.hp-=d;dnum(x===undefined?bs.x+90:x,y===undefined?G-150:y,d,head?'#ffe066':'#ff8ad0');bs.flash=4;addUlt(d*1.2);if(head)beep(1200,600,.05,.07);else beep(500,200,.04,.05);if(bs.hp<=0&&!bs.dead){bs.dead=true;bs.t=0;S.big();G_.eb=[];msgShow('AGENT B.R.S POKONANY!',99999);dropCoins(bs.x+60,G-90,12);}}
+function dmgBoss(d,head,x,y){const bs=G_.boss;bs.hp-=d;dnum(x===undefined?bs.x+90:x,y===undefined?G-150:y,d,head?'#ffe066':'#ff8ad0');bs.flash=4;addUlt(d*.45);if(head)beep(1200,600,.05,.07);else beep(500,200,.04,.05);if(bs.hp<=0&&!bs.dead){bs.dead=true;bs.t=0;S.big();G_.eb=[];msgShow('AGENT B.R.S POKONANY!',99999);dropCoins(bs.x+60,G-90,12);}}
 function dropCoins(x,y,n){for(let i=0;i<n;i++)G_.coinsL.push({x:x+(Math.random()-.5)*20,y,vx:(Math.random()-.5)*3,vy:-3-Math.random()*2,got:false});}
 function dropItem(x,y,force){const r=Math.random();const k=force?force:r<.3?'dopalka':r<.45?'kamizelka':r<.57?'folia':r<.67?'energetyk':r<.77?'magnes':r<.87?'klapki':'drugie_sniadanie';G_.items.push({x,y,vy:-3,bounce:true,k});}
 function collect(k){const g=G_;S.pick();
@@ -104,7 +104,7 @@ function muzzle(){const P=G_.P,M=META(P.anim);let lx,ly;if(P.anim==='jump'){lx=F
 function fire(){const g=G_,P=g.P,h=g.h;let dx=P.face,dy=0;
   if(P.anim==='up')dy=-1;else if(P.anim==='down')dy=1;else if(P.anim==='jump'){if(I.u)dy=-1;else if(I.d)dy=1;}
   const m=muzzle();let sx=m.x,sy=m.y;if(P.anim==='jump'&&dy!==0){sx=P.x+14*P.face;sy=dy<0?P.y-50:P.y-24;}
-  const fury=g.ultT>0&&g.hero==='l';const wl=fury?3:g.wl;
+  const wl=g.wl;
   const base=Math.atan2(dy,dx);const add=(a,o)=>g.bullets.push(Object.assign({x:sx,y:sy,vx:Math.cos(a)*h.spd,vy:Math.sin(a)*h.spd,life:90,dmg:h.dmg,sc:1},o));
   if(g.hero==='b'){if(wl===1)add(base);else if(wl===2){const nx=-Math.sin(base)*3,ny=Math.cos(base)*3;add(base,{x:sx+nx,y:sy+ny});add(base,{x:sx-nx,y:sy-ny});}else[-.12,0,.12].forEach(d=>add(base+d));}
   else if(g.hero==='m'){if(wl>=3)add(base,{pierce:true,dmg:h.dmg+1.2,sc:1.45});else add(base);}
@@ -121,3 +121,33 @@ function drawDnum(){const g=G_;if(!g.dn)return;ctx.font='8px "Press Start 2P",mo
   for(const q of g.dn){const t=q.v<1?q.v.toFixed(1):q.v<10?q.v.toFixed(1).replace('.0',''):String(Math.round(q.v));const al=q.age>40?(55-q.age)/15:1;ctx.globalAlpha=al;
     const yy=Math.round(q.y-(q.pop>0?2:0));ctx.fillStyle='#000';ctx.fillText('-'+t,Math.round(q.x)+1,yy+1);ctx.fillStyle=q.c;ctx.fillText('-'+t,Math.round(q.x),yy);}
   ctx.globalAlpha=1;ctx.textAlign='left';}
+
+/* ---------- Ult Łysej: plazmowy promień ----------
+   4 s ciągłego promienia przez cały ekran w stronę, w którą patrzy (można się obracać, nie można chodzić ani skakać).
+   Balans: łącznie ~40 HP bossa (25%, jak granat Badziejka) bez kary 20% za ciało; ramiona dostają ~36 (nie
+   rozwala ramienia w pojedynkę); zwykli wrogowie topią się szybko; promień kasuje wrogie pociski. Łysa nietykalna. */
+const BEAM_T=240,BEAM_TICK=4,BEAM_BOSS=40/(BEAM_T/BEAM_TICK),BEAM_ARM=.6,BEAM_EN=2;
+let beamOsc=null;
+function beamStart(){const g=G_;g.beamT=0;g.shake=6;if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),o2=ac.createOscillator(),gg=ac.createGain(),lf=ac.createOscillator(),lg=ac.createGain();
+  o.type='sawtooth';o.frequency.value=92;o2.type='square';o2.frequency.value=184.7;lf.frequency.value=14;lg.gain.value=18;lf.connect(lg);lg.connect(o.frequency);
+  gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.15);o.connect(gg);o2.connect(gg);gg.connect(ac.destination);[o,o2,lf].forEach(x=>x.start(t));beamOsc={o,o2,lf,gg};}
+function beamStop(){if(!beamOsc||!ac)return;const t=ac.currentTime,b=beamOsc;b.gg.gain.cancelScheduledValues(t);b.gg.gain.setValueAtTime(b.gg.gain.value,t);b.gg.gain.exponentialRampToValueAtTime(.0001,t+.25);[b.o,b.o2,b.lf].forEach(x=>x.stop(t+.3));beamOsc=null;}
+function beamGeom(g,P){const m=muzzle();const x0=m.x,x1=P.face>0?g.camX+W+4:g.camX-4;return{x0,x1,y:m.y,lo:Math.min(x0,x1),hi:Math.max(x0,x1)};}
+function beamTick(g,P){g.beamT=(g.beamT||0)+1;if(g.t%3===0)g.shake=Math.max(g.shake,2);const b=beamGeom(g,P),tick=g.beamT%BEAM_TICK===0,R=7;
+  for(const q of g.eb)if(q.k!=='wave'&&q.x>b.lo&&q.x<b.hi&&Math.abs(q.y-b.y)<R+(q.r||4)){q.dead=true;q.life=0;spark(q.x,q.y,'#ff5ad0');}
+  g.eb=g.eb.filter(q=>!q.dead);
+  for(const c of g.capsA)if(!c.dead&&c.x>b.lo&&c.x<b.hi&&Math.abs(c.y-b.y)<R+12){c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}
+  if(!tick)return;
+  for(const br of g.barrels){if(br.dead||br.x<b.lo||br.x>b.hi||!(b.y>br.y-40-R&&b.y<br.y+R))continue;br.hp-=BEAM_EN;br.flash=4;spark(br.x,b.y,'#ff5ad0');if(br.hp<=0){br.dead=true;boom(br.x,br.y-18,2);S.boom();addUlt(8);dropCoins(br.x,br.y-20,3);}}
+  for(const e of g.en){if(e.dead||!e.active||e.x<b.lo||e.x>b.hi)continue;const T=ET[e.k];if(b.y>e.y-T.h-R&&b.y<e.y+R){hitEnemy(e,BEAM_EN);spark(e.x,b.y,'#ff5ad0');}}
+  const bs=g.boss;if(bs.dead||!bs.active)return;const yo=bs.yo||0;
+  const armIn=(k)=>{const a=bs[k];if(a.dead)return false;const p=k==='fa'?faPos(bs):baPos(bs);const ylo=k==='fa'?p.y-40:p.y-58,yhi=k==='fa'?p.y+34:p.y+6,xc=k==='fa'?p.x-30:p.x-24;return xc>b.lo&&xc<b.hi&&b.y>ylo&&b.y<yhi?xc:false;};
+  for(const k of ['fa','ba']){const xc=armIn(k);if(xc!==false){const a=bs[k],v=a.vul;a.vul=Math.max(1,a.vul);hitArm(a,BEAM_ARM,xc,b.y,k==='fa');if(!a.dead)a.vul=v;}}
+  if(bs.x+34<b.hi&&bs.x+160>b.lo&&b.y>G-200+yo&&b.y<G+yo){const hx=P.face>0?Math.max(b.lo,bs.x+40):Math.min(b.hi,bs.x+150);dmgBoss(BEAM_BOSS,false,hx,b.y);spark(hx,b.y,'#fff');spark(hx,b.y,'#ff5ad0');}}
+function drawBeam(g,P){const b=beamGeom(g,P),T=g.beamT||0,left=g.ultT;const grow=Math.min(1,T/10),fade=Math.min(1,left/14),k=grow*fade;if(k<=0)return;
+  const fl=(g.t&1)?1:0,len=(b.x1-b.x0)*Math.min(1,T/6),x=Math.min(b.x0,b.x0+len),w=Math.abs(len);
+  ctx.globalAlpha=.3*k;ctx.fillStyle='#ff5ad0';ctx.fillRect(x,Math.round(b.y-11-fl),w,22+fl*2);
+  ctx.globalAlpha=.85*k;ctx.fillStyle='#ff5ad0';ctx.fillRect(x,Math.round(b.y-6),w,12);
+  ctx.fillStyle='#ffb0ec';ctx.fillRect(x,Math.round(b.y-3-fl),w,6+fl*2);ctx.fillStyle='#fff';ctx.fillRect(x,Math.round(b.y-1),w,3);
+  ctx.globalAlpha=k;for(let i=0;i<6;i++){const px=x+((g.t*7+i*53)%Math.max(1,w|0)),py=b.y+((i*37+g.t*3)%15)-7;ctx.fillStyle=i&1?'#fff':'#ffd0f0';ctx.fillRect(Math.round(px),Math.round(py),2,1);}
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(Math.round(b.x0),Math.round(b.y),7+fl*2,0,6.3);ctx.fill();ctx.globalAlpha=1;}
