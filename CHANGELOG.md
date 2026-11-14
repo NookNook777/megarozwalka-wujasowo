@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.19.1] — 2026-11-14
+### Dodane
+- Regulacja głośności 0–10: pozycja GŁOŚNOŚĆ w menu głównym (← / → albo klik) i w pauzie (← / →, z paskiem).
+  Wszystkie dźwięki idą przez jeden wzmacniacz; ustawienie zapamiętuje się w przeglądarce.
+### Zmienione
+- Marewik: obrażenia w ciało bossa z powrotem ×0.2 (było ×0.25 — lekkie przegięcie). Reszta reworku zostaje.
+
 ## [0.19.0] — 2026-11-14
 ### Zmienione — rework Marewika („ciężki czołg”)
 - Pociski przebijają wrogów już od broni poz. 1 i mocniej biją w pancerz bossa (ciało ×0.25 zamiast ×0.2).
@@ -257,7 +264,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.19.0...HEAD
+[Unreleased]: ../../compare/v0.19.1...HEAD
+[0.19.1]: ../../releases/tag/v0.19.1
 [0.19.0]: ../../releases/tag/v0.19.0
 [0.18.0]: ../../releases/tag/v0.18.0
 [0.17.10]: ../../releases/tag/v0.17.10

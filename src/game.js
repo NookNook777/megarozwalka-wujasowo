@@ -100,7 +100,7 @@ function update(){
     const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
       if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const HB=bxr(bs,48,118),BB=bxr(bs,34,160);const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>HB[0]&&b.x<HB[1]&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true,b.x,b.y);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*(g.hero==='m'?.25:.2),false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(!b.dead&&(b.x<g.camX-2||b.x>g.camX+W+2)&&fxOn('kapsle')&&!b.bounced){b.bounced=1;b.vx=-b.vx;b.x=Math.max(g.camX,Math.min(g.camX+W,b.x));b.hit=null;spark(b.x,b.y,'#ffb030');}
     if(!b.dead&&(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)){b.dead=1;b.off=1;}}
   if(fxOn('petardy'))for(const b of g.bullets)if(b.dead&&!b.off&&!b.seed)petarda(b.x,b.y,b.dmg);
@@ -185,7 +185,7 @@ const DIALOG={
  b:[['brs','Hihihi-hihi! Ale wyglądasz, kumplu niemyty! xD'],['hero','Ty w sumie też nie lepszy. Ten bolid to chyba od Marewika kupiłeś.'],['brs','Nie wiem, Nuk mnie tu wsadził i kazał chleby wypłacać tym co tu przyjdą.'],['hero','Ugh. To co? Jakieś Frotnite potem, kumplu?'],['brs','Ta, ale najpierw dawaj na środek.']],
  m:[['brs','Kto przyszedł? Cukierek albo psikus!'],['hero','Psi... co? Brys? Co ty w ogóle robisz w mojej piwnicy?'],['brs','A tak se na herbatkę wpadłem. Patrz jaki mam zajebisty czajnik, kumplu.'],['hero','Widzę właśnie. No, to kiedy pijemy?'],['brs','Nie mogę, prowadzę.']]};
 function startDialog(){const g=G_;state='dialog';g.dlg={i:0,t:0,pan:true};g.boss.face=-1;g.P.vx=0;g.P.anim='idle';g.P.face=1;whistleBlip();}
-function whistleBlip(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+.12);o.frequency.linearRampToValueAtTime(1600,t+.3);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.32);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.35);}
+function whistleBlip(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+.12);o.frequency.linearRampToValueAtTime(1600,t+.3);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.32);o.connect(gg);gg.connect(OUT());o.start(t);o.stop(t+.35);}
 function bossStart(){const g=G_,bs=g.boss;bs.active=true;bs.cd=170;g.banner=110;fiuFiu();msgShow('FIU FIU! AGENT BRS NADCHODZI!',120);}
 function updDialog(){const g=G_,d=g.dlg,L=DIALOG[g.hero];
   // najpierw kamera dojeżdża tak, żeby obaj byli w kadrze twarzą w twarz
