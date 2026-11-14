@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.9] — 2026-11-14
+### Zmienione
+- Kebab Mieszany → **Kebab Miesiany** (tak ma być).
+
 ## [0.17.8] — 2026-11-14
 ### Zmienione
 - Nowy dialog Badziejka z B.R.S przed walką („Hihihi-hihi! Ale wyglądasz, kumplu niemyty! xD” … „Ta, ale najpierw dawaj na środek.”).
@@ -225,7 +229,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.8...HEAD
+[Unreleased]: ../../compare/v0.17.9...HEAD
+[0.17.9]: ../../releases/tag/v0.17.9
 [0.17.8]: ../../releases/tag/v0.17.8
 [0.17.7]: ../../releases/tag/v0.17.7
 [0.17.6]: ../../releases/tag/v0.17.6

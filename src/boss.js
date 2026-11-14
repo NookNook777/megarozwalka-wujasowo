@@ -104,7 +104,7 @@ function dmgBoss(d,head,x,y){const bs=G_.boss;bs.hp-=d;dnum(x===undefined?bs.x+9
 function dropCoins(x,y,n){for(let i=0;i<n;i++)G_.coinsL.push({x:x+(Math.random()-.5)*20,y,vx:(Math.random()-.5)*3,vy:-3-Math.random()*2,got:false});}
 function dropItem(x,y,force){const r=Math.random();const k=force?force:r<.3?'dopalka':r<.45?'kamizelka':r<.57?'folia':r<.67?'energetyk':r<.77?'magnes':r<.87?'klapki':r<.94?'drugie_sniadanie':'kebab';G_.items.push({x,y,vy:-3,bounce:true,k});}
 function collect(k){const g=G_;S.pick();
-  const N={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPECZKI WIPMENY',drugie_sniadanie:'KANAPKA Z JAJCUSZKIEM',kebab:'KEBAB MIESZANY'};
+  const N={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPECZKI WIPMENY',drugie_sniadanie:'KANAPKA Z JAJCUSZKIEM',kebab:'KEBAB MIESIANY'};
   const FX={kamizelka:'-50% OBRAŻEŃ · 4 TRAFIENIA',folia:'TARCZA NA 10 S',energetyk:'+50% ULTA',magnes:'PRZYCIĄGA ZŁOTÓWKI',klapki:'SZYBSZY BIEG',drugie_sniadanie:'+40 HP',kebab:'+40 HP'};
   // nadwyżka: bonus, którego już nie da się wzmocnić, zamienia się w trochę ulta (+ złotówki) zamiast przepadać
   const food=k==='drugie_sniadanie'||k==='kebab';
