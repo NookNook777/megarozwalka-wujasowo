@@ -4,7 +4,7 @@
 **Badziejek**, **Marewik** i **Łysa** — przebija się przez zaślimaczoną Piwnicę
 aż do **Agenta B.R.S** i jego mechanicznych ramion.
 
-![wersja](https://img.shields.io/badge/wersja-v0.17.10-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
+![wersja](https://img.shields.io/badge/wersja-v0.18.0-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
 
 ## Zagraj
 
@@ -38,6 +38,7 @@ src/
   screens.js        tytuł, menu, wybór bohatera
   game.js           poziom, fizyka, gracz, wrogowie, update()
   boss.js           Agent B.R.S, ramiona, ulty, pociski, znajdźki, efekty
+  powerups.js       znajdźki czasowe (petardy, kapsle, Tuptuś, kawa, nalewka, pierogi)
   draw.js           rysowanie świata, HUD, dymków
   main.js           pętla gry, sterowanie dotykowe, start
 assets/             grafiki (heroes/, enemies/, boss/, level/, props/, pickups/, ...)

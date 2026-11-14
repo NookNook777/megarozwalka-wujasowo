@@ -8,6 +8,20 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.18.0] — 2026-11-14
+### Dodane
+- Siedem nowych znajdziek z kapsuł i wrogów (ikonki SpriteCook 24×24):
+  - **Petardy z Bazaru** — 12 s: każdy pocisk po trafieniu robi mały wybuch (50% obrażeń dla wrogów obok),
+  - **Kapsle od Oranżady** — 12 s: pociski raz odbijają się od podłogi i krawędzi ekranu,
+  - **Chomik Tuptuś** — 15 s: chomik biega przy nodze i pluje ziarnami w najbliższego wroga (też w bossa),
+  - **Kawa z Ekspresu** — 10 s: strzał 2× szybciej,
+  - **Nalewka Dziadka** — 5 s: wrogowie, ich pociski i boss zwalniają o połowę (lekki sepiowy filtr),
+  - **Łódzkie Pierogi** — 3 pierogi krążą wokół bohatera i łapią po jednym wrogim pocisku (do 15 s),
+  - **Smalec Babci** — +1 życie (bardzo rzadki; przy 5 życiach → nadwyżka +10% ulta).
+- Aktywne efekty czasowe widoczne w HUD jako ikonki z paskiem pozostałego czasu (miga, gdy się kończy).
+### Zmienione
+- Nowa tabela losowania znajdziek (dopałka nadal najczęstsza, ~25%).
+
 ## [0.17.10] — 2026-11-14
 ### Zmienione
 - Nowy dialog Marewika z B.R.S przed walką („Kto przyszedł? Cukierek albo psikus!” … „Nie mogę, prowadzę.”).
@@ -233,7 +247,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.10...HEAD
+[Unreleased]: ../../compare/v0.18.0...HEAD
+[0.18.0]: ../../releases/tag/v0.18.0
 [0.17.10]: ../../releases/tag/v0.17.10
 [0.17.9]: ../../releases/tag/v0.17.9
 [0.17.8]: ../../releases/tag/v0.17.8

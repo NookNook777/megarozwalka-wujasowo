@@ -1122,7 +1122,14 @@ const A={
   "magnes": "assets/pickups/magnes.png",
   "klapki": "assets/pickups/klapki.png",
   "kapsula": "assets/pickups/kapsula.png",
-  "kebab": "assets/pickups/kebab.png"
+  "kebab": "assets/pickups/kebab.png",
+  "pierogi": "assets/pickups/pierogi.png",
+  "smalec": "assets/pickups/smalec.png",
+  "tuptus": "assets/pickups/tuptus.png",
+  "kapsle": "assets/pickups/kapsle.png",
+  "petardy": "assets/pickups/petardy.png",
+  "kawa": "assets/pickups/kawa.png",
+  "nalewka": "assets/pickups/nalewka.png"
  },
  "title": "assets/ui/title_bg.webp",
  "selbg": "assets/ui/select_bg.webp",

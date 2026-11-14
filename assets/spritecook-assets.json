@@ -25,6 +25,13 @@
  },
  "pickups": {
   "kebab": "dea0e4ae-8649-4170-9048-4d0a1573ac91",
-  "kanapka_z_jajcuszkiem": "d02b354a-16e9-4640-a931-12eb55472a2f"
+  "kanapka_z_jajcuszkiem": "d02b354a-16e9-4640-a931-12eb55472a2f",
+  "pierogi": "724e5ef0-f6a6-45c5-ad44-d7490edaff5b",
+  "smalec": "6b3ce673-c98f-41c2-a601-e7d19426758d",
+  "tuptus": "ad9091b3-8297-4ba9-85a3-bac985014df0",
+  "kapsle": "1035414d-5170-409c-9627-11f92ee878a4",
+  "petardy": "a8ef6fb5-a6e7-43bf-aa55-65f5ec42763f",
+  "kawa": "4f0b3248-ebdd-481c-b502-8ca9fbf5974e",
+  "nalewka": "b842457f-2916-42c8-99bf-476dbabfab7d"
  }
 }

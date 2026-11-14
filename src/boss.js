@@ -102,16 +102,18 @@ function fiuFiu(){if(!ac)return;[0,.32].forEach(d=>{const t=ac.currentTime+d,o=a
 function spinUp(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sawtooth';o.frequency.setValueAtTime(60,t);o.frequency.exponentialRampToValueAtTime(900,t+.8);gg.gain.setValueAtTime(.001,t);gg.gain.linearRampToValueAtTime(.09,t+.6);gg.gain.exponentialRampToValueAtTime(.0001,t+.9);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.95);}
 function dmgBoss(d,head,x,y){const bs=G_.boss;bs.hp-=d;dnum(x===undefined?bs.x+90:x,y===undefined?G-150:y,d,head?'#ffe066':'#ff8ad0');bs.flash=4;addUlt(d*.45);if(head)beep(1200,600,.05,.07);else beep(500,200,.04,.05);if(bs.hp<=0&&!bs.dead){bs.dead=true;bs.t=0;S.big();G_.eb=[];msgShow('AGENT B.R.S POKONANY!',99999);dropCoins(bs.x+60,G-90,12);}}
 function dropCoins(x,y,n){for(let i=0;i<n;i++)G_.coinsL.push({x:x+(Math.random()-.5)*20,y,vx:(Math.random()-.5)*3,vy:-3-Math.random()*2,got:false});}
-function dropItem(x,y,force){const r=Math.random();const k=force?force:r<.3?'dopalka':r<.45?'kamizelka':r<.57?'folia':r<.67?'energetyk':r<.77?'magnes':r<.87?'klapki':r<.94?'drugie_sniadanie':'kebab';G_.items.push({x,y,vy:-3,bounce:true,k});}
+const DROPS=[['dopalka',25],['kamizelka',9],['folia',7],['energetyk',6],['magnes',5],['klapki',5],['drugie_sniadanie',7],['kebab',4],['petardy',6],['kapsle',6],['tuptus',6],['kawa',6],['nalewka',4],['pierogi',4],['smalec',1.5]];
+function dropItem(x,y,force){let k=force;if(!k){const tot=DROPS.reduce((a,d)=>a+d[1],0);let r=Math.random()*tot;for(const d of DROPS){r-=d[1];if(r<=0){k=d[0];break;}}k=k||'dopalka';}G_.items.push({x,y,vy:-3,bounce:true,k});}
 function collect(k){const g=G_;S.pick();
-  const N={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPECZKI WIPMENY',drugie_sniadanie:'KANAPKA Z JAJCUSZKIEM',kebab:'KEBAB MIESIANY'};
-  const FX={kamizelka:'-50% OBRAŻEŃ · 4 TRAFIENIA',folia:'TARCZA NA 10 S',energetyk:'+50% ULTA',magnes:'PRZYCIĄGA ZŁOTÓWKI',klapki:'SZYBSZY BIEG',drugie_sniadanie:'+40 HP',kebab:'+40 HP'};
+  const N={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPECZKI WIPMENY',drugie_sniadanie:'KANAPKA Z JAJCUSZKIEM',kebab:'KEBAB MIESIANY',petardy:'PETARDY Z BAZARU',kapsle:'KAPSLE OD ORANŻADY',tuptus:'CHOMIK TUPTUŚ',kawa:'KAWA Z EKSPRESU',nalewka:'NALEWKA DZIADKA',pierogi:'ŁÓDZKIE PIEROGI',smalec:'SMALEC BABCI'};
+  const FX={kamizelka:'-50% OBRAŻEŃ · 4 TRAFIENIA',folia:'TARCZA NA 10 S',energetyk:'+50% ULTA',magnes:'PRZYCIĄGA ZŁOTÓWKI',klapki:'SZYBSZY BIEG',drugie_sniadanie:'+40 HP',kebab:'+40 HP',petardy:'WYBUCHOWE POCISKI · 12 S',kapsle:'POCISKI SIĘ ODBIJAJĄ · 12 S',tuptus:'POMOCNIK STRZELA · 15 S',kawa:'STRZAŁ 2× SZYBCIEJ · 10 S',nalewka:'WROGOWIE ZWALNIAJĄ · 5 S',pierogi:'3 PIEROGI ŁAPIĄ POCISKI',smalec:'+1 ŻYCIE'};
   // nadwyżka: bonus, którego już nie da się wzmocnić, zamienia się w trochę ulta (+ złotówki) zamiast przepadać
   const food=k==='drugie_sniadanie'||k==='kebab';
-  const extra=(k==='dopalka'&&g.wl>=3)?20:((k==='magnes'&&g.magnet)||(k==='klapki'&&g.fast))?10:(food&&g.hp>=100)?10:0;
+  if(FXDUR[k]){fxStart(k);msgShow(N[k],80,FX[k]);return;}
+  const extra=(k==='smalec'&&g.lives>=5)?10:(k==='dopalka'&&g.wl>=3)?20:((k==='magnes'&&g.magnet)||(k==='klapki'&&g.fast))?10:(food&&g.hp>=100)?10:0;
   if(extra){addUlt(extra);g.coins+=3;S.coin();msgShow(N[k],90,'NADWYŻKA: +'+extra+'% ULTA · +3 ZŁ');return;}
   if(k==='dopalka'){g.wl=Math.min(3,g.wl+1);}else if(k==='kamizelka')g.armor=4;else if(k==='folia')g.barrier=600;else if(k==='energetyk')addUlt(50);
-  else if(k==='magnes')g.magnet=true;else if(k==='klapki')g.fast=true;else if(food)g.hp=Math.min(100,g.hp+40);
+  else if(k==='magnes')g.magnet=true;else if(k==='klapki')g.fast=true;else if(food)g.hp=Math.min(100,g.hp+40);else if(k==='smalec')g.lives++;
   msgShow(N[k],80,k==='dopalka'?'BROŃ POZIOM '+g.wl:FX[k]);}
 function muzzle(){const P=G_.P,M=META(P.anim);let lx,ly;if(P.anim==='jump'){lx=FW/2+18;ly=FW-36;}else{const q=M.muz[P.fr]||M.muz[0];lx=q[0];ly=q[1];}
   return{x:P.x+(lx-(FW/2-4))*P.face,y:P.y-(FW-1-ly)};}
