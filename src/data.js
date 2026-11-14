@@ -1123,7 +1123,8 @@ const A={
   "energetyk": "assets/pickups/energetyk.png",
   "magnes": "assets/pickups/magnes.png",
   "klapki": "assets/pickups/klapki.png",
-  "kapsula": "assets/pickups/kapsula.png"
+  "kapsula": "assets/pickups/kapsula.png",
+  "kebab": "assets/pickups/kebab.png"
  },
  "title": "assets/ui/title_bg.webp",
  "selbg": "assets/ui/select_bg.webp",

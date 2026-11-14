@@ -93,11 +93,15 @@ function fiuFiu(){if(!ac)return;[0,.32].forEach(d=>{const t=ac.currentTime+d,o=a
 function spinUp(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sawtooth';o.frequency.setValueAtTime(60,t);o.frequency.exponentialRampToValueAtTime(900,t+.8);gg.gain.setValueAtTime(.001,t);gg.gain.linearRampToValueAtTime(.09,t+.6);gg.gain.exponentialRampToValueAtTime(.0001,t+.9);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.95);}
 function dmgBoss(d,head,x,y){const bs=G_.boss;bs.hp-=d;dnum(x===undefined?bs.x+90:x,y===undefined?G-150:y,d,head?'#ffe066':'#ff8ad0');bs.flash=4;addUlt(d*.45);if(head)beep(1200,600,.05,.07);else beep(500,200,.04,.05);if(bs.hp<=0&&!bs.dead){bs.dead=true;bs.t=0;S.big();G_.eb=[];msgShow('AGENT B.R.S POKONANY!',99999);dropCoins(bs.x+60,G-90,12);}}
 function dropCoins(x,y,n){for(let i=0;i<n;i++)G_.coinsL.push({x:x+(Math.random()-.5)*20,y,vx:(Math.random()-.5)*3,vy:-3-Math.random()*2,got:false});}
-function dropItem(x,y,force){const r=Math.random();const k=force?force:r<.3?'dopalka':r<.45?'kamizelka':r<.57?'folia':r<.67?'energetyk':r<.77?'magnes':r<.87?'klapki':'drugie_sniadanie';G_.items.push({x,y,vy:-3,bounce:true,k});}
+function dropItem(x,y,force){const r=Math.random();const k=force?force:r<.3?'dopalka':r<.45?'kamizelka':r<.57?'folia':r<.67?'energetyk':r<.77?'magnes':r<.87?'klapki':r<.94?'drugie_sniadanie':'kebab';G_.items.push({x,y,vy:-3,bounce:true,k});}
 function collect(k){const g=G_;S.pick();
-  const L={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA · -50% OBRAŻEŃ',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPKI KUBOTA',drugie_sniadanie:'DRUGIE ŚNIADANIE · +40 HP'};
+  const L={dopalka:'DOPAŁKA',kamizelka:'KAMIZELKA · -50% OBRAŻEŃ',folia:'FOLIA ALUMINIOWA',energetyk:'ENERGETYK',magnes:'MAGNES Z LODÓWKI',klapki:'KLAPECZKI WIPMENY',drugie_sniadanie:'KANAPKA Z JAJCUSZKIEM · +40 HP',kebab:'KEBAB MIESZANY · +40 HP'};
+  // nadwyżka: bonus, którego już nie da się wzmocnić, zamienia się w trochę ulta (+ złotówki) zamiast przepadać
+  const food=k==='drugie_sniadanie'||k==='kebab';
+  const extra=(k==='dopalka'&&g.wl>=3)?20:((k==='magnes'&&g.magnet)||(k==='klapki'&&g.fast))?10:(food&&g.hp>=100)?10:0;
+  if(extra){addUlt(extra);g.coins+=3;S.coin();msgShow(L[k].split(' · ')[0]+' · NADWYŻKA: +'+extra+'% ULT, +3 ZŁ',90);return;}
   if(k==='dopalka'){g.wl=Math.min(3,g.wl+1);}else if(k==='kamizelka')g.armor=4;else if(k==='folia')g.barrier=600;else if(k==='energetyk')addUlt(50);
-  else if(k==='magnes')g.magnet=true;else if(k==='klapki')g.fast=true;else if(k==='drugie_sniadanie')g.hp=Math.min(100,g.hp+40);
+  else if(k==='magnes')g.magnet=true;else if(k==='klapki')g.fast=true;else if(food)g.hp=Math.min(100,g.hp+40);
   msgShow(L[k]+(k==='dopalka'?' · BROŃ POZ. '+g.wl:''),80);}
 function muzzle(){const P=G_.P,M=META(P.anim);let lx,ly;if(P.anim==='jump'){lx=FW/2+18;ly=FW-36;}else{const q=M.muz[P.fr]||M.muz[0];lx=q[0];ly=q[1];}
   return{x:P.x+(lx-(FW/2-4))*P.face,y:P.y-(FW-1-ly)};}

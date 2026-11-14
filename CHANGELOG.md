@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.16.0] — 2026-11-14
+### Dodane
+- Nowa znajdźka **Kebab Mieszany** (+40 HP, jak kanapka).
+- Nadwyżka znajdziek nie przepada, tylko zamienia się w mały bonus (+3 zł):
+  dopałka przy broni poz. 3 → +20% ulta; magnes / klapeczki, gdy już działają → +10% ulta; jedzenie przy pełnym HP → +10% ulta.
+  W trakcie ulta nadwyżka nie ładuje paska (jak wszystko inne).
+### Zmienione
+- Klapki Kubota → **Klapeczki Wipmeny**, Drugie śniadanie → **Kanapka z Jajcuszkiem** (nowa ikonka z jajkiem).
+
 ## [0.15.7] — 2026-11-14
 ### Poprawione
 - Ciszej buczenie plazmowego promienia Łysej (~3× ciszej).
@@ -164,7 +173,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.15.7...HEAD
+[Unreleased]: ../../compare/v0.16.0...HEAD
+[0.16.0]: ../../releases/tag/v0.16.0
 [0.15.7]: ../../releases/tag/v0.15.7
 [0.15.6]: ../../releases/tag/v0.15.6
 [0.15.5]: ../../releases/tag/v0.15.5

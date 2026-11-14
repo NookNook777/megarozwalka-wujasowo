@@ -22,5 +22,9 @@
   "marewik_stand": "e001c910-c28c-4bcf-b319-261c7d07c130",
   "lysa_stand": "a3cbfdc0-761d-4516-8de3-47d2902752bf",
   "boss_brs": "610c91e4-31a9-4eff-a287-c797a59f35ad"
+ },
+ "pickups": {
+  "kebab": "dea0e4ae-8649-4170-9048-4d0a1573ac91",
+  "kanapka_z_jajcuszkiem": "d02b354a-16e9-4640-a931-12eb55472a2f"
  }
 }
