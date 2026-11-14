@@ -26,7 +26,7 @@ function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins
   const x=c2?CP2+30:c1?CPX+30:120;g.P.x=x;g.camX=Math.max(0,x-256);g.cpDone=c1||c2;g.cp2Done=c2;
   g.en=g.en.filter(e=>e.x>x+80);g.barrels=g.barrels.filter(b=>b.x>x);for(const c of g.caps)if(c.x<x)c.spawned=true;g.coinsL=g.coinsL.filter(c=>c.x>x);
   msgShow(c2?'DRUGIE PODEJŚCIE DO B.R.S!':'WRACAMY DO AKCJI!',100);}
-function msgShow(m,t){G_.msg=m;G_.msgT=t||90;}
+function msgShow(m,t,sub){G_.msg=m;G_.msg2=sub||'';G_.msgT=t||90;}
 const META=k=>A.heroes[G_.hero].meta[k];
 function groundAt(x,py,y,drop){if(!isPit(x)&&py<=G+.5&&y>=G)return G;if(!drop)for(const p of plats){if(x>=p.x+4&&x<=p.x+PLW-4&&py<=p.y+.5&&y>=p.y)return p.y;}return null;}
 function onPlatY(P){let best=null;if(!isPit(P.x)&&P.y<=G+1)best=G;for(const p of plats){if(P.x>=p.x+4&&P.x<=p.x+PLW-4&&P.y<=p.y+1&&(best===null||p.y<best))best=p.y;}return best;}

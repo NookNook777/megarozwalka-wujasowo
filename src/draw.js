@@ -55,8 +55,7 @@ function draw(){
     if((bs.st==='whistle'||bs.st==='stagger')&&!bs.dead&&!bs.talk&&(g.t>>3)&1){ctx.font='8px "Press Start 2P",monospace';sh('▼ GŁOWA!',bmx(bs,bs.x+83),G-212,'#ffd040','center');}}
   const coin=PU.zlotowka;for(const c of g.coinsL){if(c.got)continue;ctx.drawImage(coin,Math.round(c.x-8),Math.round(c.y-8));}
   for(const it of g.items){const p=PU[it.k];ctx.drawImage(p,Math.round(it.x-12),Math.round(it.y-24+Math.sin(g.t*.1)*1.5));}
-  for(const c of g.capsA){const p=PU.kapsula;const pl=.5+.5*Math.sin(g.t*.2);ctx.fillStyle=`rgba(255,208,64,${.18+.22*pl})`;ctx.beginPath();ctx.ellipse(Math.round(c.x),Math.round(c.y),26+pl*3,16+pl*2,0,0,6.3);ctx.fill();
-    ctx.drawImage(p,Math.round(c.x-20),Math.round(c.y-12));ctx.font='8px "Press Start 2P",monospace';sh('?',Math.round(c.x),Math.round(c.y-16-pl*2),'#ffd040','center');}
+  for(const c of g.capsA){const p=PU.kapsula;const pl=.5+.5*Math.sin(g.t*.2);ctx.drawImage(p,Math.round(c.x-20),Math.round(c.y-12));ctx.font='8px "Press Start 2P",monospace';sh('?',Math.round(c.x),Math.round(c.y-16-pl*2),'#ffd040','center');}
   if(g.gren&&UP.gr.complete){ctx.save();ctx.translate(Math.round(g.gren.x),Math.round(g.gren.y));ctx.rotate(g.gren.t*.4);ctx.drawImage(UP.gr,-8,-8);ctx.restore();
     if((g.t>>1)&1){ctx.fillStyle='rgba(255,255,200,.5)';ctx.fillRect(Math.round(g.gren.x)-10,Math.round(g.gren.y)-1,20,2);ctx.fillRect(Math.round(g.gren.x)-1,Math.round(g.gren.y)-10,2,20);}}
   // player
@@ -102,7 +101,7 @@ function draw(){
   if(g.ult>=100)sh('C!',W/2+86,6,'#fff');
   if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
     const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
-  if(g.msgT>0&&state!=='win'&&state!=='dialog'){ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}
+  if(g.msgT>0&&state!=='win'&&state!=='dialog'){if(g.msg2){ctx.font='12px "Press Start 2P",monospace';const w1=ctx.measureText(g.msg).width;ctx.font='8px "Press Start 2P",monospace';const w2=ctx.measureText(g.msg2).width,bw=Math.max(w1,w2)+24;ctx.fillStyle='rgba(6,4,12,.6)';ctx.fillRect(Math.round(W/2-bw/2),82,Math.round(bw),42);ctx.font='12px "Press Start 2P",monospace';sh(g.msg,W/2,98,'#ffd040','center');ctx.font='8px "Press Start 2P",monospace';sh(g.msg2,W/2,116,'#fff3dc','center');}else{ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}}
   if(state==='pause'){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('PAUZA',W/2,140,'#fff','center');ctx.font='8px "Press Start 2P",monospace';sh('Enter / Esc: wróć do gry',W/2,176,'#c8c0d8','center');}
   if(state==='win')drawVictory(g);
   if(state==='over'){ctx.fillStyle=`rgba(0,0,0,${Math.min(.7,g.t/40)})`;ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('GAME OVER',W/2,130,'#ff3a5a','center');

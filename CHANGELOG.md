@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.1] — 2026-11-14
+### Zmienione
+- Napisy po podniesieniu znajdźki w dwóch linijkach na półprzezroczystym tle: większa nazwa u góry, pod nią krótko co robi
+  (np. „KAMIZELKA” / „-50% OBRAŻEŃ · 4 TRAFIENIA”, „DOPAŁKA” / „BROŃ POZIOM 2”, „FOLIA ALUMINIOWA” / „TARCZA NA 10 S”).
+- Latające kapsuły bez złotej poświaty (został mały „?”).
+
 ## [0.17.0] — 2026-11-14
 ### Dodane
 - Scenka dialogowa przed walką z B.R.S w stylu starych j-rpg: ramka z portretem, imię, tekst pisany literka po literce z „pikaniem”.
@@ -183,7 +189,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.0...HEAD
+[Unreleased]: ../../compare/v0.17.1...HEAD
+[0.17.1]: ../../releases/tag/v0.17.1
 [0.17.0]: ../../releases/tag/v0.17.0
 [0.16.0]: ../../releases/tag/v0.16.0
 [0.15.7]: ../../releases/tag/v0.15.7
