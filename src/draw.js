@@ -22,7 +22,7 @@ function draw(){
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
   ctx.save();ctx.translate(sx0,0);
-  layer(IM.far,.25,g.camX);layer(IM.wall,.6,g.camX);
+  layer(IM.far,.25,g.camX);layer(IM.wall,.6,g.camX);plinth(g.camX*.6);
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;
@@ -138,7 +138,7 @@ function skullBubble(x,y,pop,t){const bob=Math.round(Math.sin(t*.12)*2);y+=bob-M
 let PITGR=null;
 function drawPitCol(x,tx,t,lp,rp){
   if(!PITGR){PITGR=ctx.createLinearGradient(0,G,0,H);PITGR.addColorStop(0,'#000');PITGR.addColorStop(.55,'#04140a');PITGR.addColorStop(1,'#1d6a16');}
-  ctx.fillStyle=PITGR;ctx.fillRect(x,G-2,32,H-G+2);
+  ctx.fillStyle=PITGR;ctx.fillRect(x,G,32,H-G);
   // ślim na dnie — falująca powierzchnia
   const sy=H-22;
   for(let i=0;i<32;i+=2){const w=Math.round(Math.sin((x+i)*.18+t*.08)*2);ctx.fillStyle='#3cc42a';ctx.fillRect(x+i,sy+w,2,H-sy-w);ctx.fillStyle='#9aff5a';ctx.fillRect(x+i,sy+w,2,2);}
@@ -154,3 +154,8 @@ function pitEdge(ex,dir){const o=dir>0?0:-1;
   ctx.fillStyle='#55555e';ctx.fillRect(ex+(dir>0?4:-5),G+3,1,H-G);    // światło na krawędzi
   ctx.fillStyle='#8a8a94';ctx.fillRect(ex+(dir>0?0:-5),G,5,2);         // obłamany brzeg płyty
   ctx.fillStyle='#6a6a74';ctx.fillRect(ex+(dir>0?0:-5),G+2,5,1);}
+
+/* cokół: domyka dół ściany tła do linii podłogi (ściana kończy się 6 px nad ziemią, widać to nad dziurami) */
+function plinth(ox){const y0=G-12;ctx.fillStyle='#1b241e';ctx.fillRect(0,y0,W,G-y0+1);ctx.fillStyle='#2f3d33';ctx.fillRect(0,y0,W,2);
+  ctx.fillStyle='#121915';const o=-Math.floor(ox%40);for(let x=o;x<W;x+=40){ctx.fillRect(x,y0+2,1,G-y0-2);ctx.fillRect(x+20,y0+7,1,G-y0-7);}
+  ctx.fillRect(0,y0+7,W,1);}
