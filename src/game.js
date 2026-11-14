@@ -107,7 +107,7 @@ function update(){
     if(!it.dead&&Math.abs(it.x-P.x)<20&&it.y>P.y-70&&it.y<P.y+8){it.dead=1;collect(it.k);}}
   g.items=g.items.filter(i=>!i.dead);
   // coins
-  for(const c of g.coinsL){if(c.got)continue;if(c.vy!==undefined){c.vy=Math.min(6,c.vy+.25);const yy=c.y+c.vy;const gy=groundAt(c.x,c.y,yy,false);if(gy!==null&&c.vy>0){c.y=gy-6;c.vy=0;c.vx=0;}else{c.y=yy;c.x+=c.vx||0;}}
+  for(const c of g.coinsL){if(c.got)continue;if(c.vy!==undefined&&!c.rest){c.vy=Math.min(6,c.vy+.25);const yy=c.y+c.vy;const gy=groundAt(c.x,c.y,yy,false);if(gy!==null&&c.vy>0){c.y=gy-6;c.vy=0;c.vx=0;c.rest=1;}else{c.y=yy;c.x+=c.vx||0;}}
     const dx=P.x-c.x,dy=(P.y-34)-c.y,d=Math.hypot(dx,dy);
     if(g.magnet&&d<170){c.x+=dx/d*4;c.y+=dy/d*4;}
     if(Math.abs(dx)<18&&c.y>P.y-72&&c.y<P.y+6){c.got=true;g.coins++;S.coin();}}

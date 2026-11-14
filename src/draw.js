@@ -51,7 +51,7 @@ function draw(){
     if(!bs.dead&&bs.active){drawArm(bs,false,g.t);drawArm(bs,true,g.t);}
     if(bs.talk&&!bs.dead){const pop=Math.min(1,(150-bs.talk.t)/6),bx=Math.round(bs.x+60-cx),by=Math.round(G-200+bs.yo);ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.translate(bx,by);ctx.scale(pop,pop);ctx.translate(-bx,-by);bubble(bs.talk.txt,bx,by,'spike','#ff5ad0');ctx.restore();}
     if((bs.st==='whistle'||bs.st==='stagger')&&!bs.dead&&!bs.talk&&(g.t>>3)&1){ctx.font='8px "Press Start 2P",monospace';sh('▼ GŁOWA!',bs.x+86,G-212,'#ffd040','center');}}
-  const coin=PU.zlotowka;for(const c of g.coinsL){if(c.got)continue;const bob=c.vy===undefined?Math.round(Math.sin((g.t+c.x)*.08)*2):0;ctx.drawImage(coin,Math.round(c.x-8),Math.round(c.y-8+bob));}
+  const coin=PU.zlotowka;for(const c of g.coinsL){if(c.got)continue;ctx.drawImage(coin,Math.round(c.x-8),Math.round(c.y-8));}
   for(const it of g.items){const p=PU[it.k];ctx.drawImage(p,Math.round(it.x-12),Math.round(it.y-24+Math.sin(g.t*.1)*1.5));}
   for(const c of g.capsA){const p=PU.kapsula;ctx.drawImage(p,Math.round(c.x-20),Math.round(c.y-12));}
   if(g.gren&&UP.gr.complete){ctx.save();ctx.translate(Math.round(g.gren.x),Math.round(g.gren.y));ctx.rotate(g.gren.t*.4);ctx.drawImage(UP.gr,-8,-8);ctx.restore();
