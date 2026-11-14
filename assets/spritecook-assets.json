@@ -12,8 +12,9 @@
   },
   "lysa": {
    "base_upload": "1d992375-98e8-4c89-b88f-2c390b2b1387",
-   "pose_asset_id": "9addb555-fa95-49b0-af78-4156123a4775",
-   "anim_asset_id": "bd574f08-c798-4113-9df4-262e5f731bec"
+   "front_pose_hi": "1a3ca3a3-3510-40e5-aa59-398752653eb8",
+   "pose_asset_id": "83057ce1-5ec3-4918-858c-372dee8285d5",
+   "anim_asset_id": "7cbc5c2a-9382-4730-af4a-d781e4b5ecce"
   }
  },
  "base": {

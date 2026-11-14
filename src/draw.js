@@ -170,6 +170,7 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   ctx.fillStyle='rgba(255,220,140,.18)';ctx.beginPath();ctx.ellipse(cx,fy+2,62,9,0,0,6.3);ctx.fill();ctx.fillStyle='rgba(0,0,0,.5)';ctx.beginPath();ctx.ellipse(cx,fy+1,34,5,0,0,6.3);ctx.fill();
   const S2=2,f=Math.floor(t/8)%M.n,x0=Math.round(cx-M.fw*S2/2),y0=fy-M.fh*S2+2;
   if(im.complete)ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw*S2,M.fh*S2);
+  {const ga=ctx.globalAlpha;drawHeart(M,t,x0,y0,S2,1);ctx.globalAlpha=ga;}
   if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0]*S2,fy2=y0+M.flash[1]*S2,ph=(t%8);const r=6+ph*3;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy2,r,0,6.3);ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(fx-r*2.2,fy2-1,r*4.4,3);ctx.fillRect(fx-1,fy2-r*2.2,3,r*4.4);if(ph===0){ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(0,0,W,H);}}
   ctx.font='14px "Press Start 2P",monospace';sh('PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
@@ -177,6 +178,13 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   sh('Zebrane złotówki: '+g.coins,W/2,290,'#fff','center');if(t>60&&(t>>4)&1)sh('Enter: wróć do menu',W/2,316,'#c8c0d8','center');ctx.globalAlpha=1;}
 
 function drawTaunt(g,P){const k=g.hero,M=A.heroes[k].meta.victory,im=HS[k].victory;if(!im.complete)return;const f=Math.min(M.n-1,Math.floor((TAUNT_T-P.taunt)/8));
-  ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);const x0=-Math.round(M.fw/2),y0=-M.fh+2;ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw,M.fh);
+  ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);const x0=-Math.round(M.fw/2),y0=-M.fh+2;ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw,M.fh);drawHeart(M,TAUNT_T-P.taunt,x0,y0,1,1);
   if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0],fy=y0+M.flash[1],r=3+(P.taunt%8)*1.5;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy,r,0,6.3);ctx.fill();ctx.fillRect(fx-r*2,fy-.5,r*4,1.5);ctx.fillRect(fx-.5,fy-r*2,1.5,r*4);}
   ctx.restore();}
+
+/* serduszko z buziaka Łysej (pixel-art rysowany w kodzie): wylatuje z dłoni w klatce M.heart[2] i odlatuje w górę */
+const HEART=['.##.##.','#######','#######','.#####.','..###..','...#...'];
+function drawHeart(M,tick,x0,y0,sc,dir){if(!M.heart)return;const L=M.n*8,age=((tick-M.heart[2]*8)%L+L)%L;if(age>=34)return;
+  const hx=x0+(M.heart[0]+age*.25*dir)*sc,hy=y0+(M.heart[1]-age*.7)*sc,p=Math.max(1,Math.round(sc*(age<4?.6:1)));ctx.globalAlpha*=age>22?(34-age)/12:1;
+  for(let r=0;r<HEART.length;r++)for(let c=0;c<7;c++)if(HEART[r][c]==='#'){ctx.fillStyle=r===0&&c<3?'#ffc0e0':'#ff4a9a';ctx.fillRect(Math.round(hx+(c-3)*p),Math.round(hy+r*p),p,p);}
+  ctx.globalAlpha=1;}
