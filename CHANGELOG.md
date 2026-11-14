@@ -8,6 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.0] — 2026-11-14
+### Dodane
+- Scenka dialogowa przed walką z B.R.S w stylu starych j-rpg: ramka z portretem, imię, tekst pisany literka po literce z „pikaniem”.
+  Osobny dialog dla każdego bohatera. Dalej: Z / X / C / Enter (pierwsze wciśnięcie dokańcza linijkę). Przy ponownym podejściu z checkpointu scenka się nie powtarza.
+- B.R.S potrafi się odwrócić — można przebiec pod nim, kiedy wyskakuje w górę (skok z falą uderzeniową), a on obraca się w stronę gracza
+  (ramiona, pociski i trafienia działają w obie strony; napis DI.WA zostaje czytelny).
+### Zmienione
+- B.R.S skraca dystans stopniowo: zaczyna przy prawej stronie areny i z czasem walki podchodzi coraz bliżej (w fazach 2–3 szybciej).
+- Walka zaczyna się dopiero po wejściu na arenę (boss i bohater od razu są na ekranie).
+
 ## [0.16.0] — 2026-11-14
 ### Dodane
 - Nowa znajdźka **Kebab Mieszany** (+40 HP, jak kanapka).
@@ -173,7 +183,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.16.0...HEAD
+[Unreleased]: ../../compare/v0.17.0...HEAD
+[0.17.0]: ../../releases/tag/v0.17.0
 [0.16.0]: ../../releases/tag/v0.16.0
 [0.15.7]: ../../releases/tag/v0.15.7
 [0.15.6]: ../../releases/tag/v0.15.6

@@ -46,11 +46,13 @@ function draw(){
     else if(bs.st==='leap'){an='walk';f=bs.stT<30?0:4;}
     else{an='whistle';f=Math.floor(bs.stT/6)%6;}
     const M=BAk[an],im=BA[an];ctx.save();if(bs.flash&1)ctx.filter='brightness(2.5)';if(bs.dead&&bs.t>130)ctx.globalAlpha=Math.max(0,1-(bs.t-130)/40);
+    if((bs.face||-1)>0){const c=Math.round(bs.x+86);ctx.translate(c,0);ctx.scale(-1,1);ctx.translate(-c,0);}
     if(im.complete){const jx=bs.st==='whistle'&&!bs.dead?Math.round(Math.random()*2-1):0;ctx.drawImage(im,f*192,0,192,192,Math.round(bs.x+M.ox+jx),Math.round(G-167+M.oy+bs.yo),192,192);}
+    if((bs.face||-1)>0&&im.complete&&!bs.dead){/* napis DI.WA nie może być lustrzany: dorysuj go z powrotem normalnie */const sx=f*192+88,sy=98,sw=52,sh2=28,wx=Math.round(bs.x+M.ox)+88,wy=Math.round(G-167+M.oy+bs.yo)+sy;const c=Math.round(bs.x+86);ctx.translate(c,0);ctx.scale(-1,1);ctx.translate(-c,0);ctx.drawImage(im,sx,sy,sw,sh2,2*c-wx-sw,wy,sw,sh2);}
     ctx.restore();
     if(!bs.dead&&bs.active){drawArm(bs,false,g.t);drawArm(bs,true,g.t);}
     if(bs.talk&&!bs.dead){const pop=Math.min(1,(150-bs.talk.t)/6),bx=Math.round(bs.x+60-cx),by=Math.round(G-200+bs.yo);ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.translate(bx,by);ctx.scale(pop,pop);ctx.translate(-bx,-by);bubble(bs.talk.txt,bx,by,'spike','#ff5ad0');ctx.restore();}
-    if((bs.st==='whistle'||bs.st==='stagger')&&!bs.dead&&!bs.talk&&(g.t>>3)&1){ctx.font='8px "Press Start 2P",monospace';sh('▼ GŁOWA!',bs.x+86,G-212,'#ffd040','center');}}
+    if((bs.st==='whistle'||bs.st==='stagger')&&!bs.dead&&!bs.talk&&(g.t>>3)&1){ctx.font='8px "Press Start 2P",monospace';sh('▼ GŁOWA!',bmx(bs,bs.x+83),G-212,'#ffd040','center');}}
   const coin=PU.zlotowka;for(const c of g.coinsL){if(c.got)continue;ctx.drawImage(coin,Math.round(c.x-8),Math.round(c.y-8));}
   for(const it of g.items){const p=PU[it.k];ctx.drawImage(p,Math.round(it.x-12),Math.round(it.y-24+Math.sin(g.t*.1)*1.5));}
   for(const c of g.capsA){const p=PU.kapsula;const pl=.5+.5*Math.sin(g.t*.2);ctx.fillStyle=`rgba(255,208,64,${.18+.22*pl})`;ctx.beginPath();ctx.ellipse(Math.round(c.x),Math.round(c.y),26+pl*3,16+pl*2,0,0,6.3);ctx.fill();
@@ -82,6 +84,7 @@ function draw(){
   drawDnum();
   ctx.restore();ctx.restore();
   if(state==='ultcut')drawCut();
+  if(state==='dialog')drawDialog();
   if(g.flash>0){ctx.fillStyle=`rgba(255,255,255,${g.flash/14})`;ctx.fillRect(0,0,W,H);}
   // HUD
   ctx.font='8px "Press Start 2P",monospace';ctx.textBaseline='top';
@@ -99,7 +102,7 @@ function draw(){
   if(g.ult>=100)sh('C!',W/2+86,6,'#fff');
   if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
     const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
-  if(g.msgT>0&&state!=='win'){ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}
+  if(g.msgT>0&&state!=='win'&&state!=='dialog'){ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}
   if(state==='pause'){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('PAUZA',W/2,140,'#fff','center');ctx.font='8px "Press Start 2P",monospace';sh('Enter / Esc: wróć do gry',W/2,176,'#c8c0d8','center');}
   if(state==='win')drawVictory(g);
   if(state==='over'){ctx.fillStyle=`rgba(0,0,0,${Math.min(.7,g.t/40)})`;ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('GAME OVER',W/2,130,'#ff3a5a','center');
@@ -189,3 +192,20 @@ function drawHeart(M,tick,x0,y0,sc,dir){if(!M.heart)return;const L=M.n*8,age=((t
   const hx=x0+(M.heart[0]+age*.25*dir)*sc,hy=y0+(M.heart[1]-age*.7)*sc,p=Math.max(1,Math.round(sc*(age<4?.6:1)));ctx.globalAlpha*=age>22?(34-age)/12:1;
   for(let r=0;r<HEART.length;r++)for(let c=0;c<7;c++)if(HEART[r][c]==='#'){ctx.fillStyle=r===0&&c<3?'#ffc0e0':'#ff4a9a';ctx.fillRect(Math.round(hx+(c-3)*p),Math.round(hy+r*p),p,p);}
   ctx.globalAlpha=1;}
+
+const PORT={};
+function wrapText(t,maxW){const w=t.split(' '),lines=[];let cur='';for(const x of w){const tr=cur?cur+' '+x:x;if(ctx.measureText(tr).width>maxW&&cur){lines.push(cur);cur=x;}else cur=tr;}if(cur)lines.push(cur);return lines;}
+function drawDialog(){const g=G_,d=g.dlg;if(!d)return;const L=DIALOG[g.hero],[who,txt]=L[d.i];const shown=txt.slice(0,Math.floor(d.t*1.2));
+  ctx.setTransform(1,0,0,1,0,0);
+  // przyciemnienie + pasy kinowe
+  ctx.fillStyle='rgba(0,0,0,.25)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#000';ctx.fillRect(0,0,W,22);
+  const bx=14,by=H-96,bw=W-28,bh=84;
+  ctx.fillStyle='#0b0a18';ctx.fillRect(bx,by,bw,bh);ctx.strokeStyle='#fff3dc';ctx.lineWidth=2;ctx.strokeRect(bx+1,by+1,bw-2,bh-2);ctx.strokeStyle='#4a3f7a';ctx.strokeRect(bx+5,by+5,bw-10,bh-10);
+  // portret
+  const px=bx+12,py=by+12,ps=60;ctx.fillStyle='#1c1830';ctx.fillRect(px,py,ps,ps);ctx.strokeStyle=who==='brs'?'#ff5ad0':HEROES[g.hero].c;ctx.strokeRect(px-1,py-1,ps+2,ps+2);
+  if(who==='brs'){const im=BA.walk;if(im.complete){ctx.save();ctx.beginPath();ctx.rect(px,py,ps,ps);ctx.clip();ctx.drawImage(im,78,30,52,52,px+((d.t>>4)&1?0:0),py+2,ps,ps);ctx.restore();}}
+  else{let im=PORT[g.hero];if(!im){im=PORT[g.hero]=new Image();im.src=A.por[g.hero];}if(im.complete)ctx.drawImage(im,px,py,ps,ps);}
+  const name=who==='brs'?'AGENT B.R.S':HEROES[g.hero].name;ctx.font='8px "Press Start 2P",monospace';sh(name,px+ps+14,by+20,who==='brs'?'#ff8ad0':HEROES[g.hero].c);
+  ctx.font='10px "Press Start 2P",monospace';const lines=wrapText(shown,bw-ps-48);lines.forEach((l,i)=>sh(l,px+ps+14,by+40+i*16,'#fff3dc'));
+  if(shown.length>=txt.length&&(g.t>>4)&1){ctx.font='8px "Press Start 2P",monospace';sh('▶',bx+bw-20,by+bh-14,'#ffd040');}
+  ctx.font='7px "Press Start 2P",monospace';sh((d.i+1)+'/'+L.length,bx+bw-40,by+20,'#6a628a');}

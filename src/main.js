@@ -4,7 +4,7 @@
 let st=0,acc=0,last=performance.now();
 function frame(now){acc+=Math.min(100,now-last);last=now;
   while(acc>=1000/60){acc-=1000/60;st++;
-    if(state==='play'||state==='pause'||state==='win'||state==='over'||state==='ultcut'){update();}
+    if(state==='play'||state==='pause'||state==='win'||state==='over'||state==='ultcut'||state==='dialog'){update();}
     else poll();
     if(state==='select'){idleCv.forEach((c,i)=>{if(st%2)return;const k=ORDER[i],g2=c.getContext('2d'),o=A.heroes[k].meta.idle.order,sp=i===ssel?5:8,f=o[Math.floor(st/2/sp)%o.length];g2.imageSmoothingEnabled=false;g2.clearRect(0,0,96,96);if(HS[k].idle.complete)g2.drawImage(HS[k].idle,f*96,0,96,96,0,0,96,96);});}}
   draw();requestAnimationFrame(frame);}

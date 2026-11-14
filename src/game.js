@@ -22,7 +22,7 @@ function startGame(k){
   row(260,G-30,5);row(580,170,5);row(1050,G-60,6);row(1725,184,5);row(2255,166,5);row(2445,110,5);row(2760,G-30,6);row(3000,G-70,5);
   msgShow(h.name+' W PIWNICY MAREWIKA!',120);
 }
-function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins=o.coins;startGame(k);const g=G_;g.coins=coins;
+function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins=o.coins,ds=o.dialogSeen;startGame(k);const g=G_;g.coins=coins;g.dialogSeen=ds;
   const x=c2?CP2+30:c1?CPX+30:120;g.P.x=x;g.camX=Math.max(0,x-256);g.cpDone=c1||c2;g.cp2Done=c2;
   g.en=g.en.filter(e=>e.x>x+80);g.barrels=g.barrels.filter(b=>b.x>x);for(const c of g.caps)if(c.x<x)c.spawned=true;g.coinsL=g.coinsL.filter(c=>c.x>x);
   msgShow(c2?'DRUGIE PODEJŚCIE DO B.R.S!':'WRACAMY DO AKCJI!',100);}
@@ -43,6 +43,7 @@ function update(){
   if(state==='pause'){if(I.pp)state='play';return;}
   if(state==='win'||state==='over'){for(const p of g.parts){p.x+=p.vx;p.y+=p.vy;p.life--;}g.parts=g.parts.filter(p=>p.life>0);if(g.boss.dead&&g.boss.t<150){g.boss.t++;if(g.boss.t%6===0)boom(g.boss.x+20+Math.random()*140,G-20-Math.random()*140,2);}return;}
   if(state==='ultcut'){updCut();return;}
+  if(state==='dialog'){updDialog();return;}
   if(state!=='play')return;
   if(I.pp){state='pause';return;}
   const P=g.P,h=g.h;
@@ -64,7 +65,7 @@ function update(){
   if(!I.j&&P.vy<-3.5)P.vy=-3.5;
   P.vy=Math.min(9,P.vy+GRAV);
   if(!g.arenaLock&&g.boss.active&&!g.boss.dead&&P.x>ARENA+24)g.arenaLock=true;
-  const py=P.y;P.x=Math.max(g.arenaLock&&!g.boss.dead?ARENA+12:g.camX+12,Math.min((g.boss.dead?LEN:g.boss.x-6)-10,P.x+P.vx));P.y+=P.vy;
+  const py=P.y;P.x=Math.max(g.arenaLock&&!g.boss.dead?ARENA+12:g.camX+12,Math.min(LEN-20,P.x+P.vx));P.y+=P.vy;
   if(P.vy>=0){const gy=groundAt(P.x,py,P.y,P.dropT>0);if(gy!==null){P.y=gy;P.vy=0;P.ground=true;}else P.ground=false;}else P.ground=false;
   if(P.y>H+60){P.x=Math.max(g.camX+80,P.x-160);while(isPit(P.x))P.x+=20;P.y=-20;P.vy=0;if(!killFall())return;P.inv=Math.max(P.inv,120);}
   if(P.inv>0)P.inv--;if(g.barrier>0)g.barrier--;
@@ -97,9 +98,9 @@ function update(){
     if(b.dead)continue;
     for(const c of g.capsA){if(c.dead)continue;if(Math.abs(b.x-c.x)<18&&Math.abs(b.y-c.y)<12){b.dead=1;c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}}
     const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
-      if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>bs.x+48&&b.x<bs.x+118&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
+      if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const HB=bxr(bs,48,118),BB=bxr(bs,34,160);const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>HB[0]&&b.x<HB[1]&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true,b.x,b.y);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)b.dead=1;}
   g.bullets=g.bullets.filter(b=>!b.dead);
   // capsules
@@ -141,7 +142,7 @@ function update(){
     if(e.x<g.camX-120)e.dead=true;}
   // boss
   const bs=g.boss;
-  if(!bs.dead&&P.x>bs.x-560){if(!bs.active){bs.active=true;bs.cd=170;g.banner=110;fiuFiu();msgShow('FIU FIU! AGENT BRS NADCHODZI!',120);}}
+  if(!bs.dead&&!bs.active&&P.x>ARENA+40&&P.ground){if(!g.dialogSeen){startDialog();return;}bossStart();}
   if(g.banner>0)g.banner--;
   if(bs.active&&!bs.dead&&g.banner<=0)bossAI(g,bs,P);
   if(bs.dead&&bs.t<170){bs.t++;if(bs.t%6===0&&bs.t<110){boom(bs.x+20+Math.random()*140,G-20-Math.random()*140,2);}if(bs.t===170){state='win';g.t=0;}}
@@ -173,3 +174,16 @@ function safeHop(x,dir,dist){for(let d=0;d<=dist;d+=6)if(isPit(x+dir*d)||x+dir*d
 
 /* poza zwycięstwa na żądanie (V/T, LB/Select, przycisk ☺): jedna pętla animacji, przerywana ruchem, skokiem, strzałem lub trafieniem */
 const TAUNT_T=40; // ~0,7 s
+
+/* ---------- scenka dialogowa przed walką (styl starych j-rpg) ---------- */
+const DIALOG={
+ l:[['brs','Fiu fiu! A kto to mnie nawiedził?'],['hero','Wiesz kim jestem. Nie świruj pawiana, Brys.'],['brs','Mam wszystko w kajecie.'],['hero','Zaraz ci ten kajet wsadzę w dupę!'],['brs','Próbuj szczęścia, koleżanko!']],
+ b:[['brs','Fiu fiu! A kto to mnie nawiedził?'],['hero','Nie poznajesz mnie, kumplu niemyty?'],['brs','Kiedyś tam coś tam ten... Ale nie wiem w sumie...'],['hero','To ci zara przypomnę. ŁUTUTUTUTU!'],['brs','Próbuj szczęścia. "Kumplu".']],
+ m:[['brs','Fiu fiu! A kto mnie nawiedził?'],['hero','Nie poznajesz, kumplu?'],['brs','Nie.'],['hero','Zaraz se przypomnisz.'],['brs','To pociągnie za sobą cały szereg złych decyzji.']]};
+function startDialog(){const g=G_;state='dialog';g.dlg={i:0,t:0};g.P.vx=0;g.P.anim='idle';g.P.face=1;whistleBlip();}
+function whistleBlip(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+.12);o.frequency.linearRampToValueAtTime(1600,t+.3);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.32);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.35);}
+function bossStart(){const g=G_,bs=g.boss;bs.active=true;bs.cd=170;g.banner=110;fiuFiu();msgShow('FIU FIU! AGENT BRS NADCHODZI!',120);}
+function updDialog(){const g=G_,d=g.dlg,L=DIALOG[g.hero];d.t++;const line=L[d.i][1],shown=Math.floor(d.t*1.2);
+  if(shown<line.length&&d.t%3===0)beep(L[d.i][0]==='brs'?520:760,null,.025,.025,'square');
+  if(I.jp||I.xp||I.pp||(I.f&&!d.held)){if(shown<line.length)d.t=Math.ceil(line.length/1.2)+1;else{d.i++;d.t=0;if(d.i>=L.length){state='play';g.dialogSeen=true;bossStart();return;}}}
+  d.held=I.f;}

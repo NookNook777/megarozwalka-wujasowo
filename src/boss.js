@@ -2,25 +2,29 @@
 /* Agent B.R.S: fazy, ramiona, ataki; ulty, pociski, znajdźki, efekty */
 const BOSS_SEQ=['walk','shoot','walk','lob','walk','whistle'];
 const AF={ax:55,ay:26},AB={ax:46,ay:46};
-function faPos(bs){return{x:bs.x+82,y:G-56+(bs.yo||0)};}
-function baPos(bs){return{x:bs.x+156,y:G-112+(bs.yo||0)};}
+/* B.R.S może się odwrócić (bs.face: -1 = w lewo, domyślnie; 1 = w prawo). Wszystkie pozycje liczone są dla
+   ustawienia w lewo, a bmx() odbija je względem środka bossa. */
+function bmx(bs,x){return (bs.face||-1)<0?x:2*(bs.x+86)-x;}
+function bxr(bs,a,b){const p=bmx(bs,bs.x+a),q=bmx(bs,bs.x+b);return[Math.min(p,q),Math.max(p,q)];}
+function faPos(bs){return{x:bmx(bs,bs.x+82),y:G-56+(bs.yo||0)};}
+function baPos(bs){return{x:bmx(bs,bs.x+156),y:G-112+(bs.yo||0)};}
 function faAng(bs){return -faAng0(bs);}
 function faAng0(bs){const t=bs.fa.t;if(t<0)return Math.sin(bs.stT*.08)*.05;if(t<24)return -0.9*(t/24);if(t<30)return -0.9+1.25*((t-24)/6);if(t<44)return .35-.35*((t-30)/14);return 0;}
 function baAng(bs){const t=bs.ba.t;if(t<0)return Math.sin(bs.stT*.07+1)*.06;if(t<14)return .25*(t/14);if(t<18)return .25-.55*((t-14)/4);return -.3+.3*Math.min(1,(t-18)/14);}
 function armsAI(g,bs,P,enr){if(bs.fa.vul>0)bs.fa.vul--;if(bs.ba.vul>0)bs.ba.vul--;if(bs.st==='whistle'||bs.st==='stagger'||bs.st==='leap')return;
   const fa=bs.fa,ba=bs.ba;
-  if(!fa.dead){if(fa.t>=0){fa.t++;if(fa.t===30){const p=faPos(bs);const fx=p.x-58;g.shake=10;noise(.4,.4,900,60);beep(90,40,.3,.2,'triangle');
+  if(!fa.dead){if(fa.t>=0){fa.t++;if(fa.t===30){const p=faPos(bs);const fx=p.x+(bs.face||-1)*58;g.shake=10;noise(.4,.4,900,60);beep(90,40,.3,.2,'triangle');
         g.eb.push({x:fx,y:G-6,vx:-3.4,vy:0,g:0,r:10,k:'wave',dmg:20,life:140});g.eb.push({x:fx,y:G-6,vx:3.4,vy:0,g:0,r:10,k:'wave',dmg:20,life:60});
         for(let i=0;i<12;i++)g.parts.push({x:fx+(Math.random()-.5)*30,y:G-2,vx:(Math.random()-.5)*3,vy:-Math.random()*3,life:20,c:'#b8b0c0',s:2});}
       if(fa.t>=46){fa.t=-1;fa.vul=70;}}else if(--fa.cd<=0){fa.t=0;fa.vul=0;fa.cd=enr?130:170;beep(200,500,.25,.06,'sawtooth');}}
-  if(!ba.dead){if(ba.t>=0){ba.t++;if(ba.t===16){const p=baPos(bs);const sx=p.x-46,sy=p.y-48,T=54,gg=.22,dx=P.x-sx,dy=(P.y-20)-sy;
+  if(!ba.dead){if(ba.t>=0){ba.t++;if(ba.t===16){const p=baPos(bs);const sx=p.x+(bs.face||-1)*46,sy=p.y-48,T=54,gg=.22,dx=P.x-sx,dy=(P.y-20)-sy;
         g.eb.push({x:sx,y:sy,vx:dx/T,vy:(dy-.5*gg*T*T)/T,g:gg,r:7,k:'bag',dmg:20,rot:0});noise(.2,.25,1200,200);}
       if(ba.t>=34){ba.t=-1;ba.vul=70;}}else if(--ba.cd<=0){ba.t=0;ba.vul=0;ba.cd=enr?100:140;}}}
 function hitArm(a,d,x,y,isFront){const g=G_,bs=g.boss;if(!(a.t>=0||a.vul>0)){for(let i=0;i<3;i++)g.parts.push({x,y,vx:-1-Math.random()*2,vy:(Math.random()-.5)*3,life:8,c:'#d8d8e0',s:1});if((g.t&3)===0)beep(1900,1500,.03,.03,'square');return;}a.hp-=d;a.flash=4;dnum(x,y,d,'#ffb030');beep(700,250,.04,.05);spark(x,y,'#ffd060');
   if(a.hp<=0&&!a.dead){a.dead=true;a.t=-1;boom(x,y,3);S.big();g.shake=12;dmgBoss(12);dropCoins(x,y,6);msgShow(isFront?'PIĘŚĆ ZNISZCZONA!':'MOŹDZIERZ ZNISZCZONY!',90);
     if(bs.fa.dead&&bs.ba.dead){msgShow('B.R.S WPADA W SZAŁ!',100);fiuFiu();}}}
 function drawArm(bs,front,t){const a=front?bs.fa:bs.ba,p=front?faPos(bs):baPos(bs),A2=front?AF:AB,im=UP[front?'arm_front':'arm_back'];if(!im.complete)return;
-  ctx.save();ctx.translate(Math.round(p.x),Math.round(p.y));
+  ctx.save();ctx.translate(Math.round(p.x),Math.round(p.y));if((bs.face||-1)>0)ctx.scale(-1,1);
   if(a.dead){const sw=Math.sin(t*.12)*2;
     // dangling broken cables
     ctx.lineWidth=2;ctx.strokeStyle='#111';ctx.beginPath();ctx.moveTo(-4,4);ctx.quadraticCurveTo(-10,14,-8+sw,24);ctx.stroke();
@@ -39,9 +43,11 @@ function drawArm(bs,front,t){const a=front?bs.fa:bs.ba,p=front?faPos(bs):baPos(b
   if(a.t>=0||a.vul>0){const pulse=.5+.5*Math.sin(t*.4);ctx.fillStyle=`rgba(255,220,60,${.35+.4*pulse})`;ctx.beginPath();ctx.arc(Math.round(p.x),Math.round(p.y),7+pulse*2,0,6.3);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(Math.round(p.x)-1,Math.round(p.y)-1,3,3);}}
 function armHit(bs,b){// returns 'fa'/'ba' if bullet hits a living, currently vulnerable arm (armored arms let bullets through to the body)
   const vuln=a=>a.t>=0||a.vul>0;
-  if(!bs.fa.dead&&vuln(bs.fa)){const p=faPos(bs);const ang=faAng(bs);const fx=p.x-50*Math.cos(ang),fy=p.y-50*Math.sin(ang);
-    if(b.x>Math.min(p.x,fx)-26&&b.x<p.x+6&&b.y>Math.min(p.y,fy)-22&&b.y<Math.max(p.y,fy)+34)return 'fa';}
-  if(!bs.ba.dead&&vuln(bs.ba)){const p=baPos(bs);if(b.x>p.x-52&&b.x<p.x+8&&b.y>p.y-58&&b.y<p.y+6)return 'ba';}
+  const fc=bs.face||-1;
+  if(!bs.fa.dead&&vuln(bs.fa)){const p=faPos(bs);const ang=faAng(bs);const fx=p.x+fc*50*Math.cos(ang),fy=p.y-50*Math.sin(ang);
+    const lo=Math.min(p.x,fx)-(fc<0?26:6),hi=Math.max(p.x,fx)+(fc<0?6:26);
+    if(b.x>lo&&b.x<hi&&b.y>Math.min(p.y,fy)-22&&b.y<Math.max(p.y,fy)+34)return 'fa';}
+  if(!bs.ba.dead&&vuln(bs.ba)){const p=baPos(bs);const lo=fc<0?p.x-52:p.x-8,hi=fc<0?p.x+8:p.x+52;if(b.x>lo&&b.x<hi&&b.y>p.y-58&&b.y<p.y+6)return 'ba';}
   return null;}
 const TALK2=['Moja herbata się nie poddaje!','Zaraz się zagotuję!'],TALK3=['TERAZ SIĘ ZAGOTUJE!','Wrzątek dla wszystkich!'];
 function bossTalk(bs,txt){bs.talk={txt,t:150};}
@@ -54,12 +60,14 @@ function bossAI(g,bs,P){bs.stT++;
   const fast=bs.phase===1?1:bs.phase===2?1.25:1.5;
   if(bs.st==='stagger'){for(let i=0;i<2;i++)if((bs.stT&3)===0)g.parts.push({x:bs.x+40+Math.random()*100,y:G-60-Math.random()*90,vx:(Math.random()-.5)*2,vy:-Math.random()*2,life:16,c:Math.random()<.5?'#ffd060':'#fff',s:1});
     if(bs.stT>=100){bs.st='walk';bs.stT=0;bs.step=0;}}
-  else if(bs.st==='walk'){const want=P.x-(bs.x+86);if(Math.abs(want)>170)bs.dir=want<0?-1:1;else if((bs.stT%60)===0)bs.dir=-bs.dir;bs.x+=.6*fast*bs.dir;if(bs.x<ARENA+140){bs.x=ARENA+140;bs.dir=1;}if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
-  else if(bs.st==='shoot'){const per=Math.round(26/fast),n=bs.phase===1?2:3;const p=bs.stT%per;if(p===Math.round(10/fast)){const sx=bs.x+8,sy=G-96;const tx=P.x,ty=P.y-30;const d=Math.hypot(tx-sx,ty-sy)||1;g.eb.push({x:sx,y:sy,vx:(tx-sx)/d*4.6,vy:(ty-sy)/d*4.6,g:0,r:8,k:'tea',dmg:20});noise(.2,.25,1400,200);beep(220,90,.15,.1,'triangle');g.shake=4;}
+  else if(bs.st==='walk'){const want=P.x-(bs.x+86);if(Math.abs(want)>40&&bs.stT%20===0)bs.face=want<0?-1:1;
+    bs.minX=Math.max(ARENA+140,(bs.minX===undefined?LEN-300:bs.minX)-.09*fast); // stopniowe skracanie dystansu
+    if(Math.abs(want)>170)bs.dir=want<0?-1:1;else if((bs.stT%60)===0)bs.dir=-bs.dir;bs.x+=.6*fast*bs.dir;if(bs.x<bs.minX){bs.x=bs.minX;bs.dir=1;}if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
+  else if(bs.st==='shoot'){const per=Math.round(26/fast),n=bs.phase===1?2:3;const p=bs.stT%per;if(p===Math.round(10/fast)){const sx=bmx(bs,bs.x+8),sy=G-96;const tx=P.x,ty=P.y-30;const d=Math.hypot(tx-sx,ty-sy)||1;g.eb.push({x:sx,y:sy,vx:(tx-sx)/d*4.6,vy:(ty-sy)/d*4.6,g:0,r:8,k:'tea',dmg:20});noise(.2,.25,1400,200);beep(220,90,.15,.1,'triangle');g.shake=4;}
     if(enr&&bs.stT===12&&!bs.ba.dead&&bs.ba.t<0){bs.ba.t=0;}
     if(bs.stT>=per*n)next();}
-  else if(bs.st==='lob'){if(bs.stT===10||(bs.phase>1&&bs.stT===30)){const sx=bs.x+18,sy=G-118;const dx=P.x-sx,t=46;g.eb.push({x:sx,y:sy,vx:dx/t,vy:-5,g:.22,r:7,k:'tea',dmg:15});g.eb.push({x:sx,y:sy,vx:dx/t*.6,vy:-6.5,g:.22,r:7,k:'tea',dmg:15});if(bs.phase>1)g.eb.push({x:sx,y:sy,vx:dx/t*1.3,vy:-4,g:.22,r:7,k:'tea',dmg:15});beep(300,120,.15,.08,'triangle');}
-    if(enr&&bs.stT===20){for(let i=0;i<2;i++)g.en.push({k:'rat',x:bs.x+10-i*16,y:G,vx:0,vy:-3,hp:ET.rat.hp,face:P.x<bs.x?-1:1,chase:true,active:true,t:0,cd:60,at:-1,flash:0,dead:false,ground:false,turnT:0});beep(1200,700,.1,.06);}
+  else if(bs.st==='lob'){if(bs.stT===10||(bs.phase>1&&bs.stT===30)){const sx=bmx(bs,bs.x+18),sy=G-118;const dx=P.x-sx,t=46;g.eb.push({x:sx,y:sy,vx:dx/t,vy:-5,g:.22,r:7,k:'tea',dmg:15});g.eb.push({x:sx,y:sy,vx:dx/t*.6,vy:-6.5,g:.22,r:7,k:'tea',dmg:15});if(bs.phase>1)g.eb.push({x:sx,y:sy,vx:dx/t*1.3,vy:-4,g:.22,r:7,k:'tea',dmg:15});beep(300,120,.15,.08,'triangle');}
+    if(enr&&bs.stT===20){for(let i=0;i<2;i++)g.en.push({k:'rat',x:bmx(bs,bs.x+10-i*16),y:G,vx:0,vy:-3,hp:ET.rat.hp,face:P.x<bs.x+86?-1:1,chase:true,active:true,t:0,cd:60,at:-1,flash:0,dead:false,ground:false,turnT:0});beep(1200,700,.1,.06);}
     if(bs.stT>=48)next();}
   else if(bs.st==='leap'){const T=30;
     if(bs.stT<T){if((bs.stT>>2)&1)bs.flash=1;bs.yo=Math.min(0,Math.sin(bs.stT*.9)*2);}
@@ -145,9 +153,9 @@ function beamTick(g,P){g.beamT=(g.beamT||0)+1;if(g.t%3===0)g.shake=Math.max(g.sh
   for(const br of g.barrels){if(br.dead||br.x<b.lo||br.x>b.hi||!(b.y>br.y-40-R&&b.y<br.y+R))continue;br.hp-=BEAM_EN;br.flash=4;spark(br.x,b.y,'#ff5ad0');if(br.hp<=0){br.dead=true;boom(br.x,br.y-18,2);S.boom();addUlt(8);dropCoins(br.x,br.y-20,3);}}
   for(const e of g.en){if(e.dead||!e.active||e.x<b.lo||e.x>b.hi)continue;const T=ET[e.k];if(b.y>e.y-T.h-R&&b.y<e.y+R){hitEnemy(e,BEAM_EN);spark(e.x,b.y,'#ff5ad0');}}
   const bs=g.boss;if(bs.dead||!bs.active)return;const yo=bs.yo||0;
-  const armIn=(k)=>{const a=bs[k];if(a.dead)return false;const p=k==='fa'?faPos(bs):baPos(bs);const ylo=k==='fa'?p.y-40:p.y-58,yhi=k==='fa'?p.y+34:p.y+6,xc=k==='fa'?p.x-30:p.x-24;return xc>b.lo&&xc<b.hi&&b.y>ylo&&b.y<yhi?xc:false;};
+  const armIn=(k)=>{const a=bs[k];if(a.dead)return false;const p=k==='fa'?faPos(bs):baPos(bs);const ylo=k==='fa'?p.y-40:p.y-58,yhi=k==='fa'?p.y+34:p.y+6,xc=p.x+(bs.face||-1)*(k==='fa'?30:24);return xc>b.lo&&xc<b.hi&&b.y>ylo&&b.y<yhi?xc:false;};
   for(const k of ['fa','ba']){const xc=armIn(k);if(xc!==false){const a=bs[k],v=a.vul;a.vul=Math.max(1,a.vul);hitArm(a,BEAM_ARM,xc,b.y,k==='fa');if(!a.dead)a.vul=v;}}
-  if(bs.x+34<b.hi&&bs.x+160>b.lo&&b.y>G-200+yo&&b.y<G+yo){const hx=P.face>0?Math.max(b.lo,bs.x+40):Math.min(b.hi,bs.x+150);dmgBoss(BEAM_BOSS,false,hx,b.y);spark(hx,b.y,'#fff');spark(hx,b.y,'#ff5ad0');}}
+  const BB=bxr(bs,34,160);if(BB[0]<b.hi&&BB[1]>b.lo&&b.y>G-200+yo&&b.y<G+yo){const hx=P.face>0?Math.max(b.lo,BB[0]+6):Math.min(b.hi,BB[1]-10);dmgBoss(BEAM_BOSS,false,hx,b.y);spark(hx,b.y,'#fff');spark(hx,b.y,'#ff5ad0');}}
 function drawBeam(g,P){const b=beamGeom(g,P),T=g.beamT||0,left=g.ultT;const grow=Math.min(1,T/10),fade=Math.min(1,left/14),k=grow*fade;if(k<=0)return;
   const fl=(g.t&1)?1:0,len=(b.x1-b.x0)*Math.min(1,T/6),x=Math.min(b.x0,b.x0+len),w=Math.abs(len);
   ctx.globalAlpha=.3*k;ctx.fillStyle='#ff5ad0';ctx.fillRect(x,Math.round(b.y-11-fl),w,22+fl*2);
