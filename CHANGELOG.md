@@ -8,6 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.15.7] — 2026-11-14
+### Poprawione
+- Ciszej buczenie plazmowego promienia Łysej (~3× ciszej).
+- Usunięta zdublowana platforma przy x≈6000 (dwie nakładały się na siebie).
+- Arena bossa: po wejściu na arenę ekran się blokuje (jak w Contrze) — nie da się wycofać pod flagę i grać „na snajpera”.
+- B.R.S podchodzi do gracza zamiast stać przy prawej krawędzi i strzelać z daleka.
+- Szczury wzywane gwizdkiem gonią gracza; wszystkie szczury odwracają się w stronę gracza, gdy jest blisko (i nadal nie wskakują do dziur).
+### Zmienione
+- Latające kapsuły z bonusami wyróżnione złotą poświatą i „?” — to znajdźki do zestrzelenia (jak w Contrze), nie bomby.
+
 ## [0.15.6] — 2026-11-14
 ### Zmienione
 - Ujednolicone pozy zwycięstwa: wszystkie trzy robione na klatce idle z gry (sylwetka piksel w piksel ta sama, zmienia się tylko przednia ręka i mimika, 4 klatki, bez przeskoku):
@@ -154,7 +164,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.15.6...HEAD
+[Unreleased]: ../../compare/v0.15.7...HEAD
+[0.15.7]: ../../releases/tag/v0.15.7
 [0.15.6]: ../../releases/tag/v0.15.6
 [0.15.5]: ../../releases/tag/v0.15.5
 [0.15.4]: ../../releases/tag/v0.15.4

@@ -53,7 +53,8 @@ function draw(){
     if((bs.st==='whistle'||bs.st==='stagger')&&!bs.dead&&!bs.talk&&(g.t>>3)&1){ctx.font='8px "Press Start 2P",monospace';sh('▼ GŁOWA!',bs.x+86,G-212,'#ffd040','center');}}
   const coin=PU.zlotowka;for(const c of g.coinsL){if(c.got)continue;ctx.drawImage(coin,Math.round(c.x-8),Math.round(c.y-8));}
   for(const it of g.items){const p=PU[it.k];ctx.drawImage(p,Math.round(it.x-12),Math.round(it.y-24+Math.sin(g.t*.1)*1.5));}
-  for(const c of g.capsA){const p=PU.kapsula;ctx.drawImage(p,Math.round(c.x-20),Math.round(c.y-12));}
+  for(const c of g.capsA){const p=PU.kapsula;const pl=.5+.5*Math.sin(g.t*.2);ctx.fillStyle=`rgba(255,208,64,${.18+.22*pl})`;ctx.beginPath();ctx.ellipse(Math.round(c.x),Math.round(c.y),26+pl*3,16+pl*2,0,0,6.3);ctx.fill();
+    ctx.drawImage(p,Math.round(c.x-20),Math.round(c.y-12));ctx.font='8px "Press Start 2P",monospace';sh('?',Math.round(c.x),Math.round(c.y-16-pl*2),'#ffd040','center');}
   if(g.gren&&UP.gr.complete){ctx.save();ctx.translate(Math.round(g.gren.x),Math.round(g.gren.y));ctx.rotate(g.gren.t*.4);ctx.drawImage(UP.gr,-8,-8);ctx.restore();
     if((g.t>>1)&1){ctx.fillStyle='rgba(255,255,200,.5)';ctx.fillRect(Math.round(g.gren.x)-10,Math.round(g.gren.y)-1,20,2);ctx.fillRect(Math.round(g.gren.x)-1,Math.round(g.gren.y)-10,2,20);}}
   // player

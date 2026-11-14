@@ -54,12 +54,12 @@ function bossAI(g,bs,P){bs.stT++;
   const fast=bs.phase===1?1:bs.phase===2?1.25:1.5;
   if(bs.st==='stagger'){for(let i=0;i<2;i++)if((bs.stT&3)===0)g.parts.push({x:bs.x+40+Math.random()*100,y:G-60-Math.random()*90,vx:(Math.random()-.5)*2,vy:-Math.random()*2,life:16,c:Math.random()<.5?'#ffd060':'#fff',s:1});
     if(bs.stT>=100){bs.st='walk';bs.stT=0;bs.step=0;}}
-  else if(bs.st==='walk'){bs.x+=.6*fast*bs.dir;if(bs.x<ARENA+250){bs.x=ARENA+250;bs.dir=1;}if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
+  else if(bs.st==='walk'){const want=P.x-(bs.x+86);if(Math.abs(want)>170)bs.dir=want<0?-1:1;else if((bs.stT%60)===0)bs.dir=-bs.dir;bs.x+=.6*fast*bs.dir;if(bs.x<ARENA+140){bs.x=ARENA+140;bs.dir=1;}if(bs.x>LEN-180){bs.x=LEN-180;bs.dir=-1;}if(bs.stT>110/fast)next();}
   else if(bs.st==='shoot'){const per=Math.round(26/fast),n=bs.phase===1?2:3;const p=bs.stT%per;if(p===Math.round(10/fast)){const sx=bs.x+8,sy=G-96;const tx=P.x,ty=P.y-30;const d=Math.hypot(tx-sx,ty-sy)||1;g.eb.push({x:sx,y:sy,vx:(tx-sx)/d*4.6,vy:(ty-sy)/d*4.6,g:0,r:8,k:'tea',dmg:20});noise(.2,.25,1400,200);beep(220,90,.15,.1,'triangle');g.shake=4;}
     if(enr&&bs.stT===12&&!bs.ba.dead&&bs.ba.t<0){bs.ba.t=0;}
     if(bs.stT>=per*n)next();}
   else if(bs.st==='lob'){if(bs.stT===10||(bs.phase>1&&bs.stT===30)){const sx=bs.x+18,sy=G-118;const dx=P.x-sx,t=46;g.eb.push({x:sx,y:sy,vx:dx/t,vy:-5,g:.22,r:7,k:'tea',dmg:15});g.eb.push({x:sx,y:sy,vx:dx/t*.6,vy:-6.5,g:.22,r:7,k:'tea',dmg:15});if(bs.phase>1)g.eb.push({x:sx,y:sy,vx:dx/t*1.3,vy:-4,g:.22,r:7,k:'tea',dmg:15});beep(300,120,.15,.08,'triangle');}
-    if(enr&&bs.stT===20){for(let i=0;i<2;i++)g.en.push({k:'rat',x:bs.x+10-i*16,y:G,vx:0,vy:-3,hp:ET.rat.hp,face:-1,active:true,t:0,cd:60,at:-1,flash:0,dead:false,ground:false,turnT:0});beep(1200,700,.1,.06);}
+    if(enr&&bs.stT===20){for(let i=0;i<2;i++)g.en.push({k:'rat',x:bs.x+10-i*16,y:G,vx:0,vy:-3,hp:ET.rat.hp,face:P.x<bs.x?-1:1,chase:true,active:true,t:0,cd:60,at:-1,flash:0,dead:false,ground:false,turnT:0});beep(1200,700,.1,.06);}
     if(bs.stT>=48)next();}
   else if(bs.st==='leap'){const T=30;
     if(bs.stT<T){if((bs.stT>>2)&1)bs.flash=1;bs.yo=Math.min(0,Math.sin(bs.stT*.9)*2);}
@@ -130,7 +130,7 @@ const BEAM_T=240,BEAM_TICK=4,BEAM_BOSS=40/(BEAM_T/BEAM_TICK),BEAM_ARM=.6,BEAM_EN
 let beamOsc=null;
 function beamStart(){const g=G_;g.beamT=0;g.shake=6;if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),o2=ac.createOscillator(),gg=ac.createGain(),lf=ac.createOscillator(),lg=ac.createGain();
   o.type='sawtooth';o.frequency.value=92;o2.type='square';o2.frequency.value=184.7;lf.frequency.value=14;lg.gain.value=18;lf.connect(lg);lg.connect(o.frequency);
-  gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.15);o.connect(gg);o2.connect(gg);gg.connect(ac.destination);[o,o2,lf].forEach(x=>x.start(t));beamOsc={o,o2,lf,gg};}
+  gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.022,t+.15);o.connect(gg);o2.connect(gg);gg.connect(ac.destination);[o,o2,lf].forEach(x=>x.start(t));beamOsc={o,o2,lf,gg};}
 function beamStop(){if(!beamOsc||!ac)return;const t=ac.currentTime,b=beamOsc;b.gg.gain.cancelScheduledValues(t);b.gg.gain.setValueAtTime(b.gg.gain.value,t);b.gg.gain.exponentialRampToValueAtTime(.0001,t+.25);[b.o,b.o2,b.lf].forEach(x=>x.stop(t+.3));beamOsc=null;}
 function beamGeom(g,P){const m=muzzle();const x0=m.x,x1=P.face>0?g.camX+W+4:g.camX-4;return{x0,x1,y:m.y,lo:Math.min(x0,x1),hi:Math.max(x0,x1)};}
 function beamTick(g,P){g.beamT=(g.beamT||0)+1;if(g.t%3===0)g.shake=Math.max(g.shake,2);const b=beamGeom(g,P),tick=g.beamT%BEAM_TICK===0,R=7;

@@ -4,7 +4,7 @@
 const LEN=7500,ARENA=LEN-W,CPX=3700,CP2=ARENA-80;
 const pits=[[900,1000],[1690,1850],[2620,2720],[3300,3410],[4300,4420],[5050,5230],[6050,6150]];
 const isPit=x=>pits.some(p=>x>=p[0]&&x<p[1]);
-const plats=[{x:560,y:200},{x:1705,y:214},{x:2240,y:196},{x:2430,y:140},{x:2610,y:206},{x:3290,y:206},{x:3900,y:200},{x:4180,y:196},{x:4330,y:150},{x:4480,y:204},{x:5070,y:214},{x:5200,y:170},{x:5600,y:196},{x:5790,y:146},{x:5980,y:200},{x:6040,y:206},{x:6500,y:196},{x:LEN-640+24,y:224},{x:LEN-640+168,y:176}];
+const plats=[{x:560,y:200},{x:1705,y:214},{x:2240,y:196},{x:2430,y:140},{x:2610,y:206},{x:3290,y:206},{x:3900,y:200},{x:4180,y:196},{x:4330,y:150},{x:4480,y:204},{x:5070,y:214},{x:5200,y:170},{x:5600,y:196},{x:5790,y:146},{x:5980,y:200},{x:6500,y:196},{x:LEN-640+24,y:224},{x:LEN-640+168,y:176}];
 const PLW=127,PLH=22;
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
@@ -63,7 +63,8 @@ function update(){
   if(P.dropT>0)P.dropT--;
   if(!I.j&&P.vy<-3.5)P.vy=-3.5;
   P.vy=Math.min(9,P.vy+GRAV);
-  const py=P.y;P.x=Math.max(g.camX+12,Math.min((g.boss.dead?LEN:g.boss.x-6)-10,P.x+P.vx));P.y+=P.vy;
+  if(!g.arenaLock&&g.boss.active&&!g.boss.dead&&P.x>ARENA+24)g.arenaLock=true;
+  const py=P.y;P.x=Math.max(g.arenaLock&&!g.boss.dead?ARENA+12:g.camX+12,Math.min((g.boss.dead?LEN:g.boss.x-6)-10,P.x+P.vx));P.y+=P.vy;
   if(P.vy>=0){const gy=groundAt(P.x,py,P.y,P.dropT>0);if(gy!==null){P.y=gy;P.vy=0;P.ground=true;}else P.ground=false;}else P.ground=false;
   if(P.y>H+60){P.x=Math.max(g.camX+80,P.x-160);while(isPit(P.x))P.x+=20;P.y=-20;P.vy=0;if(!killFall())return;P.inv=Math.max(P.inv,120);}
   if(P.inv>0)P.inv--;if(g.barrier>0)g.barrier--;
@@ -121,7 +122,7 @@ function update(){
     if(!e.active){if(e.x<g.camX+W+30){e.active=true;e.face=P.x<e.x?-1:1;}else continue;}
     e.t++;if(e.flash>0)e.flash--;const dx=P.x-e.x;
     if(e.at<0&&e.k!=='rat')e.face=dx<0?-1:1;
-    if(e.k==='rat'){if(e.turnT>0)e.turnT--;if(e.ground&&e.turnT<=0&&(isPit(e.x+e.face*14)||e.x+e.face*14>ARENA-12||e.x+e.face*14<16)){e.face*=-1;e.turnT=20;}if(e.ground&&e.cd<=0&&Math.abs(dx)<70&&Math.sign(dx)===e.face&&safeHop(e.x,e.face,90)){e.vy=-3.6;e.vx=3.8*e.face;e.ground=false;e.cd=90;beep(900,1400,.06,.04);}else if(e.ground)e.vx=2.8*e.face;e.cd--;}
+    if(e.k==='rat'){if(e.turnT>0)e.turnT--;if((e.chase||(Math.abs(dx)<160&&Math.abs(P.y-e.y)<40))&&e.ground&&e.turnT<=0&&Math.abs(dx)>24&&Math.sign(dx)!==e.face&&safeHop(e.x,Math.sign(dx),14)){e.face=Math.sign(dx);e.turnT=14;}if(e.ground&&e.turnT<=0&&(isPit(e.x+e.face*14)||e.x+e.face*14>ARENA-12||e.x+e.face*14<16)){e.face*=-1;e.turnT=20;}if(e.ground&&e.cd<=0&&Math.abs(dx)<70&&Math.sign(dx)===e.face&&safeHop(e.x,e.face,90)){e.vy=-3.6;e.vx=3.8*e.face;e.ground=false;e.cd=90;beep(900,1400,.06,.04);}else if(e.ground)e.vx=2.8*e.face;e.cd--;}
     else if(e.k==='robol'||e.k==='kan'){const near=e.k==='robol'?90:150;e.vx=(e.at<0&&Math.abs(dx)>near)?(e.k==='robol'?.45:.35)*e.face:0;if(e.ground&&isPit(e.x+e.vx*10))e.vx=0;
       if(e.k==='robol'&&!e.seen&&e.x<g.camX+W-16&&e.x>g.camX+16){e.seen=true;e.cd=Math.min(e.cd,8);}
       e.cd--;if(e.cd<=0&&e.at<0&&(e.k==='robol'?(e.x<g.camX+W-16&&e.x>g.camX+16):Math.abs(dx)<340)&&e.x<g.camX+W-10){e.at=0;e.cd=e.k==='robol'?90:100;}
@@ -157,7 +158,7 @@ function update(){
   for(const p of g.parts){p.x+=p.vx;p.y+=p.vy;p.vx*=.93;p.vy=p.vy*.93+.05;p.life--;}g.parts=g.parts.filter(p=>p.life>0);updDnum();
   if(g.puffs){for(const q of g.puffs)q.t++;g.puffs=g.puffs.filter(q=>q.t<14);}
   for(const br of g.barrels)if(br.flash>0)br.flash--;
-  const tgt=Math.min(ARENA,P.x-W*.4);g.camX+=(tgt-g.camX)*.12;g.camX=Math.max(0,Math.min(ARENA,g.camX));
+  const tgt=Math.min(ARENA,P.x-W*.4);g.camX+=(tgt-g.camX)*.12;g.camX=Math.max(0,Math.min(ARENA,g.camX));if(g.arenaLock&&!g.boss.dead)g.camX=ARENA;
   if(bs.active&&!bs.dead){g.camX+=(ARENA-g.camX)*.08;if(Math.abs(ARENA-g.camX)<1)g.camX=ARENA;}
   if(g.msgT>0)g.msgT--;if(g.flash>0)g.flash--;if(g.shake>0)g.shake--;
 }
