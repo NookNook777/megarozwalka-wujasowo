@@ -101,7 +101,7 @@ function draw(){
   if(g.ult>=100)sh('C!',W/2+86,6,'#fff');
   if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
     const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
-  if(g.msgT>0&&state!=='win'&&state!=='dialog'){if(g.msg2){ctx.font='12px "Press Start 2P",monospace';const w1=ctx.measureText(g.msg).width;ctx.font='8px "Press Start 2P",monospace';const w2=ctx.measureText(g.msg2).width,bw=Math.max(w1,w2)+24;ctx.fillStyle='rgba(6,4,12,.6)';ctx.fillRect(Math.round(W/2-bw/2),82,Math.round(bw),42);ctx.font='12px "Press Start 2P",monospace';sh(g.msg,W/2,98,'#ffd040','center');ctx.font='8px "Press Start 2P",monospace';sh(g.msg2,W/2,116,'#fff3dc','center');}else{ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}}
+  if(g.msgT>0&&state!=='win'&&state!=='dialog'){if(g.msg2){ctx.font='12px "Press Start 2P",monospace';shO(g.msg,W/2,98,'#ffd040');ctx.font='8px "Press Start 2P",monospace';shO(g.msg2,W/2,116,'#fff3dc');}else{ctx.font='10px "Press Start 2P",monospace';shO(g.msg,W/2,104,'#ffd040');}}
   if(state==='pause'){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('PAUZA',W/2,140,'#fff','center');ctx.font='8px "Press Start 2P",monospace';sh('Enter / Esc: wróć do gry',W/2,176,'#c8c0d8','center');}
   if(state==='win')drawVictory(g);
   if(state==='over'){ctx.fillStyle=`rgba(0,0,0,${Math.min(.7,g.t/40)})`;ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('GAME OVER',W/2,130,'#ff3a5a','center');
@@ -208,3 +208,7 @@ function drawDialog(){const g=G_,d=g.dlg;if(!d)return;const L=DIALOG[g.hero],[wh
   ctx.font='10px "Press Start 2P",monospace';const lines=wrapText(shown,bw-ps-48);lines.forEach((l,i)=>sh(l,px+ps+14,by+40+i*16,'#fff3dc'));
   if(shown.length>=txt.length&&(g.t>>4)&1){ctx.font='8px "Press Start 2P",monospace';sh('▶',bx+bw-20,by+bh-14,'#ffd040');}
   ctx.font='7px "Press Start 2P",monospace';sh((d.i+1)+'/'+L.length,bx+bw-40,by+20,'#6a628a');}
+
+/* napis z czarnym obrysem i cieniem — czytelny na każdym tle, bez prostokąta pod spodem */
+function shO(t,x,y,c){ctx.textAlign='center';ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillText(t,x+2,y+2);ctx.fillStyle='#0a0610';
+  for(const [dx,dy] of [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[1,-1],[-1,1],[1,1]])ctx.fillText(t,x+dx,y+dy);ctx.fillStyle=c;ctx.fillText(t,x,y);ctx.textAlign='left';}
