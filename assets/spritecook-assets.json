@@ -1,8 +1,20 @@
 {
  "victory": {
-  "badziejek": {"pose_asset_id": "5c716d24-7cde-4ee2-b465-fd8b721aecc7", "anim_asset_id": "0c4d5b39-4a47-4b74-9f75-6584cf8188f2"},
-  "marewik":   {"pose_asset_id": "f41befcd-a77f-4dbe-a112-81faa586dda1", "anim_asset_id": "0d02bc30-c8ef-450f-a9c4-b4af28071fb0"},
-  "lysa":      {"pose_asset_id": "e1da389b-38c8-4a79-b8c8-55dd42000318", "anim_asset_id": "f3a96494-ff2f-45a3-bf92-0bb24eaf3ee9"}
+  "badziejek": {
+   "base_upload": "586273a5-ae2f-4e5d-bcb6-9c2e52e31a46",
+   "pose_asset_id": "d960897a-c24b-4c5c-986a-31c066cf2e56",
+   "anim_asset_id": "2c947992-3e12-4d46-95b1-424ffbcc2564"
+  },
+  "marewik": {
+   "base_upload": "88fc3a67-82c6-4a7a-8165-6553d8c75d1d",
+   "pose_asset_id": "e5ef6505-0ead-438d-9259-775b9526f681",
+   "anim_asset_id": "3e11c1da-77d5-4e66-9582-1cf8d48f20d0"
+  },
+  "lysa": {
+   "base_upload": "1d992375-98e8-4c89-b88f-2c390b2b1387",
+   "pose_asset_id": "9addb555-fa95-49b0-af78-4156123a4775",
+   "anim_asset_id": "bd574f08-c798-4113-9df4-262e5f731bec"
+  }
  },
  "base": {
   "badziejek_hunched": "ee4373fd-07a1-432a-8910-93e3ae4f2efa",
