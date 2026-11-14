@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.7] — 2026-11-14
+### Poprawione
+- Łysa: szara łata między przednią ręką a górą minigunu (resztka szarego tła z generatora animacji uwięziona w zamkniętym obszarze)
+  usunięta z animacji idle, biegu, skoku, strzału, trafienia oraz spod brody w celowaniu w górę. Widoczne m.in. na ekranie wyboru i tytułowym.
+  Poza zwycięstwa Łysej przebudowana z poprawionej klatki.
+### Dodane
+- `tools/fixmatte.py` — czyszczenie uwięzionych łat tła w arkuszach animacji.
+
 ## [0.17.6] — 2026-11-14
 ### Zmienione
 - Okno dialogu z powrotem na dole ekranu, ale niższe i zaczyna się pod linią podłogi — bohater i B.R.S zostają w pełni widoczni.
@@ -213,7 +221,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.6...HEAD
+[Unreleased]: ../../compare/v0.17.7...HEAD
+[0.17.7]: ../../releases/tag/v0.17.7
 [0.17.6]: ../../releases/tag/v0.17.6
 [0.17.5]: ../../releases/tag/v0.17.5
 [0.17.4]: ../../releases/tag/v0.17.4
