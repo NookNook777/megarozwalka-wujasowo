@@ -6,7 +6,7 @@ const img=s=>{const i=new Image();i.src=s;return i;};
 const IM={far:img(A.far),wall:img(A.wall),tiles:img(A.tiles),plat:img(A.plat),boss:img(A.boss)};
 const PR={};for(const k in A.props)PR[k]=img(A.props[k]);
 const PU={};for(const k in A.pu)PU[k]=img(A.pu[k]);
-const HS={};for(const k in A.heroes){HS[k]={};for(const n of ['idle','run','jump','shoot','up','down','hit','die'])HS[k][n]=img(A.heroes[k][n]);}
+const HS={};for(const k in A.heroes){HS[k]={};for(const n of ['idle','run','jump','shoot','up','down','hit','die','victory'])HS[k][n]=img(A.heroes[k][n]);}
 const BUL={};for(const k in A.bul)BUL[k]=img(A.bul[k]);
 const UP={};for(const k in A.ult)UP[k]=img(A.ult[k].img);
 const EN={};for(const k in A.enemies)EN[k]=img(A.enemies[k].img);

@@ -357,6 +357,16 @@ const A={
       7
      ],
      "fw": 128
+    },
+    "victory": {
+     "fw": 64,
+     "fh": 78,
+     "n": 8,
+     "flash": [
+      54,
+      15,
+      3
+     ]
     }
    },
    "idle": "assets/heroes/badziejek/idle.png",
@@ -366,7 +376,8 @@ const A={
    "up": "assets/heroes/badziejek/up.png",
    "down": "assets/heroes/badziejek/down.png",
    "hit": "assets/heroes/badziejek/hit.png",
-   "die": "assets/heroes/badziejek/die.png"
+   "die": "assets/heroes/badziejek/die.png",
+   "victory": "assets/heroes/badziejek/victory.png"
   },
   "m": {
    "meta": {
@@ -709,6 +720,11 @@ const A={
       7
      ],
      "fw": 128
+    },
+    "victory": {
+     "fw": 68,
+     "fh": 78,
+     "n": 8
     }
    },
    "idle": "assets/heroes/marewik/idle.png",
@@ -718,7 +734,8 @@ const A={
    "up": "assets/heroes/marewik/up.png",
    "down": "assets/heroes/marewik/down.png",
    "hit": "assets/heroes/marewik/hit.png",
-   "die": "assets/heroes/marewik/die.png"
+   "die": "assets/heroes/marewik/die.png",
+   "victory": "assets/heroes/marewik/victory.png"
   },
   "l": {
    "meta": {
@@ -1063,6 +1080,11 @@ const A={
       7
      ],
      "fw": 128
+    },
+    "victory": {
+     "fw": 46,
+     "fh": 85,
+     "n": 8
     }
    },
    "idle": "assets/heroes/lysa/idle.png",
@@ -1072,7 +1094,8 @@ const A={
    "up": "assets/heroes/lysa/up.png",
    "down": "assets/heroes/lysa/down.png",
    "hit": "assets/heroes/lysa/hit.png",
-   "die": "assets/heroes/lysa/die.png"
+   "die": "assets/heroes/lysa/die.png",
+   "victory": "assets/heroes/lysa/victory.png"
   }
  },
  "bul": {

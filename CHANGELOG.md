@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.14.0] — 2026-11-14
+### Dodane
+- Pozy zwycięstwa (animowane, 8 klatek) na nowym ekranie wygranej z reflektorem:
+  - Badziejek — selfie z „V” i wywalonym językiem, z błyskiem flesza (nawiązanie do ulta „Flesz na mordę!”),
+  - Marewik — elegancko sączy kawkę z porcelanowej filiżanki z odgiętym małym palcem,
+  - Łysa — puszcza buziaka do kamery z mrugnięciem, serduszko odlatuje.
+
 ## [0.13.1] — 2026-11-14
 ### Poprawione
 - Szczury (rzut na gracza) i beczki (podskok) nie skaczą już, jeśli lot skończyłby się w przepaści — wcześniej wpadały do dziur, gdy gracz stał po drugiej stronie.
@@ -101,7 +108,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.13.1...HEAD
+[Unreleased]: ../../compare/v0.14.0...HEAD
+[0.14.0]: ../../releases/tag/v0.14.0
 [0.13.1]: ../../releases/tag/v0.13.1
 [0.13.0]: ../../releases/tag/v0.13.0
 [0.12.9]: ../../releases/tag/v0.12.9
