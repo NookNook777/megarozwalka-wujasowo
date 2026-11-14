@@ -8,6 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.19.0] — 2026-11-14
+### Zmienione — rework Marewika („ciężki czołg”)
+- Pociski przebijają wrogów już od broni poz. 1 i mocniej biją w pancerz bossa (ciało ×0.25 zamiast ×0.2).
+- Odrzut: trafieni wrogowie cofają się (szczury i robole najmocniej, kanalarz lekko; nigdy do dziury).
+- Twardziel: przyjmuje 20% mniej obrażeń.
+- Broń poz. 3: ciężkie pociski z małym wybuchem przy każdym trafieniu (rani wrogów obok).
+- Ult „No i pyk!”: pstryk obraca w pył wszystkich zwykłych wrogów, beczki i wrogie pociski na ekranie, B.R.S traci 15% życia;
+  potem 4 s nietykalności i podwójnych obrażeń (wcześniej tylko 5 s nietykalności i podwójnych obrażeń).
+- Obrażenia w bossa (10 s ostrzału): poz. 1 — 30 (Badziejek 26, Łysa 20), poz. 3 — 81 (77 / 79).
+
 ## [0.18.0] — 2026-11-14
 ### Dodane
 - Siedem nowych znajdziek z kapsuł i wrogów (ikonki SpriteCook 24×24):
@@ -247,7 +257,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.18.0...HEAD
+[Unreleased]: ../../compare/v0.19.0...HEAD
+[0.19.0]: ../../releases/tag/v0.19.0
 [0.18.0]: ../../releases/tag/v0.18.0
 [0.17.10]: ../../releases/tag/v0.17.10
 [0.17.9]: ../../releases/tag/v0.17.9

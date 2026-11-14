@@ -32,7 +32,7 @@ function groundAt(x,py,y,drop){if(!isPit(x)&&py<=G+.5&&y>=G)return G;if(!drop)fo
 function onPlatY(P){let best=null;if(!isPit(P.x)&&P.y<=G+1)best=G;for(const p of plats){if(P.x>=p.x+4&&P.x<=p.x+PLW-4&&P.y<=p.y+1&&(best===null||p.y<best))best=p.y;}return best;}
 function onPlat(P){return plats.some(p=>P.x>=p.x+4&&P.x<=p.x+PLW-4&&Math.abs(P.y-p.y)<1);}
 const DIFF=1;
-function hurt(dmg,fromX){const g=G_,P=g.P;dmg=(dmg||15)*DIFF;if(P.dead||P.inv>0||g.barrier>0||(g.ultT>0&&(g.hero==='m'||g.hero==='l')))return;
+function hurt(dmg,fromX){const g=G_,P=g.P;dmg=(dmg||15)*DIFF*(G_.hero==='m'?.8:1);if(P.dead||P.inv>0||g.barrier>0||(g.ultT>0&&(g.hero==='m'||g.hero==='l')))return;
   if(g.armor>0){g.armor--;dmg*=.5;}
   g.hp-=dmg;g.dmgFlash=10;S.hurt();g.shake=6;P.inv=42;P.hitT=24;const dir=fromX!==undefined?(P.x<fromX?-1:1):-P.face;P.kb=2.4*dir;
   if(g.hp<=0){g.hp=0;g.lives--;g.shake=12;g.wl=Math.max(1,g.wl-1);P.hitT=0;P.dead=true;P.deathT=0;P.kb=1.8*dir;P.vy=Math.min(P.vy,-2);}}
@@ -94,13 +94,13 @@ function update(){
     for(const br of g.barrels){if(br.dead||(b.hit&&b.hit.has(br))||br.x<g.camX+10||br.x>g.camX+W-14)continue;if(b.x>br.x-16&&b.x<br.x+16&&b.y>br.y-40&&b.y<br.y){br.hp-=b.dmg;br.flash=4;spark(b.x,b.y,'#9aff5a');beep(900,300,.04,.05);
       if(b.pierce){(b.hit=b.hit||new Set()).add(br);}else b.dead=1;
       if(br.hp<=0){br.dead=true;boom(br.x,br.y-18,2);S.boom();addUlt(8);dropCoins(br.x,br.y-20,3);}}}
-    for(const e of g.en){if(e.dead||!e.active||(b.hit&&b.hit.has(e))||e.x<g.camX+10||e.x>g.camX+W-14)continue;const T=ET[e.k];if(Math.abs(b.x-e.x)<T.w/2+3&&b.y>e.y-T.h&&b.y<e.y+2){hitEnemy(e,b.dmg*(g.ultT>0&&g.hero==='m'?2:1));spark(b.x,b.y,'#9aff5a');if(b.pierce)(b.hit=b.hit||new Set()).add(e);else{b.dead=1;break;}}}
+    for(const e of g.en){if(e.dead||!e.active||(b.hit&&b.hit.has(e))||e.x<g.camX+10||e.x>g.camX+W-14)continue;const T=ET[e.k];if(Math.abs(b.x-e.x)<T.w/2+3&&b.y>e.y-T.h&&b.y<e.y+2){hitEnemy(e,b.dmg*(g.ultT>0&&g.hero==='m'?2:1));spark(b.x,b.y,'#9aff5a');if(g.hero==='m'&&!b.seed)marewikImpact(e,b);if(b.pierce)(b.hit=b.hit||new Set()).add(e);else{b.dead=1;break;}}}
     if(b.dead)continue;
     for(const c of g.capsA){if(c.dead)continue;if(Math.abs(b.x-c.x)<18&&Math.abs(b.y-c.y)<12){b.dead=1;c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}}
     const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
       if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const HB=bxr(bs,48,118),BB=bxr(bs,34,160);const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>HB[0]&&b.x<HB[1]&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true,b.x,b.y);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*(g.hero==='m'?.25:.2),false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(!b.dead&&(b.x<g.camX-2||b.x>g.camX+W+2)&&fxOn('kapsle')&&!b.bounced){b.bounced=1;b.vx=-b.vx;b.x=Math.max(g.camX,Math.min(g.camX+W,b.x));b.hit=null;spark(b.x,b.y,'#ffb030');}
     if(!b.dead&&(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)){b.dead=1;b.off=1;}}
   if(fxOn('petardy'))for(const b of g.bullets)if(b.dead&&!b.off&&!b.seed)petarda(b.x,b.y,b.dmg);

@@ -87,12 +87,12 @@ const CUT={b:46,m:56,l:50};
 function stepGren(){const g=G_;if(!g.gren)return;const q=g.gren;q.t++;q.vy+=.28;q.x+=q.vx;q.y+=q.vy;q.vx*=.985;if(q.y>=G-6||q.t>48){g.gren=null;flashBang(q.x,Math.min(q.y,G-10));}}
 function updCut(){const g=G_,c=g.cut;c.t++;
   for(const p of g.parts){p.x+=p.vx;p.y+=p.vy;p.life--;}g.parts=g.parts.filter(p=>p.life>0);
-  if(g.hero==='m'&&c.t===30){beep(2600,1800,.05,.1,'square');noise(.05,.25,6000,3000);}
+  if(g.hero==='m'&&c.t===30){beep(2600,1800,.05,.1,'square');noise(.05,.25,6000,3000);snapDust();}
   if(g.hero==='b'&&c.t===18){beep(520,200,.12,.08);const P=g.P;g.gren={x:P.x+22*P.face,y:P.y-44,vx:5.4*P.face,vy:-4.6,t:0};}
   if(g.hero==='b'&&c.t>18)stepGren();
   if(g.hero==='l'){g.shake=3;}
   if(c.t>=CUT[g.hero]){state='play';const P=g.P;P.inv=Math.max(P.inv,20);
-    if(g.hero==='m'){g.ultT=300;}else if(g.hero==='l'){g.ultT=BEAM_T;beamStart();}else{g.ultT=360;g.shake=8;}}}
+    if(g.hero==='m'){g.ultT=240;}else if(g.hero==='l'){g.ultT=BEAM_T;beamStart();}else{g.ultT=360;g.shake=8;}}}
 function flashBang(x,y){const g=G_;g.flash=18;g.shake=12;S.big();boom(x,y,3);
   for(const b of g.barrels)if(!b.dead&&b.x>g.camX-20&&b.x<g.camX+W+20){b.dead=true;boom(b.x,b.y-18,2);dropCoins(b.x,b.y-20,2);}
   for(const e of g.en)if(!e.dead&&e.active&&e.x>g.camX-20&&e.x<g.camX+W+20)hitEnemy(e,e.k==='kan'?10:99);
@@ -123,7 +123,7 @@ function fire(){const g=G_,P=g.P,h=g.h;let dx=P.face,dy=0;
   const wl=g.wl;
   const base=Math.atan2(dy,dx);const add=(a,o)=>g.bullets.push(Object.assign({x:sx,y:sy,vx:Math.cos(a)*h.spd,vy:Math.sin(a)*h.spd,life:90,dmg:h.dmg,sc:1},o));
   if(g.hero==='b'){if(wl===1)add(base);else if(wl===2){const nx=-Math.sin(base)*3,ny=Math.cos(base)*3;add(base,{x:sx+nx,y:sy+ny});add(base,{x:sx-nx,y:sy-ny});}else[-.12,0,.12].forEach(d=>add(base+d));}
-  else if(g.hero==='m'){if(wl>=3)add(base,{pierce:true,dmg:h.dmg+1.2,sc:1.45});else add(base);}
+  else if(g.hero==='m'){if(wl>=3)add(base,{pierce:true,heavy:true,dmg:h.dmg+1.2,sc:1.45});else add(base,{pierce:true});}
   else{if(wl===1)add(base);else if(wl===2)add(base,{dmg:h.dmg+1,sc:1.4});else[-.16,0,.16].forEach(d=>add(base+d,{dmg:h.dmg+.5,sc:1.2}));}
   P.flashT=3;beep(h.snd[0],h.snd[1],.06,.05,h.snd[2]);}
 function spark(x,y,c){for(let i=0;i<4;i++)G_.parts.push({x,y,vx:(Math.random()-.5)*3,vy:(Math.random()-.5)*3,life:8+Math.random()*6,c,s:1});}
@@ -167,3 +167,15 @@ function drawBeam(g,P){const b=beamGeom(g,P),T=g.beamT||0,left=g.ultT;const grow
   ctx.fillStyle='#ffb0ec';ctx.fillRect(x,Math.round(b.y-3-fl),w,6+fl*2);ctx.fillStyle='#fff';ctx.fillRect(x,Math.round(b.y-1),w,3);
   ctx.globalAlpha=k;for(let i=0;i<6;i++){const px=x+((g.t*7+i*53)%Math.max(1,w|0)),py=b.y+((i*37+g.t*3)%15)-7;ctx.fillStyle=i&1?'#fff':'#ffd0f0';ctx.fillRect(Math.round(px),Math.round(py),2,1);}
   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(Math.round(b.x0),Math.round(b.y),7+fl*2,0,6.3);ctx.fill();ctx.globalAlpha=1;}
+
+/* ---------- Marewik: ciężki karabin ----------
+   odrzut trafionych wrogów, na poz. 3 ciężkie pociski z małym wybuchem; ult „No i pyk!” — pstryk obraca wrogów w pył */
+function marewikImpact(e,b){const g=G_;if(e.dead)return;const dir=Math.sign(b.vx)||1,kb=e.k==='kan'?2:e.k==='barrel'?3:6;
+  if(e.ground!==false&&!isPit(e.x+dir*(kb+14))&&e.x+dir*kb<ARENA-12)e.x+=dir*kb;
+  if(b.heavy)petarda(b.x,b.y,b.dmg*1.2);}
+function snapDust(){const g=G_;g.flash=10;g.shake=10;
+  const dust=(x,y,n)=>{for(let i=0;i<n;i++)g.parts.push({x:x+(Math.random()-.5)*20,y:y+(Math.random()-.5)*30,vx:Math.random()*1.5+.3,vy:-Math.random()*1.4,life:30+Math.random()*30,c:['#8a7a6a','#b8a890','#5a4a3a','#d8c8b0'][Math.floor(Math.random()*4)],s:1+Math.floor(Math.random()*2)});};
+  for(const e of g.en)if(!e.dead&&e.active&&e.x>g.camX-20&&e.x<g.camX+W+20){const T=ET[e.k];dust(e.x,e.y-T.h/2,26);e.dead=true;dropCoins(e.x,e.y-T.h/2,T.coins);}
+  for(const br of g.barrels)if(!br.dead&&br.x>g.camX-20&&br.x<g.camX+W+20){dust(br.x,br.y-18,20);br.dead=true;dropCoins(br.x,br.y-20,2);}
+  g.eb=g.eb.filter(q=>{if(q.x>g.camX-20&&q.x<g.camX+W+20){dust(q.x,q.y,4);return false;}return true;});
+  const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W){dust(bs.x+86,G-100,40);dmgBoss(bs.max*.15);}}
