@@ -180,7 +180,7 @@ const TAUNT_T=40; // ~0,7 s
 const DIALOG={
  l:[['brs','Fiu fiu! A kto to mnie nawiedził?'],['hero','Wiesz kim jestem. Nie świruj pawiana, Brys.'],['brs','Mam wszystko w kajecie.'],['hero','Zaraz ci ten kajet wsadzę w dupę!'],['brs','Próbuj szczęścia, koleżanko!']],
  b:[['brs','Hihihi-hihi! Ale wyglądasz, kumplu niemyty! xD'],['hero','Ty w sumie też nie lepszy. Ten bolid to chyba od Marewika kupiłeś.'],['brs','Nie wiem, Nuk mnie tu wsadził i kazał chleby wypłacać tym co tu przyjdą.'],['hero','Ugh. To co? Jakieś Frotnite potem, kumplu?'],['brs','Ta, ale najpierw dawaj na środek.']],
- m:[['brs','Fiu fiu! A kto mnie nawiedził?'],['hero','Nie poznajesz, kumplu?'],['brs','Nie.'],['hero','Zaraz se przypomnisz.'],['brs','To pociągnie za sobą cały szereg złych decyzji.']]};
+ m:[['brs','Kto przyszedł? Cukierek albo psikus!'],['hero','Psi... co? Brys? Co ty w ogóle robisz w mojej piwnicy?'],['brs','A tak se na herbatkę wpadłem. Patrz jaki mam zajebisty czajnik, kumplu.'],['hero','Widzę właśnie. No, to kiedy pijemy?'],['brs','Nie mogę, prowadzę.']]};
 function startDialog(){const g=G_;state='dialog';g.dlg={i:0,t:0,pan:true};g.boss.face=-1;g.P.vx=0;g.P.anim='idle';g.P.face=1;whistleBlip();}
 function whistleBlip(){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.setValueAtTime(1500,t);o.frequency.linearRampToValueAtTime(2300,t+.12);o.frequency.linearRampToValueAtTime(1600,t+.3);gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.07,t+.03);gg.gain.exponentialRampToValueAtTime(.0001,t+.32);o.connect(gg);gg.connect(ac.destination);o.start(t);o.stop(t+.35);}
 function bossStart(){const g=G_,bs=g.boss;bs.active=true;bs.cd=170;g.banner=110;fiuFiu();msgShow('FIU FIU! AGENT BRS NADCHODZI!',120);}
