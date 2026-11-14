@@ -28,8 +28,9 @@ function draw(){
   const t0=Math.floor(cx/32)-1;
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
-    const l=isPit(x-16),r=isPit(x+48);const top=l?4:r?5:((tx*7)%4);
-    ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
+    const l=isPit(x-16),r=isPit(x+48);const top=(tx*7)%4;
+    ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);
+    if(l)pitEdge(x,1);if(r)pitEdge(x+32,-1);}
   for(const p of plats)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
   for(const b of g.barrels){if(b.dead)continue;const p=PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
@@ -137,14 +138,18 @@ let PITGR=null;
 function drawPitCol(x,tx,t,lp,rp){
   if(!PITGR){PITGR=ctx.createLinearGradient(0,G,0,H);PITGR.addColorStop(0,'#000');PITGR.addColorStop(.55,'#04140a');PITGR.addColorStop(1,'#1d6a16');}
   ctx.fillStyle=PITGR;ctx.fillRect(x,G-2,32,H-G+2);
-  // ściany przepaści (krawędź skały)
-  ctx.fillStyle='#1a1a1e';if(!lp){ctx.fillRect(x,G,4,H-G);ctx.fillStyle='#2c2c33';ctx.fillRect(x+4,G,2,H-G);ctx.fillStyle='#1a1a1e';}
-  if(!rp){ctx.fillRect(x+28,G,4,H-G);ctx.fillStyle='#2c2c33';ctx.fillRect(x+26,G,2,H-G);}
   // ślim na dnie — falująca powierzchnia
   const sy=H-22;
   for(let i=0;i<32;i+=2){const w=Math.round(Math.sin((x+i)*.18+t*.08)*2);ctx.fillStyle='#3cc42a';ctx.fillRect(x+i,sy+w,2,H-sy-w);ctx.fillStyle='#9aff5a';ctx.fillRect(x+i,sy+w,2,2);}
   // bąble
   const ph=(t+tx*37)%90;if(ph<60){const bx=x+8+((tx*13)%16),by=sy-Math.floor(ph/12);ctx.fillStyle='#d8ff90';ctx.fillRect(bx,by,3,3);ctx.fillStyle='#1e7a18';ctx.fillRect(bx+1,by+1,1,1);}
   // kapiący ślim z krawędzi
-  if(!lp||!rp){const ex=!lp?x+5:x+25,d=(t+tx*19)%70;ctx.fillStyle='#3cc42a';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#9aff5a';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}
+  if(!lp||!rp){const ex=!lp?x+1:x+29,d=(t+tx*19)%70;ctx.fillStyle='#3cc42a';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#9aff5a';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}
 }
+
+/* czysta pionowa krawędź urwiska przy dziurze (zamiast klinowatego kafla) */
+function pitEdge(ex,dir){const o=dir>0?0:-1;
+  ctx.fillStyle='#101014';ctx.fillRect(ex+o*4,G+3,4,H-G);           // cień ściany
+  ctx.fillStyle='#55555e';ctx.fillRect(ex+(dir>0?4:-5),G+3,1,H-G);    // światło na krawędzi
+  ctx.fillStyle='#8a8a94';ctx.fillRect(ex+(dir>0?0:-5),G,5,2);         // obłamany brzeg płyty
+  ctx.fillStyle='#6a6a74';ctx.fillRect(ex+(dir>0?0:-5),G+2,5,1);}
