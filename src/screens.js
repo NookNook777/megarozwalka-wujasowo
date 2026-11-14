@@ -10,7 +10,10 @@ function renderMenu(){const m=$('menu');m.innerHTML='';MENU.forEach((it,i)=>{con
   d.onpointerenter=()=>{if(tstate==='menu'&&msel!==i){msel=i;S.blip();renderMenu();}};d.onclick=()=>{if(tstate==='menu'){msel=i;S.ok();MENU[i].a();}};m.appendChild(d);});}
 function panel(k){tstate='panel';const p=$('panel');
   p.innerHTML=(k==='ctrl'?'<h2>STEROWANIE</h2><table><tr><td>Strzałki / WASD</td><td>ruch i celowanie</td></tr><tr><td>↑ / ↓ + bieg</td><td>strzał po skosie</td></tr><tr><td>Z / K / Spacja</td><td>skok (↓ + skok: zeskok)</td></tr><tr><td>X / J</td><td>strzał</td></tr><tr><td>C / L</td><td>ult (gdy pasek pełny)</td></tr><tr><td>V / T</td><td>poza zwycięstwa (szpan)</td></tr><tr><td>← / → w pauzie</td><td>głośność</td></tr><tr><td>Enter / Esc</td><td>pauza</td></tr></table>'
-   :'<h2>AUTORZY</h2>Pomysł, postaci i plansze: Nook<br>Kod i chiptune: Claude<br>Grafika: SpriteCook, Sorceress, Sprite Flow')+'<div class="hint">Enter, Esc albo kliknij, żeby wrócić</div>';p.classList.add('on');}
+   :'<h2>AUTORZY</h2>Pomysł, postaci i plansze: Nook<br>Kod i chiptune: Claude<br>Grafika: SpriteCook, Sorceress, Sprite Flow'
+     +'<div class="thx"><b>Specjalne podziękowania</b> dla społeczności discordowego serwera <b>WUJASOWO</b> za inspirację. Konkretnie: BrS, Natalia, Błażejek, Maverick, Gucio, Blizzu, Loki, Sosna, Ghost Ripper, Miciia, Frostii, Swifty. Jeśli kogoś nie wymieniłem z ksywki, to przepraszam.'
+     +'<br><br>Oddzielne podziękowania dla mojej żony – <b>Ev</b>, która bezustannie wspiera mnie w działaniach.'
+     +'<br><br>Jeśli choć raz zagraliście i bawiliście się dobrze, to kłaniam się Wam bardzo nisko.</div>')+'<div class="hint">Enter, Esc albo kliknij, żeby wrócić</div>';p.classList.add('on');}
 $('panel').onclick=()=>{$('panel').classList.remove('on');tstate='menu';};
 function showTitle(){state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';
   $('logo').classList.remove('in');setTimeout(()=>{$('logo').classList.add('in');},200);setTimeout(()=>{S.boom();tstate='press';},900);}
