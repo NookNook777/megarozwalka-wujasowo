@@ -60,6 +60,7 @@ function draw(){
   const P=g.P;{const gy=onPlatY(P);if(gy!==null){const hgt=Math.max(0,gy-P.y);const r=Math.max(5,14-hgt*.08);ctx.fillStyle=`rgba(0,0,0,${Math.max(.12,.45-hgt*.004)})`;ctx.beginPath();ctx.ellipse(Math.round(P.x),gy+2,r,3.5,0,0,6.3);ctx.fill();}}const inv=P.inv>0&&P.hitT<=0&&(g.t>>2)&1;const ghost=g.ultT>0&&g.hero==='m';
   if(P.dead||(state==='over'&&P.deathT!==undefined)){const im=HS[g.hero].die,fw=128,fr=Math.min(7,Math.floor((P.deathT||0)/8));if(im.complete){ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);ctx.drawImage(im,fr*fw,0,fw,96,-(fw/2-4),-95,fw,96);ctx.restore();}
     const dt=P.deathT||0;if(dt>44)skullBubble(Math.round(P.x-P.face*20),Math.round(P.y-30),Math.min(1,(dt-44)/6),g.t);}
+  else if(P.taunt>0&&state==='play'&&!inv)drawTaunt(g,P);
   else if(state!=='over'&&state!=='win'&&!inv&&state!=='ultcut'){const im=HS[g.hero][P.anim];if(im.complete){const rc=(P.shotT>8&&P.anim!=='shoot')?-1:0;ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);
     if(ghost)ctx.globalAlpha=.4;if(g.ultT>0&&g.hero==='l'&&(g.t>>2)&1)ctx.filter='brightness(1.5) saturate(1.6)';
     if(P.hitT>0&&(P.hitT>>1)&1)ctx.filter='brightness(1.8) sepia(1) hue-rotate(-30deg) saturate(4)';ctx.drawImage(im,P.fr*FW,0,FW,FW,-(FW/2-4)+rc,-(FW-1),FW,FW);ctx.restore();}}
@@ -174,3 +175,8 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   ctx.font='14px "Press Start 2P",monospace';sh('PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
   ctx.font='8px "Press Start 2P",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,'#ff8ad0','center');
   sh('Zebrane złotówki: '+g.coins,W/2,290,'#fff','center');if(t>60&&(t>>4)&1)sh('Enter: wróć do menu',W/2,316,'#c8c0d8','center');ctx.globalAlpha=1;}
+
+function drawTaunt(g,P){const k=g.hero,M=A.heroes[k].meta.victory,im=HS[k].victory;if(!im.complete)return;const f=Math.min(M.n-1,Math.floor((TAUNT_T-P.taunt)/8));
+  ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);const x0=-Math.round(M.fw/2),y0=-M.fh+2;ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw,M.fh);
+  if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0],fy=y0+M.flash[1],r=3+(P.taunt%8)*1.5;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy,r,0,6.3);ctx.fill();ctx.fillRect(fx-r*2,fy-.5,r*4,1.5);ctx.fillRect(fx-.5,fy-r*2,1.5,r*4);}
+  ctx.restore();}

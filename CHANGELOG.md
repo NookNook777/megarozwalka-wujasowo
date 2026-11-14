@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.15.0] — 2026-11-14
+### Dodane
+- Osobny przycisk pozy zwycięstwa w trakcie gry („szpan”): **V / T** na klawiaturze, **LB / Select** na padzie, **☺** na ekranie dotykowym.
+  Działa na ziemi; jedna pętla animacji (~1 s), przerywana ruchem, skokiem, strzałem, ultem lub trafieniem. Opisane w menu STEROWANIE.
+
 ## [0.14.0] — 2026-11-14
 ### Dodane
 - Pozy zwycięstwa (animowane, 8 klatek) na nowym ekranie wygranej z reflektorem:
@@ -108,7 +113,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.14.0...HEAD
+[Unreleased]: ../../compare/v0.15.0...HEAD
+[0.15.0]: ../../releases/tag/v0.15.0
 [0.14.0]: ../../releases/tag/v0.14.0
 [0.13.1]: ../../releases/tag/v0.13.1
 [0.13.0]: ../../releases/tag/v0.13.0

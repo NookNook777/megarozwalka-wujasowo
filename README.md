@@ -4,7 +4,7 @@
 **Badziejek**, **Marewik** i **Łysa** — przebija się przez zaślimaczoną Piwnicę
 aż do **Agenta B.R.S** i jego mechanicznych ramion.
 
-![wersja](https://img.shields.io/badge/wersja-v0.14.0-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
+![wersja](https://img.shields.io/badge/wersja-v0.15.0-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
 
 ## Zagraj
 
@@ -19,9 +19,10 @@ aż do **Agenta B.R.S** i jego mechanicznych ramion.
 | Skok | Z / K / Spacja | A |
 | Strzał | X / J | X / RT |
 | Ult | C / L | Y / B |
+| Poza zwycięstwa (szpan) | V / T | LB / Select |
 | Pauza | Enter / Esc / P | Start |
 
-Na telefonie pojawia się wirtualna gałka i przyciski SKOK / OGIEŃ / ULT / II.
+Na telefonie pojawia się wirtualna gałka i przyciski SKOK / OGIEŃ / ULT / II / ☺.
 (Dokładne mapowanie: menu → STEROWANIE w grze.)
 
 ## Struktura

@@ -15,6 +15,6 @@ function frame(now){acc+=Math.min(100,now-last);last=now;
   stk.addEventListener('pointerdown',e=>{id=e.pointerId;stk.setPointerCapture(id);au();set(...pos(e));});stk.addEventListener('pointermove',e=>{if(e.pointerId===id)set(...pos(e));});
   const end=e=>{if(e.pointerId===id){id=null;set(0,0);}};stk.addEventListener('pointerup',end);stk.addEventListener('pointercancel',end);
   const btn=(el,k,tk)=>{el.addEventListener('pointerdown',e=>{e.preventDefault();el.setPointerCapture(e.pointerId);au();T[k]=1;if(tk)T[tk]=1;el.classList.add('on');});const up=()=>{T[k]=0;el.classList.remove('on');};el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);};
-  btn($('bJ'),'j','tj');btn($('bF'),'f');btn($('bU'),'x','tx');$('bP').addEventListener('pointerdown',e=>{e.preventDefault();T.tp=1;});})();
+  btn($('bJ'),'j','tj');btn($('bF'),'f');btn($('bU'),'x','tx');$('bP').addEventListener('pointerdown',e=>{e.preventDefault();T.tp=1;});$('bV').addEventListener('pointerdown',e=>{e.preventDefault();au();T.tv=1;});})();
 (document.fonts&&document.fonts.load?Promise.all([document.fonts.load('8px "Press Start 2P"'),document.fonts.load('16px "Press Start 2P"')]).catch(()=>{}):Promise.resolve()).finally(()=>{});
 showTitle();requestAnimationFrame(frame);

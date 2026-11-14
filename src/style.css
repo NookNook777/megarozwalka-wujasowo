@@ -49,5 +49,6 @@ canvas.idle{position:absolute;right:-3%;top:22%;width:38%;image-rendering:pixela
 #bJ{width:70px;height:70px;right:calc(100px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 #bF{width:78px;height:78px;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(60px + env(safe-area-inset-bottom,0px))}
 #bU{width:54px;height:54px;right:calc(30px + env(safe-area-inset-right,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+#bV{width:44px;height:44px;right:calc(68px + env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));font-size:18px}
 #bP{width:44px;height:44px;right:calc(14px + env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px))}
 .tb.on{background:var(--padb)}

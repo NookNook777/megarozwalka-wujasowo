@@ -9,7 +9,7 @@ const MENU=[{t:'START GRY',a:()=>showSelect()},{t:'STEROWANIE',a:()=>panel('ctrl
 function renderMenu(){const m=$('menu');m.innerHTML='';MENU.forEach((it,i)=>{const d=document.createElement('div');d.className='it'+(i===msel?' sel':'');d.textContent=it.t;
   d.onpointerenter=()=>{if(tstate==='menu'&&msel!==i){msel=i;S.blip();renderMenu();}};d.onclick=()=>{if(tstate==='menu'){msel=i;S.ok();MENU[i].a();}};m.appendChild(d);});}
 function panel(k){tstate='panel';const p=$('panel');
-  p.innerHTML=(k==='ctrl'?'<h2>STEROWANIE</h2><table><tr><td>Strzałki / WASD</td><td>ruch i celowanie</td></tr><tr><td>↑ / ↓ + bieg</td><td>strzał po skosie</td></tr><tr><td>Z / K / Spacja</td><td>skok (↓ + skok: zeskok)</td></tr><tr><td>X / J</td><td>strzał</td></tr><tr><td>C / L</td><td>ult (gdy pasek pełny)</td></tr><tr><td>Enter / Esc</td><td>pauza</td></tr></table>'
+  p.innerHTML=(k==='ctrl'?'<h2>STEROWANIE</h2><table><tr><td>Strzałki / WASD</td><td>ruch i celowanie</td></tr><tr><td>↑ / ↓ + bieg</td><td>strzał po skosie</td></tr><tr><td>Z / K / Spacja</td><td>skok (↓ + skok: zeskok)</td></tr><tr><td>X / J</td><td>strzał</td></tr><tr><td>C / L</td><td>ult (gdy pasek pełny)</td></tr><tr><td>V / T</td><td>poza zwycięstwa (szpan)</td></tr><tr><td>Enter / Esc</td><td>pauza</td></tr></table>'
    :'<h2>AUTORZY</h2>Pomysł, postaci i plansze: Nook<br>Kod i chiptune: Claude<br>Grafika: SpriteCook, Sorceress, Sprite Flow')+'<div class="hint">Enter, Esc albo kliknij, żeby wrócić</div>';p.classList.add('on');}
 $('panel').onclick=()=>{$('panel').classList.remove('on');tstate='menu';};
 function showTitle(){state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';

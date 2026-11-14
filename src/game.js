@@ -53,7 +53,8 @@ function update(){
     return;}
   if(P.hitT>0){P.hitT--;P.x+=P.kb;P.kb*=.85;}
   const beam=g.hero==='l'&&g.ultT>0;
-  const mx0=(I.r?1:0)-(I.l?1:0);if(mx0)P.face=mx0;const mx=beam?0:mx0;
+  const mx0=(I.r?1:0)-(I.l?1:0);if(mx0)P.face=mx0;if(I.vp&&P.ground&&!beam&&!P.taunt&&P.hitT<=0)P.taunt=TAUNT_T;if(P.taunt>0&&(mx0||I.jp||I.f||I.xp||P.hitT>0||!P.ground))P.taunt=0;if(P.taunt>0)P.taunt--;
+  const mx=(beam||P.taunt>0)?0:mx0;
   P.vx=mx*(g.fast?3.3:2.6);
   if(I.jp&&!beam)P.buf=7;if(P.buf>0)P.buf--;
   if(P.ground)P.coyote=6;else if(P.coyote>0)P.coyote--;
@@ -77,7 +78,7 @@ function update(){
   // fire
   if(P.cd>0)P.cd--;if(P.shotT>0)P.shotT--;
   if(beam)beamTick(g,P);
-  else if(I.f&&P.cd<=0){fire();P.cd=Math.max(3,Math.round(h.cd-(g.wl>=2&&g.hero==='m'?3:0)));P.shotT=11;}
+  else if(I.f&&P.cd<=0&&!P.taunt){fire();P.cd=Math.max(3,Math.round(h.cd-(g.wl>=2&&g.hero==='m'?3:0)));P.shotT=11;}
   // ult
   if(g.ultT>0){g.ultT--;if(g.ultT===0&&g.hero==='l')beamStop();}
   if(g.boss.active&&!g.boss.dead)addUlt(.5/60); // powolne ładowanie w trakcie walki z bossem
@@ -168,3 +169,6 @@ function microBoom(x,y,k){const g=G_;const C=k==='slime'?['#9aff5a','#3cc42a','#
 
 /* czy skok/rzut wroga nie skończy się w przepaści (próbkowanie co 6 px na całej długości lotu) */
 function safeHop(x,dir,dist){for(let d=0;d<=dist;d+=6)if(isPit(x+dir*d)||x+dir*d>ARENA-12)return false;return true;}
+
+/* poza zwycięstwa na żądanie (V/T, LB/Select, przycisk ☺): jedna pętla animacji, przerywana ruchem, skokiem, strzałem lub trafieniem */
+const TAUNT_T=8*8;
