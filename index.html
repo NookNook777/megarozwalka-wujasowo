@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Megarozwałka w Wujasowie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="scr">
+  <canvas id="c" width="640" height="360"></canvas>
+  <div class="layer" id="title"><div id="tshade"></div><div id="ver">v0.12.0</div><img id="logo" alt="Megarozwałka w Wujasowie"><div id="press">NACIŚNIJ START</div><div id="menu"></div><div id="panel"></div></div>
+  <div class="layer" id="select"><h1>WYBIERZ BOHATERA</h1><div id="cards"></div><div class="shint">← → wybór · ENTER / Z / X zatwierdź · kliknij kartę</div></div>
+  <div id="crt"></div>
+</div>
+<div id="touch" hidden><div id="stick"><div id="knob"></div></div><div class="tb" id="bJ">SKOK</div><div class="tb" id="bF">OGIEŃ</div><div class="tb" id="bU">ULT</div><div class="tb" id="bP">II</div></div>
+<!-- kolejność ma znaczenie: zwykłe skrypty dzielą wspólny zasięg globalny -->
+<script src="src/data.js"></script>
+<script src="src/config.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/input.js"></script>
+<script src="src/screens.js"></script>
+<script src="src/game.js"></script>
+<script src="src/boss.js"></script>
+<script src="src/draw.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
