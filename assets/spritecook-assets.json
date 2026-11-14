@@ -12,9 +12,9 @@
   },
   "lysa": {
    "base_upload": "1d992375-98e8-4c89-b88f-2c390b2b1387",
-   "front_pose_hi": "1a3ca3a3-3510-40e5-aa59-398752653eb8",
-   "pose_asset_id": "83057ce1-5ec3-4918-858c-372dee8285d5",
-   "anim_asset_id": "7cbc5c2a-9382-4730-af4a-d781e4b5ecce"
+   "finger_pose_hi": "47c30a9c-f21c-4de2-8571-08b65def247f",
+   "finger_pose_native_upload": "0c88129b-a080-4c37-84ba-44e258b71ad8",
+   "note": "animacja z\u0142o\u017cona w kodzie (ruch d\u0142oni + \u015bmiech), bez animate_game_art"
   }
  },
  "base": {
