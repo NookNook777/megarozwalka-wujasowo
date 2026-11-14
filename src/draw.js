@@ -76,6 +76,7 @@ function draw(){
     ctx.strokeStyle=`rgba(${c1},${al})`;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(Math.round(q.x),Math.round(q.y-r*.4),r,r*.6,0,Math.PI,2*Math.PI);ctx.stroke();
     if(q.t<4){ctx.fillStyle='#fff';ctx.fillRect(Math.round(q.x)-1,Math.round(q.y)-5,3,3);}}
   for(const p of g.parts){ctx.fillStyle=p.c;ctx.fillRect(Math.round(p.x),Math.round(p.y),p.s,p.s);}
+  drawDnum();
   ctx.restore();ctx.restore();
   if(state==='ultcut')drawCut();
   if(g.flash>0){ctx.fillStyle=`rgba(255,255,255,${g.flash/14})`;ctx.fillRect(0,0,W,H);}
@@ -93,8 +94,8 @@ function draw(){
   // ult bar
   sh('ULT',W/2-70,6,'#c8c0d8');ctx.fillStyle='#000';ctx.fillRect(W/2-40,8,120,8);ctx.fillStyle=g.ult>=100&&(g.t>>3)&1?'#fff':h.c;ctx.fillRect(W/2-39,9,Math.round(118*g.ult/100),6);
   if(g.ult>=100)sh('C!',W/2+86,6,'#fff');
-  if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,Math.round(168*Math.max(0,bs.hp/bs.max)),5);
-    const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,Math.round(78*Math.max(0,a.hp/a.max)),3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
+  if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
+    const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}
   if(g.msgT>0){ctx.font='10px "Press Start 2P",monospace';sh(g.msg,W/2,104,'#ffd040','center');}
   if(state==='pause'){ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);ctx.font='16px "Press Start 2P",monospace';sh('PAUZA',W/2,140,'#fff','center');ctx.font='8px "Press Start 2P",monospace';sh('Enter / Esc: wróć do gry',W/2,176,'#c8c0d8','center');}
   if(state==='win'&&g.t>20){ctx.fillStyle=`rgba(0,0,0,${Math.min(.6,g.t/60)})`;ctx.fillRect(0,0,W,H);ctx.font='14px "Press Start 2P",monospace';sh('PIWNICA ZALICZONA!',W/2,120,'#ffd040','center');

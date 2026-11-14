@@ -94,8 +94,8 @@ function update(){
     for(const c of g.capsA){if(c.dead)continue;if(Math.abs(b.x-c.x)<18&&Math.abs(b.y-c.y)<12){b.dead=1;c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}}
     const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
       if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>bs.x+48&&b.x<bs.x+118&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
-      if(head){dmgBoss(b.dmg*mul*3,true);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      if(head){dmgBoss(b.dmg*mul*3,true,b.x,b.y);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
+      else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)b.dead=1;}
   g.bullets=g.bullets.filter(b=>!b.dead);
   // capsules
@@ -151,7 +151,7 @@ function update(){
     if(e.k==='splash'){e.dead=1;}
     if(!e.dead&&Math.abs(e.x-P.x)<e.r+6&&e.y>P.y-62&&e.y<P.y+4){hurt(e.dmg||15,e.x);e.dead=1;microBoom(e.x,e.y,e.k);}if(e.y>H+30)e.dead=1;}
   g.eb=g.eb.filter(e=>!e.dead);
-  for(const p of g.parts){p.x+=p.vx;p.y+=p.vy;p.vx*=.93;p.vy=p.vy*.93+.05;p.life--;}g.parts=g.parts.filter(p=>p.life>0);
+  for(const p of g.parts){p.x+=p.vx;p.y+=p.vy;p.vx*=.93;p.vy=p.vy*.93+.05;p.life--;}g.parts=g.parts.filter(p=>p.life>0);updDnum();
   if(g.puffs){for(const q of g.puffs)q.t++;g.puffs=g.puffs.filter(q=>q.t<14);}
   for(const br of g.barrels)if(br.flash>0)br.flash--;
   const tgt=Math.min(ARENA,P.x-W*.4);g.camX+=(tgt-g.camX)*.12;g.camX=Math.max(0,Math.min(ARENA,g.camX));
