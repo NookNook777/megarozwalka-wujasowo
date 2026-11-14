@@ -12,6 +12,7 @@ import base64, mimetypes, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 mimetypes.add_type('image/webp', '.webp')
+mimetypes.add_type('font/woff2', '.woff2')
 
 def data_uri(rel):
     p = ROOT / rel
@@ -26,7 +27,10 @@ def main():
     html = (ROOT / 'index.html').read_text(encoding='utf-8')
 
     def css(m):
-        return '<style>\n' + (ROOT / m.group(1)).read_text(encoding='utf-8') + '</style>'
+        path = ROOT / m.group(1)
+        txt = path.read_text(encoding='utf-8')
+        txt = re.sub(r'url\((\.\./assets/[^)]+)\)', lambda u: 'url(' + data_uri((path.parent / u.group(1)).resolve().relative_to(ROOT)) + ')', txt)
+        return '<style>\n' + txt + '</style>'
     html = re.sub(r'<link rel="stylesheet" href="([^"]+)">', css, html)
 
     def script(m):

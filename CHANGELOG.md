@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.17.2] — 2026-11-14
+### Zmienione
+- Czcionka Press Start 2P wbudowana w grę (`assets/fonts/`, licencja OFL) zamiast ładowania z Google Fonts:
+  gra wygląda tak samo zawsze, także offline i przy blokadzie Google — nigdy nie spada do zwykłej czcionki systemowej.
+
 ## [0.17.1] — 2026-11-14
 ### Zmienione
 - Napisy po podniesieniu znajdźki w dwóch linijkach na półprzezroczystym tle: większa nazwa u góry, pod nią krótko co robi
@@ -189,7 +194,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.17.1...HEAD
+[Unreleased]: ../../compare/v0.17.2...HEAD
+[0.17.2]: ../../releases/tag/v0.17.2
 [0.17.1]: ../../releases/tag/v0.17.1
 [0.17.0]: ../../releases/tag/v0.17.0
 [0.16.0]: ../../releases/tag/v0.16.0

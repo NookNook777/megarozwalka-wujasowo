@@ -12,4 +12,4 @@ Pochodzenie:
 Przed upublicznieniem repozytorium sprawdź aktualne warunki licencyjne SpriteCook
 dla wygenerowanych zasobów.
 
-Czcionka **Press Start 2P** (CodeMan38) ładowana z Google Fonts — licencja SIL Open Font License 1.1.
+Czcionka **Press Start 2P** (CodeMan38) jest dołączona w `assets/fonts/` (z pakietu @fontsource) — licencja SIL Open Font License 1.1, tekst w `assets/fonts/OFL.txt`.

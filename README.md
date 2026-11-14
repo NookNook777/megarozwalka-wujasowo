@@ -4,7 +4,7 @@
 **Badziejek**, **Marewik** i **Łysa** — przebija się przez zaślimaczoną Piwnicę
 aż do **Agenta B.R.S** i jego mechanicznych ramion.
 
-![wersja](https://img.shields.io/badge/wersja-v0.17.1-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
+![wersja](https://img.shields.io/badge/wersja-v0.17.2-ffd040) ![HTML5](https://img.shields.io/badge/HTML5-canvas-e8203a)
 
 ## Zagraj
 
@@ -79,4 +79,4 @@ liczba klatek lub ich szerokość — popraw `n` / `fw` w `src/data.js`.
 
 - Kod: [MIT](LICENSE).
 - Grafiki: wszelkie prawa zastrzeżone — [assets/LICENSE.md](assets/LICENSE.md).
-- Czcionka Press Start 2P: SIL Open Font License 1.1 (Google Fonts).
+- Czcionka Press Start 2P: SIL Open Font License 1.1 (dołączona w `assets/fonts/`, gra działa offline).
