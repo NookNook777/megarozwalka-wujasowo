@@ -27,7 +27,7 @@ function draw(){
   for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
-    if(isPit(x+16)){ctx.fillStyle='#3cc42a';ctx.fillRect(x,H-14,32,14);ctx.fillStyle='#9aff5a';ctx.fillRect(x+((g.t>>3)+tx*5)%28,H-14,4,2);continue;}
+    if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
     const l=isPit(x-16),r=isPit(x+48);const top=l?4:r?5:((tx*7)%4);
     ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
   for(const p of plats)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
@@ -131,3 +131,20 @@ function skullBubble(x,y,pop,t){const bob=Math.round(Math.sin(t*.12)*2);y+=bob-M
   // skull outline
   ctx.fillStyle='#111';for(let r=0;r<9;r++)for(let c=0;c<9;c++){if(SKULL[r][c]==='.')continue;[[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{const rr=r+dy,cc=c+dx;if(rr<0||rr>8||cc<0||cc>8||SKULL[rr][cc]==='.')ctx.fillRect(-9+cc*2,-23+rr*2,2,2);});}
   ctx.restore();}
+
+/* dziura ze ślimem: ciemna przepaść, zielona poświata, falujący ślim z bąblami, kapanie z krawędzi */
+let PITGR=null;
+function drawPitCol(x,tx,t,lp,rp){
+  if(!PITGR){PITGR=ctx.createLinearGradient(0,G,0,H);PITGR.addColorStop(0,'#000');PITGR.addColorStop(.55,'#04140a');PITGR.addColorStop(1,'#1d6a16');}
+  ctx.fillStyle=PITGR;ctx.fillRect(x,G-2,32,H-G+2);
+  // ściany przepaści (krawędź skały)
+  ctx.fillStyle='#1a1a1e';if(!lp){ctx.fillRect(x,G,4,H-G);ctx.fillStyle='#2c2c33';ctx.fillRect(x+4,G,2,H-G);ctx.fillStyle='#1a1a1e';}
+  if(!rp){ctx.fillRect(x+28,G,4,H-G);ctx.fillStyle='#2c2c33';ctx.fillRect(x+26,G,2,H-G);}
+  // ślim na dnie — falująca powierzchnia
+  const sy=H-22;
+  for(let i=0;i<32;i+=2){const w=Math.round(Math.sin((x+i)*.18+t*.08)*2);ctx.fillStyle='#3cc42a';ctx.fillRect(x+i,sy+w,2,H-sy-w);ctx.fillStyle='#9aff5a';ctx.fillRect(x+i,sy+w,2,2);}
+  // bąble
+  const ph=(t+tx*37)%90;if(ph<60){const bx=x+8+((tx*13)%16),by=sy-Math.floor(ph/12);ctx.fillStyle='#d8ff90';ctx.fillRect(bx,by,3,3);ctx.fillStyle='#1e7a18';ctx.fillRect(bx+1,by+1,1,1);}
+  // kapiący ślim z krawędzi
+  if(!lp||!rp){const ex=!lp?x+5:x+25,d=(t+tx*19)%70;ctx.fillStyle='#3cc42a';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#9aff5a';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}
+}

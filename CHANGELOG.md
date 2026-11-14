@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.12.2] — 2026-11-14
+### Zmienione
+- Dziury w podłodze czytelniejsze: ciemna przepaść, ściany skały, falujący ślim z bąblami na dnie, kapanie z krawędzi (testerzy brali je za błąd grafiki).
+
 ## [0.12.1] — 2026-11-14
 ### Zmienione
 - Ekran wyboru: nagłówek „SELEKT YOUR WUJAS OR CIOTKA” zamiast „WYBIERZ BOHATERA” (sugestia testerów).
@@ -44,6 +48,7 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.12.1...HEAD
+[Unreleased]: ../../compare/v0.12.2...HEAD
+[0.12.2]: ../../releases/tag/v0.12.2
 [0.12.1]: ../../releases/tag/v0.12.1
 [0.12.0]: ../../releases/tag/v0.12.0
