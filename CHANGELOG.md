@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.12.4] — 2026-11-14
+### Poprawione
+- Agent B.R.S nie dostawał obrażeń w trakcie chodzenia i dymków — „niewidzialna ściana”:
+  - opancerzone ramiona pochłaniały pociski lecące w nogi i tułów; teraz pociski przelatują przez ramię w spoczynku i trafiają w ciało, a ramię da się ranić tylko podczas ataku / świecącego stawu;
+  - hitbox ciała obejmował tylko dolne 128 px, więc strzały z górnej platformy (szczególnie Marewika, który trzyma karabin wysoko) przelatywały nad nim; teraz obejmuje całą postać (głowa ×3 nadal tylko przy gwizdku i zachwianiu).
+
 ## [0.12.3] — 2026-11-14
 ### Poprawione
 - Krawędzie dziur: klinowate, „szarpane” kafle (wyglądały jak błąd, bo pod nimi zaczynała się pełna ściana) zastąpione czystą pionową krawędzią urwiska.
@@ -52,7 +58,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.12.3...HEAD
+[Unreleased]: ../../compare/v0.12.4...HEAD
+[0.12.4]: ../../releases/tag/v0.12.4
 [0.12.3]: ../../releases/tag/v0.12.3
 [0.12.2]: ../../releases/tag/v0.12.2
 [0.12.1]: ../../releases/tag/v0.12.1

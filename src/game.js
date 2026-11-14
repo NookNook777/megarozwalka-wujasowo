@@ -95,7 +95,7 @@ function update(){
     const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20&&!(b.hit&&b.hit.has(bs))){const mul=(g.ultT>0&&g.hero==='m'?2:1);const ah=armHit(bs,b);
       if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}else{const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>bs.x+48&&b.x<bs.x+118&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-128+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      else if(b.x>bs.x+34&&b.x<bs.x+160&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)b.dead=1;}
   g.bullets=g.bullets.filter(b=>!b.dead);
   // capsules

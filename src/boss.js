@@ -37,10 +37,11 @@ function drawArm(bs,front,t){const a=front?bs.fa:bs.ba,p=front?faPos(bs):baPos(b
   if((front&&a.t>=0&&a.t<24)||(!front&&a.t>=0&&a.t<14)){if((t>>1)&1)ctx.filter='brightness(1.7) sepia(1) hue-rotate(-40deg) saturate(3)';}
   ctx.drawImage(im,-A2.ax,-A2.ay);ctx.restore();
   if(a.t>=0||a.vul>0){const pulse=.5+.5*Math.sin(t*.4);ctx.fillStyle=`rgba(255,220,60,${.35+.4*pulse})`;ctx.beginPath();ctx.arc(Math.round(p.x),Math.round(p.y),7+pulse*2,0,6.3);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(Math.round(p.x)-1,Math.round(p.y)-1,3,3);}}
-function armHit(bs,b){// returns 'fa'/'ba' if bullet hits a living arm
-  if(!bs.fa.dead){const p=faPos(bs);const ang=faAng(bs);const fx=p.x-50*Math.cos(ang),fy=p.y-50*Math.sin(ang);
+function armHit(bs,b){// returns 'fa'/'ba' if bullet hits a living, currently vulnerable arm (armored arms let bullets through to the body)
+  const vuln=a=>a.t>=0||a.vul>0;
+  if(!bs.fa.dead&&vuln(bs.fa)){const p=faPos(bs);const ang=faAng(bs);const fx=p.x-50*Math.cos(ang),fy=p.y-50*Math.sin(ang);
     if(b.x>Math.min(p.x,fx)-26&&b.x<p.x+6&&b.y>Math.min(p.y,fy)-22&&b.y<Math.max(p.y,fy)+34)return 'fa';}
-  if(!bs.ba.dead){const p=baPos(bs);if(b.x>p.x-52&&b.x<p.x+8&&b.y>p.y-58&&b.y<p.y+6)return 'ba';}
+  if(!bs.ba.dead&&vuln(bs.ba)){const p=baPos(bs);if(b.x>p.x-52&&b.x<p.x+8&&b.y>p.y-58&&b.y<p.y+6)return 'ba';}
   return null;}
 const TALK2=['Moja herbata się nie poddaje!','Zaraz się zagotuję!'],TALK3=['TERAZ SIĘ ZAGOTUJE!','Wrzątek dla wszystkich!'];
 function bossTalk(bs,txt){bs.talk={txt,t:150};}
