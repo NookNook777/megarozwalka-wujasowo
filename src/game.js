@@ -171,4 +171,4 @@ function microBoom(x,y,k){const g=G_;const C=k==='slime'?['#9aff5a','#3cc42a','#
 function safeHop(x,dir,dist){for(let d=0;d<=dist;d+=6)if(isPit(x+dir*d)||x+dir*d>ARENA-12)return false;return true;}
 
 /* poza zwycięstwa na żądanie (V/T, LB/Select, przycisk ☺): jedna pętla animacji, przerywana ruchem, skokiem, strzałem lub trafieniem */
-const TAUNT_T=8*8;
+const TAUNT_T=40; // ~0,7 s

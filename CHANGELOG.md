@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.15.5] — 2026-11-14
+### Zmienione
+- Poza Łysej zrobiona „chirurgicznie” na klatce idle z gry: głowa, ciało, nogi i minigun są piksel w piksel te same,
+  zmienia się tylko przednia ręka (środkowy palec) i mimika — wredny uśmieszek z kącikiem ust do góry i przymrużone oko jak na portrecie.
+  4 klatki (lekkie dźgnięcie palcem), idealnie w miejscu postaci, bez przeskoku sylwetki.
+- Poza na przycisk (V/T/LB/☺) skrócona do ~0,7 s dla wszystkich.
+### Dodane
+- `tools/lysa_victory_pose.py` — skrypt generujący tę pozę z klatki idle.
+
 ## [0.15.4] — 2026-11-14
 ### Zmienione
 - Nowa poza zwycięstwa Łysej: bokiem jak w grze, złośliwy uśmiech i środkowy palec.
@@ -136,7 +145,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.15.4...HEAD
+[Unreleased]: ../../compare/v0.15.5...HEAD
+[0.15.5]: ../../releases/tag/v0.15.5
 [0.15.4]: ../../releases/tag/v0.15.4
 [0.15.3]: ../../releases/tag/v0.15.3
 [0.15.2]: ../../releases/tag/v0.15.2

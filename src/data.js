@@ -1082,9 +1082,11 @@ const A={
      "fw": 128
     },
     "victory": {
-     "fw": 46,
-     "fh": 73,
-     "n": 8
+     "fw": 55,
+     "fh": 75,
+     "n": 4,
+     "ox": -25,
+     "oy": -74
     }
    },
    "idle": "assets/heroes/lysa/idle.png",
