@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.24.0] — 2026-11-15
+### Dodane
+- **Muzyka walki z B.R.S.** (autor: Nook). W trakcie rozmowy przed walką muzyka poziomu przycicha,
+  a po ostatniej kwestii płynnie przechodzi w motyw bossa. Utwór wczytuje się w tle podczas rozmowy.
+- Szew pętli wygładzony mikroprzenikaniem 2 ms (koniec pliku schodził stromo do zera, początek startował z innego poziomu).
+
 ## [0.23.1] — 2026-11-15
 ### Poprawione
 - **Energetyk** nie dawał nic, jeśli zebrało się go w trakcie ulta (pasek był wtedy zablokowany).
@@ -333,7 +339,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.23.1...HEAD
+[Unreleased]: ../../compare/v0.24.0...HEAD
+[0.24.0]: ../../releases/tag/v0.24.0
 [0.23.1]: ../../releases/tag/v0.23.1
 [0.23.0]: ../../releases/tag/v0.23.0
 [0.22.0]: ../../releases/tag/v0.22.0
