@@ -7,7 +7,7 @@ let ac=null,master=null;
 function volGain(){return Math.pow(VOL/10,1.6);}
 function au(){if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(C){ac=new C();master=ac.createGain();master.gain.value=volGain();master.connect(OUT());}}if(ac&&ac.state==='suspended')ac.resume();}
 function OUT(){return master||ac.destination;}
-function setVol(v){VOL=Math.max(0,Math.min(10,v));if(master)master.gain.setTargetAtTime(volGain(),ac.currentTime,.02);try{localStorage.setItem('megarozwalka_vol',VOL);}catch(e){}beep(880,null,.05,.06);}
+function setVol(v){VOL=Math.max(0,Math.min(10,v));if(master){const t=ac.currentTime;master.gain.cancelScheduledValues(t);master.gain.setValueAtTime(volGain(),t);master.gain.value=volGain();}try{localStorage.setItem('megarozwalka_vol',VOL);}catch(e){}beep(880,null,.05,.06);}
 function volBar(){return '▮'.repeat(VOL)+'▯'.repeat(10-VOL);}
 function beep(f0,f1,d,v,type){if(!ac)return;const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.type=type||'square';o.frequency.setValueAtTime(f0,t);if(f1)o.frequency.exponentialRampToValueAtTime(f1,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(OUT());o.start(t);o.stop(t+d+.02);}
 function noise(d,v,f0,f1){if(!ac)return;const t=ac.currentTime,n=Math.floor(ac.sampleRate*d),b=ac.createBuffer(1,n,ac.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=(Math.random()*2-1)*(1-i/n);

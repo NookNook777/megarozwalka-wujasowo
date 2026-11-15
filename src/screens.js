@@ -6,8 +6,13 @@ const $=id=>document.getElementById(id);
 $('select').style.backgroundImage=`url(${A.selbg})`;$('logo').src=A.logo;
 let tstate='intro',msel=0;
 const MENU=[{t:'START GRY',a:()=>showSelect()},{t:'GŁOŚNOŚĆ',vol:true,a:()=>{setVol(VOL>=10?0:VOL+1);renderMenu();}},{t:'STEROWANIE',a:()=>panel('ctrl')},{t:'AUTORZY',a:()=>panel('cred')}];
-function renderMenu(){const m=$('menu');m.innerHTML='';MENU.forEach((it,i)=>{const d=document.createElement('div');d.className='it'+(i===msel?' sel':'');d.textContent=it.vol?('< '+it.t+' '+VOL+' >'):it.t;
-  d.onpointerenter=()=>{if(tstate==='menu'&&msel!==i){msel=i;S.blip();renderMenu();}};d.onclick=()=>{if(tstate==='menu'){msel=i;S.ok();MENU[i].a();}};m.appendChild(d);});}
+/* menu budowane raz; przy zmianach tylko aktualizujemy klasy i tekst (wcześniej przebudowa DOM gubiła kliknięcia) */
+function renderMenu(){const m=$('menu');
+  if(m.children.length!==MENU.length){m.innerHTML='';MENU.forEach((it,i)=>{const d=document.createElement('div');
+    d.onpointerenter=()=>{if(tstate==='menu'&&msel!==i){msel=i;S.blip();renderMenu();}};
+    d.onclick=e=>{if(tstate!=='menu')return;msel=i;if(it.vol){const r=d.getBoundingClientRect();setVol(VOL+((e.clientX-r.left)<r.width/2?-1:1));renderMenu();return;}S.ok();it.a();};
+    m.appendChild(d);});}
+  MENU.forEach((it,i)=>{const d=m.children[i];d.className='it'+(i===msel?' sel':'');const t=it.vol?('< '+it.t+' '+String(VOL).padStart(2,' ')+' >'):it.t;if(d.textContent!==t)d.textContent=t;});}
 function panel(k){tstate='panel';const p=$('panel');
   p.innerHTML=(k==='ctrl'?'<h2>STEROWANIE</h2><table><tr><td>Strzałki / WASD</td><td>ruch i celowanie</td></tr><tr><td>↑ / ↓ + bieg</td><td>strzał po skosie</td></tr><tr><td>Z / K / Spacja</td><td>skok (↓ + skok: zeskok)</td></tr><tr><td>X / J</td><td>strzał</td></tr><tr><td>C / L</td><td>ult (gdy pasek pełny)</td></tr><tr><td>V / T</td><td>poza zwycięstwa (szpan)</td></tr><tr><td>← / → w pauzie</td><td>głośność</td></tr><tr><td>Enter / Esc</td><td>pauza</td></tr></table>'
    :'<h2>AUTORZY</h2>Pomysł, postaci i plansze: Nook<br>Kod i chiptune: Claude<br>Grafika: SpriteCook, Sorceress, Sprite Flow'
