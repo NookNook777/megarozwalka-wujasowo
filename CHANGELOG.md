@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.21.1] — 2026-11-15
+### Zmienione
+- Muzyka zapisana w 80 kbps zamiast 96 kbps — gra jest lżejsza o ok. 0,6 MB, pętle bez zmian.
+
 ## [0.21.0] — 2026-11-15
 ### Dodane
 - **Muzyka do poziomu „Piwnica”** (autor: Nook, 149 BPM). Gra przez cały poziom, łącznie z walką z B.R.S.;
@@ -309,7 +313,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.21.0...HEAD
+[Unreleased]: ../../compare/v0.21.1...HEAD
+[0.21.1]: ../../releases/tag/v0.21.1
 [0.21.0]: ../../releases/tag/v0.21.0
 [0.20.0]: ../../releases/tag/v0.20.0
 [0.19.6]: ../../releases/tag/v0.19.6
