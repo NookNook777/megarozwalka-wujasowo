@@ -8,7 +8,7 @@ const plats=[{x:560,y:200},{x:1705,y:214},{x:2240,y:196},{x:2430,y:140},{x:2610,
 const PLW=127,PLH=22;
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
-function startGame(k){
+function startGame(k){beamStop();
   state='play';const h=HEROES[k];
   G_={hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
     P:{x:120,y:G,vx:0,vy:0,face:1,ground:true,coyote:0,buf:0,cd:0,anim:'idle',fr:0,fi:0,ft:0,inv:60,shotT:0,flashT:0,hitT:0,kb:0,dead:false},

@@ -20,7 +20,7 @@ function panel(k){tstate='panel';const p=$('panel');
      +'<br><br>Oddzielne podziękowania dla mojej żony – <b>Ev</b>, która bezustannie wspiera mnie w działaniach.'
      +'<br><br>Jeśli choć raz zagraliście i bawiliście się dobrze, to kłaniam się Wam bardzo nisko.</div>')+'<div class="hint">Enter, Esc albo kliknij, żeby wrócić</div>';p.classList.add('on');}
 $('panel').onclick=()=>{$('panel').classList.remove('on');tstate='menu';};
-function showTitle(){state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';
+function showTitle(){if(typeof beamStop==='function')beamStop();state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';
   $('logo').classList.remove('in');setTimeout(()=>{$('logo').classList.add('in');},200);setTimeout(()=>{S.boom();tstate='press';},900);}
 function pressStart(){tstate='menu';$('press').style.display='none';$('menu').classList.add('on');renderMenu();S.ok();}
 $('title').addEventListener('click',e=>{au();if(tstate==='press')pressStart();});

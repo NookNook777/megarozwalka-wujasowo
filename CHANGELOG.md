@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.19.6] — 2026-11-15
+### Poprawione
+- Buczenie promienia Łysej grało w nieskończoność, jeśli promień dobił bossa (gra przechodziła do ekranu wygranej, zanim ult się skończył),
+  i słychać je było nawet w kolejnej grze inną postacią. Teraz dźwięk ma twardy limit długości promienia i jest wyłączany
+  przy śmierci bossa, nowej grze i powrocie do menu.
+
 ## [0.19.5] — 2026-11-15
 ### Poprawione
 - **Gra była całkiem niema od v0.19.1**: główny wzmacniacz głośności był przez pomyłkę podłączony sam do siebie zamiast do głośników.
@@ -286,7 +292,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.19.5...HEAD
+[Unreleased]: ../../compare/v0.19.6...HEAD
+[0.19.6]: ../../releases/tag/v0.19.6
 [0.19.5]: ../../releases/tag/v0.19.5
 [0.19.4]: ../../releases/tag/v0.19.4
 [0.19.3]: ../../releases/tag/v0.19.3
