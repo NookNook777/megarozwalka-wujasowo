@@ -1134,6 +1134,7 @@ const A={
  "title": "assets/ui/title_bg.webp",
  "selbg": "assets/ui/select_bg.webp",
  "logo": "assets/ui/logo.webp",
+ "music": "assets/music/maintheme.mp3",
  "ult": {
   "b1": {
    "img": "assets/ult/badziejek_1.png",

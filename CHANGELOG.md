@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.20.0] — 2026-11-15
+### Dodane
+- **Muzyka!** Pierwszy motyw główny (autor: Nook) gra na ekranie tytułowym i przy wyborze postaci.
+  Zapętla się bez przerwy i bez kliku; łagodnie wycisza się przy starcie gry i wraca po powrocie do menu.
+- Osobne suwaki **MUZYKA** i **EFEKTY** w menu głównym i w pauzie (w pauzie: góra/dół wybór, lewo/prawo zmiana).
+  Oba ustawienia zapamiętują się w przeglądarce.
+- Autorzy: dopisana muzyka (Nook).
+
 ## [0.19.6] — 2026-11-15
 ### Poprawione
 - Buczenie promienia Łysej grało w nieskończoność, jeśli promień dobił bossa (gra przechodziła do ekranu wygranej, zanim ult się skończył),
@@ -292,7 +300,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.19.6...HEAD
+[Unreleased]: ../../compare/v0.20.0...HEAD
+[0.20.0]: ../../releases/tag/v0.20.0
 [0.19.6]: ../../releases/tag/v0.19.6
 [0.19.5]: ../../releases/tag/v0.19.5
 [0.19.4]: ../../releases/tag/v0.19.4

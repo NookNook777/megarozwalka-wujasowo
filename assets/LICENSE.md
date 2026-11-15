@@ -13,3 +13,9 @@ Przed upublicznieniem repozytorium sprawdź aktualne warunki licencyjne SpriteCo
 dla wygenerowanych zasobów.
 
 Czcionka **Press Start 2P** (CodeMan38) jest dołączona w `assets/fonts/` (z pakietu @fontsource) — licencja SIL Open Font License 1.1, tekst w `assets/fonts/OFL.txt`.
+
+
+## Muzyka
+
+`music/maintheme.mp3` — motyw główny, © 2026 Tomek "Nook", stworzony w Suno. Te same zastrzeżenia co dla grafik;
+przed komercyjnym wydaniem sprawdź warunki Suno dla swojego planu (prawa do utworów z darmowego planu są ograniczone).
