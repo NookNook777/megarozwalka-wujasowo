@@ -33,7 +33,7 @@ ORDER.forEach((k,i)=>{const h=HEROES[k];const d=document.createElement('div');d.
   d.onpointerenter=()=>{if(!slock&&ssel!==i){ssel=i;S.blip();renderSel();}};d.onclick=()=>{if(!slock){ssel=i;renderSel();pickHero();}};
   $('cards').appendChild(d);idleCv.push(d.querySelector('canvas'));});
 function renderSel(){[...$('cards').children].forEach((c,i)=>c.classList.toggle('sel',i===ssel));}
-function showSelect(){if(ac){musInit();musLoad('piwnica');}state='select';$('title').classList.remove('on');$('select').classList.add('on');renderSel();slock=false;}
+function showSelect(){if(ac){musInit();musLoad('piwnica');musLoad('win');}state='select';$('title').classList.remove('on');$('select').classList.add('on');renderSel();slock=false;}
 function pickHero(){slock=true;S.ult();setTimeout(()=>{$('select').classList.remove('on');startGame(ORDER[ssel]);},700);}
 function onKey(code){
   const ok=['Enter','Space','KeyZ','KeyX','KeyJ','KeyK'].includes(code);

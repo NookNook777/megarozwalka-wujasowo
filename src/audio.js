@@ -25,20 +25,23 @@ const S={blip:()=>beep(880,null,.05,.06),ok:()=>{beep(660,null,.07,.09);setTimeo
    Tor: źródło -> wzmacniacz źródła (pojawianie/wyciszanie, przenikanie utworów) -> musDuckN (przyciszenie w pauzie itp.)
         -> musVolN (suwak MUZYKA, tylko .value) -> wyjście.
    MP3 ma opóźnienie kodera (~1105 próbek); jeśli przeglądarka go nie przycina, przesuwamy punkty pętli. */
-const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000}};
-let musVolN=null,musDuckN=null,musSrc=null,musWant=null,musDuck=1;
+const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000},win:{src:A.musicWin,once:true}};
+let musVolN=null,musDuckN=null,musSrc=null,musWant=null,musDuck=1,musJ=null,musPrev=null;
 function mvolGain(){return .55*Math.pow(MVOL/10,1.6);}
 function musInit(){if(!ac||musVolN)return;musVolN=ac.createGain();musVolN.gain.value=mvolGain();musVolN.connect(ac.destination);musDuckN=ac.createGain();musDuckN.gain.value=1;musDuckN.connect(musVolN);
   musLoad('menu');}
 function musLoad(k){const T=TRACKS[k];if(T.buf||T.loading||!T.src)return;T.loading=true;
   fetch(T.src).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,no)=>{const p=ac.decodeAudioData(b,ok,no);if(p&&p.catch)p.catch(no);})).then(buf=>{T.buf=buf;if(musWant===k&&(!musSrc||musSrc.k!==k))musPlay(k);}).catch(e=>console.warn('muzyka '+k+':',e));}
 /* musPlay(k): przenika do utworu k; jeśli k już gra, nic nie robi */
-function musPlay(k){k=k||'menu';musWant=k;if(!ac)return;musInit();if(musSrc&&musSrc.k===k)return;const T=TRACKS[k];if(!T)return;if(!T.buf){musLoad(k);return;}
+function musPlay(k){k=k||'menu';musWant=k;if(!ac)return;musInit();if(musJ){musFadeOut(musJ,.4);musJ=null;}if(musSrc&&musSrc.k===k)return;const T=TRACKS[k];if(!T)return;if(!T.buf){musLoad(k);return;}
   musFadeOut(musSrc,.9);
   const s=ac.createBufferSource(),g=ac.createGain(),buf=T.buf;s.buffer=buf;const off=buf.duration>T.len+.012?1105/44100:0;s.loop=true;s.loopStart=off;s.loopEnd=Math.min(buf.duration,off+T.len);
   const t=ac.currentTime;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(1,t+1.2);s.connect(g);g.connect(musDuckN);s.start(t,off);musSrc={s,g,k};}
 function musFadeOut(m,d){if(!m)return;const {s,g}=m,t=ac.currentTime;g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(Math.max(.0001,g.gain.value),t);g.gain.exponentialRampToValueAtTime(.0001,t+d);try{s.stop(t+d+.05);}catch(e){}setTimeout(()=>{try{g.disconnect();}catch(e){}},(d+.3)*1000);}
+/* dżingiel (jednorazowy): wycisza pętlę i gra raz */
+function musJingle(k){if(!ac)return;musInit();const T=TRACKS[k];if(!T||!T.buf){musLoad(k);return;}musStop(.5);if(musJ)musFadeOut(musJ,.2);
+  const s=ac.createBufferSource(),g=ac.createGain();s.buffer=T.buf;g.gain.value=1;s.connect(g);g.connect(musDuckN);s.start(ac.currentTime+.15);musJ={s,g};s.onended=()=>{if(musJ&&musJ.s===s)musJ=null;try{g.disconnect();}catch(e){}};}
 function musStop(fade){musWant=null;if(!musSrc)return;musFadeOut(musSrc,fade==null?.8:fade);musSrc=null;}
 /* co klatkę: przyciszenie zależne od stanu gry (pauza, game over, wygrana) */
-function musTick(){if(!musDuckN)return;const d=state==='pause'?.35:state==='over'?.3:state==='win'?0:1;if(d!==musDuck){musDuck=d;const t=ac.currentTime;musDuckN.gain.cancelScheduledValues(t);musDuckN.gain.setTargetAtTime(Math.max(d,.0001),t,d===0?.6:.15);}}
+function musTick(){if(typeof state==='undefined')return;if(state==='win'&&musPrev!=='win')musJingle('win');musPrev=state;if(!musDuckN)return;const d=state==='pause'?.35:state==='over'?.3:1;if(d!==musDuck){musDuck=d;const t=ac.currentTime;musDuckN.gain.cancelScheduledValues(t);musDuckN.gain.setTargetAtTime(Math.max(d,.0001),t,d===0?.6:.15);}}
 function setMVol(v){MVOL=Math.max(0,Math.min(10,v));if(musVolN)musVolN.gain.value=mvolGain();try{localStorage.setItem('megarozwalka_mvol',MVOL);}catch(e){}}

@@ -1136,6 +1136,7 @@ const A={
  "logo": "assets/ui/logo.webp",
  "music": "assets/music/maintheme.mp3",
  "musicLvl": "assets/music/piwnica.mp3",
+ "musicWin": "assets/music/victory.mp3",
  "ult": {
   "b1": {
    "img": "assets/ult/badziejek_1.png",
