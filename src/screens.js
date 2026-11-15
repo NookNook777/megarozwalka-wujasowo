@@ -22,9 +22,9 @@ function panel(k){tstate='panel';const p=$('panel');
      +'<br><br>Oddzielne podziękowania dla mojej żony – <b>Ev</b>, która bezustannie wspiera mnie w działaniach.'
      +'<br><br>Jeśli choć raz zagraliście i bawiliście się dobrze, to kłaniam się Wam bardzo nisko.</div>')+'<div class="hint">Enter, Esc albo kliknij, żeby wrócić</div>';p.classList.add('on');}
 $('panel').onclick=()=>{$('panel').classList.remove('on');tstate='menu';};
-function showTitle(){if(typeof beamStop==='function')beamStop();state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';if(ac)musPlay();
+function showTitle(){if(typeof beamStop==='function')beamStop();state='title';$('title').classList.add('on');$('select').classList.remove('on');$('menu').classList.remove('on');$('press').style.display='block';tstate='intro';if(ac)musPlay('menu');
   $('logo').classList.remove('in');setTimeout(()=>{$('logo').classList.add('in');},200);setTimeout(()=>{S.boom();tstate='press';},900);}
-function pressStart(){musPlay();tstate='menu';$('press').style.display='none';$('menu').classList.add('on');renderMenu();S.ok();}
+function pressStart(){musPlay('menu');tstate='menu';$('press').style.display='none';$('menu').classList.add('on');renderMenu();S.ok();}
 $('title').addEventListener('click',e=>{au();if(tstate==='press')pressStart();});
 // select
 let ssel=0,slock=false;const idleCv=[];
@@ -33,7 +33,7 @@ ORDER.forEach((k,i)=>{const h=HEROES[k];const d=document.createElement('div');d.
   d.onpointerenter=()=>{if(!slock&&ssel!==i){ssel=i;S.blip();renderSel();}};d.onclick=()=>{if(!slock){ssel=i;renderSel();pickHero();}};
   $('cards').appendChild(d);idleCv.push(d.querySelector('canvas'));});
 function renderSel(){[...$('cards').children].forEach((c,i)=>c.classList.toggle('sel',i===ssel));}
-function showSelect(){state='select';$('title').classList.remove('on');$('select').classList.add('on');renderSel();slock=false;}
+function showSelect(){if(ac){musInit();musLoad('piwnica');}state='select';$('title').classList.remove('on');$('select').classList.add('on');renderSel();slock=false;}
 function pickHero(){slock=true;S.ult();setTimeout(()=>{$('select').classList.remove('on');startGame(ORDER[ssel]);},700);}
 function onKey(code){
   const ok=['Enter','Space','KeyZ','KeyX','KeyJ','KeyK'].includes(code);

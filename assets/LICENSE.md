@@ -17,5 +17,5 @@ Czcionka **Press Start 2P** (CodeMan38) jest dołączona w `assets/fonts/` (z pa
 
 ## Muzyka
 
-`music/maintheme.mp3` — motyw główny, © 2026 Tomek "Nook", stworzony w Suno. Te same zastrzeżenia co dla grafik;
+`music/maintheme.mp3` (motyw główny) i `music/piwnica.mp3` (poziom „Piwnica”) — © 2026 Tomek "Nook", stworzony w Suno. Te same zastrzeżenia co dla grafik;
 przed komercyjnym wydaniem sprawdź warunki Suno dla swojego planu (prawa do utworów z darmowego planu są ograniczone).

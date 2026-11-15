@@ -2,7 +2,7 @@
 /* Pętla gry, sterowanie dotykowe, start */
 /* ---------------- loop ---------------- */
 let st=0,acc=0,last=performance.now();
-function frame(now){acc+=Math.min(100,now-last);last=now;
+function frame(now){musTick();acc+=Math.min(100,now-last);last=now;
   while(acc>=1000/60){acc-=1000/60;st++;
     if(state==='play'||state==='pause'||state==='win'||state==='over'||state==='ultcut'||state==='dialog'){update();}
     else poll();
