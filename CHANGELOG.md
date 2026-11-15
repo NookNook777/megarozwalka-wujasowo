@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.24.1] — 2026-11-15
+### Zmienione
+- Napis „… WYGRYWA!” na ekranie zwycięstwa jest w kolorze postaci, jak na ekranie wyboru
+  (Badziejek żółty, Marewik pomarańczowy, Łysa różowa).
+
 ## [0.24.0] — 2026-11-15
 ### Dodane
 - **Muzyka walki z B.R.S.** (autor: Nook). W trakcie rozmowy przed walką muzyka poziomu przycicha,
@@ -339,7 +344,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.24.0...HEAD
+[Unreleased]: ../../compare/v0.24.1...HEAD
+[0.24.1]: ../../releases/tag/v0.24.1
 [0.24.0]: ../../releases/tag/v0.24.0
 [0.23.1]: ../../releases/tag/v0.23.1
 [0.23.0]: ../../releases/tag/v0.23.0

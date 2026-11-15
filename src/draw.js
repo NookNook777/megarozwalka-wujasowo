@@ -180,7 +180,7 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0]*S2,fy2=y0+M.flash[1]*S2,ph=(t%8);const r=3+ph*1.6;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy2,r,0,6.3);ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(fx-r*2.2,fy2-1,r*4.4,3);ctx.fillRect(fx-1,fy2-r*2.2,3,r*4.4);if(ph===0){ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(0,0,W,H);}}
   ctx.font='14px "Press Start 2P",monospace';sh('PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
-  ctx.font='8px "Press Start 2P",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,'#ff8ad0','center');
+  ctx.font='8px "Press Start 2P",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,HEROES[k].c,'center');/* kolor postaci jak na ekranie wyboru */
   sh('Zebrane złotówki: '+g.coins,W/2,290,'#fff','center');if(t>60&&(t>>4)&1)sh('Enter: wróć do menu',W/2,316,'#c8c0d8','center');ctx.globalAlpha=1;}
 
 function drawTaunt(g,P){const k=g.hero,M=A.heroes[k].meta.victory,im=HS[k].victory;if(!im.complete)return;const f=Math.min(M.n-1,Math.floor((TAUNT_T-P.taunt)/TAUNT_T*M.n));
