@@ -112,7 +112,7 @@ function collect(k){const g=G_;S.pick();
   if(FXDUR[k]){fxStart(k);msgShow(N[k],80,FX[k]);return;}
   const extra=(k==='smalec'&&g.lives>=5)?10:(k==='dopalka'&&g.wl>=3)?20:((k==='magnes'&&g.magnet)||(k==='klapki'&&g.fast))?10:(food&&g.hp>=100)?10:0;
   if(extra){addUlt(extra);g.coins+=3;S.coin();msgShow(N[k],90,'NADWYŻKA: +'+extra+'% ULTA · +3 ZŁ');return;}
-  if(k==='dopalka'){g.wl=Math.min(3,g.wl+1);}else if(k==='kamizelka')g.armor=4;else if(k==='folia')g.barrier=600;else if(k==='energetyk')addUlt(50);
+  if(k==='dopalka'){g.wl=Math.min(3,g.wl+1);}else if(k==='kamizelka')g.armor=4;else if(k==='folia')g.barrier=600;else if(k==='energetyk')g.ult=Math.min(100,g.ult+50);/* bez blokady z addUlt: działa też w trakcie ulta */
   else if(k==='magnes')g.magnet=true;else if(k==='klapki')g.fast=true;else if(food)g.hp=Math.min(100,g.hp+40);else if(k==='smalec')g.lives++;
   msgShow(N[k],80,k==='dopalka'?'BROŃ POZIOM '+g.wl:FX[k]);}
 function muzzle(){const P=G_.P,M=META(P.anim);let lx,ly;if(P.anim==='jump'){lx=FW/2+18;ly=FW-36;}else{const q=M.muz[P.fr]||M.muz[0];lx=q[0];ly=q[1];}

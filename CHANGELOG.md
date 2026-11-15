@@ -8,6 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.23.1] — 2026-11-15
+### Poprawione
+- **Energetyk** nie dawał nic, jeśli zebrało się go w trakcie ulta (pasek był wtedy zablokowany).
+  Teraz zawsze dodaje +50% ulta.
+- **Chomik Tuptuś przy bossie** znikał: kamera w arenie stoi w miejscu, a chomik biegł za plecami gracza,
+  poza kadr (i strzelał z ekranu, więc pestki od razu przepadały). Teraz zawsze trzyma się w kadrze
+  — jeśli z tyłu nie ma miejsca, staje przed graczem.
+- Tuptuś realnie rani B.R.S.: celuje w głowę, gdy jest odsłonięta, pestki przelatują przez opancerzone ramię,
+  a trafienie w korpus zadaje 60% obrażeń zamiast 20%.
+
 ## [0.23.0] — 2026-11-15
 ### Dodane
 - **Dżingiel game over** (autor: Nook). Muzyka poziomu wycisza się, dżingiel gra raz (ok. 5,5 s);
@@ -323,7 +333,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.23.0...HEAD
+[Unreleased]: ../../compare/v0.23.1...HEAD
+[0.23.1]: ../../releases/tag/v0.23.1
 [0.23.0]: ../../releases/tag/v0.23.0
 [0.22.0]: ../../releases/tag/v0.22.0
 [0.21.1]: ../../releases/tag/v0.21.1

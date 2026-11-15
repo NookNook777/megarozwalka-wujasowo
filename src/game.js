@@ -97,10 +97,10 @@ function update(){
     for(const e of g.en){if(e.dead||!e.active||(b.hit&&b.hit.has(e))||e.x<g.camX+10||e.x>g.camX+W-14)continue;const T=ET[e.k];if(Math.abs(b.x-e.x)<T.w/2+3&&b.y>e.y-T.h&&b.y<e.y+2){hitEnemy(e,b.dmg*(g.ultT>0&&g.hero==='m'?2:1));spark(b.x,b.y,'#9aff5a');if(g.hero==='m'&&!b.seed)marewikImpact(e,b);if(b.pierce)(b.hit=b.hit||new Set()).add(e);else{b.dead=1;break;}}}
     if(b.dead)continue;
     for(const c of g.capsA){if(c.dead)continue;if(Math.abs(b.x-c.x)<18&&Math.abs(b.y-c.y)<12){b.dead=1;c.dead=true;boom(c.x,c.y,1);S.boom();dropItem(c.x,c.y,c.k);}}
-    const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;
+    const bs=g.boss;if(!bs.dead&&bs.active&&bs.x<g.camX+W-20){const mul=(g.ultT>0&&g.hero==='m'?2:1);let ah=armHit(bs,b);if(ah&&b.hit&&b.hit.has(bs[ah]))ah=null;if(ah&&b.seed&&!(bs[ah].t>=0||bs[ah].vul>0))ah=null;/* pestki Tuptusia przelatują przez opancerzone ramię */
       if(ah){hitArm(bs[ah],b.dmg*mul,b.x,b.y,ah==='fa');if(b.pierce)(b.hit=b.hit||new Set()).add(bs[ah]);else b.dead=1;}else if(!(b.hit&&b.hit.has(bs))){const HB=bxr(bs,48,118),BB=bxr(bs,34,160);const head=(bs.st==='whistle'||bs.st==='stagger')&&b.x>HB[0]&&b.x<HB[1]&&b.y>G-200+bs.yo&&b.y<G-118+bs.yo;
       if(head){dmgBoss(b.dmg*mul*3,true,b.x,b.y);spark(b.x,b.y,'#ffe066');spark(b.x,b.y,'#fff');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}
-      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*.2,false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
+      else if(b.x>BB[0]&&b.x<BB[1]&&b.y>G-200+bs.yo&&b.y<G+bs.yo){dmgBoss(b.dmg*mul*(b.seed?.6:.2),false,b.x,b.y);spark(b.x,b.y,'#ff8ad0');if(b.pierce)(b.hit=b.hit||new Set()).add(bs);else b.dead=1;}}}
     if(!b.dead&&(b.x<g.camX-2||b.x>g.camX+W+2)&&fxOn('kapsle')&&!b.bounced){b.bounced=1;b.vx=-b.vx;b.x=Math.max(g.camX,Math.min(g.camX+W,b.x));b.hit=null;spark(b.x,b.y,'#ffb030');}
     if(!b.dead&&(b.life<=0||b.x<g.camX-2||b.x>g.camX+W+2||b.y<-30)){b.dead=1;b.off=1;}}
   if(fxOn('petardy'))for(const b of g.bullets)if(b.dead&&!b.off&&!b.seed)petarda(b.x,b.y,b.dmg);
