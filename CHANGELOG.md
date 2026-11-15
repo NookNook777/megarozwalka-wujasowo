@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.19.5] — 2026-11-15
+### Poprawione
+- **Gra była całkiem niema od v0.19.1**: główny wzmacniacz głośności był przez pomyłkę podłączony sam do siebie zamiast do głośników.
+  Teraz podłączony poprawnie; dodatkowo głośność ustawiana bez automatyki parametrów (nowy wzmacniacz przy każdej zmianie,
+  efekty skalowane już przy tworzeniu) — działa tak samo w każdej przeglądarce.
+- Test: zmierzony realny sygnał wyjściowy przy głośności 10 / 5 / 1 / 0 — maleje zgodnie z suwakiem (w v0.19.4 był zerowy na każdym poziomie).
+
 ## [0.19.4] — 2026-11-15
 ### Poprawione
 - Regulacja głośności faktycznie zmienia głośność: suwak zmieniał liczbę, ale wzmacniacz w części przeglądarek zostawał na starej wartości
@@ -279,7 +286,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.19.4...HEAD
+[Unreleased]: ../../compare/v0.19.5...HEAD
+[0.19.5]: ../../releases/tag/v0.19.5
 [0.19.4]: ../../releases/tag/v0.19.4
 [0.19.3]: ../../releases/tag/v0.19.3
 [0.19.2]: ../../releases/tag/v0.19.2
