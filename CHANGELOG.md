@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.23.0] — 2026-11-15
+### Dodane
+- **Dżingiel game over** (autor: Nook). Muzyka poziomu wycisza się, dżingiel gra raz (ok. 5,5 s);
+  po „kontynuuj” muzyka poziomu startuje od nowa.
+
 ## [0.22.0] — 2026-11-15
 ### Dodane
 - **Dżingiel zwycięstwa** (autor: Nook) po pokonaniu B.R.S. Muzyka poziomu wycisza się, dżingiel gra raz
@@ -318,7 +323,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.22.0...HEAD
+[Unreleased]: ../../compare/v0.23.0...HEAD
+[0.23.0]: ../../releases/tag/v0.23.0
 [0.22.0]: ../../releases/tag/v0.22.0
 [0.21.1]: ../../releases/tag/v0.21.1
 [0.21.0]: ../../releases/tag/v0.21.0

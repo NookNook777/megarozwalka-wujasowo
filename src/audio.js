@@ -25,7 +25,7 @@ const S={blip:()=>beep(880,null,.05,.06),ok:()=>{beep(660,null,.07,.09);setTimeo
    Tor: źródło -> wzmacniacz źródła (pojawianie/wyciszanie, przenikanie utworów) -> musDuckN (przyciszenie w pauzie itp.)
         -> musVolN (suwak MUZYKA, tylko .value) -> wyjście.
    MP3 ma opóźnienie kodera (~1105 próbek); jeśli przeglądarka go nie przycina, przesuwamy punkty pętli. */
-const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000},win:{src:A.musicWin,once:true}};
+const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000},win:{src:A.musicWin,once:true},over:{src:A.musicOver,once:true}};
 let musVolN=null,musDuckN=null,musSrc=null,musWant=null,musDuck=1,musJ=null,musPrev=null;
 function mvolGain(){return .55*Math.pow(MVOL/10,1.6);}
 function musInit(){if(!ac||musVolN)return;musVolN=ac.createGain();musVolN.gain.value=mvolGain();musVolN.connect(ac.destination);musDuckN=ac.createGain();musDuckN.gain.value=1;musDuckN.connect(musVolN);
@@ -43,5 +43,5 @@ function musJingle(k){if(!ac)return;musInit();const T=TRACKS[k];if(!T||!T.buf){m
   const s=ac.createBufferSource(),g=ac.createGain();s.buffer=T.buf;g.gain.value=1;s.connect(g);g.connect(musDuckN);s.start(ac.currentTime+.15);musJ={s,g};s.onended=()=>{if(musJ&&musJ.s===s)musJ=null;try{g.disconnect();}catch(e){}};}
 function musStop(fade){musWant=null;if(!musSrc)return;musFadeOut(musSrc,fade==null?.8:fade);musSrc=null;}
 /* co klatkę: przyciszenie zależne od stanu gry (pauza, game over, wygrana) */
-function musTick(){if(typeof state==='undefined')return;if(state==='win'&&musPrev!=='win')musJingle('win');musPrev=state;if(!musDuckN)return;const d=state==='pause'?.35:state==='over'?.3:1;if(d!==musDuck){musDuck=d;const t=ac.currentTime;musDuckN.gain.cancelScheduledValues(t);musDuckN.gain.setTargetAtTime(Math.max(d,.0001),t,d===0?.6:.15);}}
+function musTick(){if(typeof state==='undefined')return;if((state==='win'||state==='over')&&musPrev!==state)musJingle(state);musPrev=state;if(!musDuckN)return;const d=state==='pause'?.35:1;if(d!==musDuck){musDuck=d;const t=ac.currentTime;musDuckN.gain.cancelScheduledValues(t);musDuckN.gain.setTargetAtTime(Math.max(d,.0001),t,d===0?.6:.15);}}
 function setMVol(v){MVOL=Math.max(0,Math.min(10,v));if(musVolN)musVolN.gain.value=mvolGain();try{localStorage.setItem('megarozwalka_mvol',MVOL);}catch(e){}}
