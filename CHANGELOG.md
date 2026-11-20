@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.26.4] — 2026-11-20
+### Usunięte
+- Podgląd Farmy: przyczepa jako platforma (wyglądała źle). Platformy to teraz na zmianę bela siana i stos palet.
+
 ## [0.26.3] — 2026-11-20
 ### Dodane
 - Podgląd Farmy: **gnojówka w dziurach** zamiast zielonego ślimu. Faktura z Sorceress powoli płynie i lekko faluje,
@@ -380,7 +384,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.26.3...HEAD
+[Unreleased]: ../../compare/v0.26.4...HEAD
+[0.26.4]: ../../releases/tag/v0.26.4
 [0.26.3]: ../../releases/tag/v0.26.3
 [0.26.2]: ../../releases/tag/v0.26.2
 [0.26.1]: ../../releases/tag/v0.26.1

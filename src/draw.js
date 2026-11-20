@@ -7,9 +7,9 @@ function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
 let FARMA=/farma/i.test(location.search+location.hash);
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
 function bgLayers(camX){if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
-/* platforma: w Farmie na zmianę bele siana, przyczepa i palety (górna krawędź tam, gdzie zwykła platforma) */
-const FPL=['plat_siano','plat_przyczepa','plat_palety'];
-function drawPlat(p){if(FARMA){const im=PF[FPL[(plats.indexOf(p))%3]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
+/* platforma: w Farmie na zmianę bele siana i palety (górna krawędź tam, gdzie zwykła platforma) */
+const FPL=['plat_siano','plat_palety'];
+function drawPlat(p){if(FARMA){const im=PF[FPL[(plats.indexOf(p))%FPL.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
 function tileFx(on){if(FARMA)ctx.filter=on?'sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)':'none';}
 function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
   let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
