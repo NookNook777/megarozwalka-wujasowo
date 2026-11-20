@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.26.5] — 2026-11-20
+### Poprawione
+- Podgląd Farmy: rekwizyty nie nachodzą już na siebie ani na inne elementy. Rozkład omija dziury z gnojówką,
+  beczki po kapuście, checkpointy i niskie platformy (wysokie rzeczy, jak strach na wróble, nie stoją pod nimi),
+  i trzyma odstęp między dekoracjami.
+
 ## [0.26.4] — 2026-11-20
 ### Usunięte
 - Podgląd Farmy: przyczepa jako platforma (wyglądała źle). Platformy to teraz na zmianę bela siana i stos palet.
@@ -384,7 +390,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.26.4...HEAD
+[Unreleased]: ../../compare/v0.26.5...HEAD
+[0.26.5]: ../../releases/tag/v0.26.5
 [0.26.4]: ../../releases/tag/v0.26.4
 [0.26.3]: ../../releases/tag/v0.26.3
 [0.26.2]: ../../releases/tag/v0.26.2
