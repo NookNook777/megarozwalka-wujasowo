@@ -9,6 +9,7 @@ const A={
  "farma": {"far":"assets/level/farma/far.webp","a1":"assets/level/farma/a1.webp","a2":"assets/level/farma/a2.webp","b1":"assets/level/farma/b1.webp","b2":"assets/level/farma/b2.webp","c1":"assets/level/farma/c1.webp","c2":"assets/level/farma/c2.webp"},
  "tiles": "assets/level/tiles.png",
  "plat": "assets/level/platform.png",
+ "propsF": {"kapusta": "assets/props/farma/kapusta.png", "ul": "assets/props/farma/ul.png", "tv": "assets/props/farma/tv.png", "strach": "assets/props/farma/strach.png", "krasnal": "assets/props/farma/krasnal.png", "labedz": "assets/props/farma/labedz.png", "wanna": "assets/props/farma/wanna.png", "butla": "assets/props/farma/butla.png", "gasior": "assets/props/farma/gasior.png", "buda": "assets/props/farma/buda.png", "rower": "assets/props/farma/rower.png", "wiadro": "assets/props/farma/wiadro.png"},
  "props": {
   "slimebarrel": "assets/props/slimebarrel.png",
   "car": "assets/props/car.png",

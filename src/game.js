@@ -6,6 +6,8 @@ const pits=[[900,1000],[1690,1850],[2620,2720],[3300,3410],[4300,4420],[5050,523
 const isPit=x=>pits.some(p=>x>=p[0]&&x<p[1]);
 const plats=[{x:560,y:200},{x:1705,y:214},{x:2240,y:196},{x:2430,y:140},{x:2610,y:206},{x:3290,y:206},{x:3900,y:200},{x:4180,y:196},{x:4330,y:150},{x:4480,y:204},{x:5070,y:214},{x:5200,y:170},{x:5600,y:196},{x:5790,y:146},{x:5980,y:200},{x:6500,y:196},{x:LEN-640+24,y:224},{x:LEN-640+168,y:176}];
 const PLW=127,PLH=22;
+/* dekoracje Farmy (podgląd): rozłożone co ~250 px, losowa kolejność stała */
+const decoF=(()=>{const k=['strach','krasnal','labedz','wanna','ul','tv','buda','rower','wiadro','gasior','butla','krasnal','labedz','strach','wanna','buda','rower','ul','tv','wiadro'];const o=[];for(let i=0,x=60;x<7000;i++,x+=230+((i*97)%140))o.push([k[i%k.length],x]);return o;})();
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
 function startGame(k){beamStop();musPlay('piwnica');

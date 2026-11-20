@@ -15,7 +15,7 @@ const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillTe
 function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
@@ -33,7 +33,7 @@ function draw(){
   ctx.save();ctx.translate(sx0,0);
   bgLayers(g.camX);if(!FARMA)plinth(g.camX*.6);else{ctx.fillStyle='#4f8a2c';ctx.fillRect(0,G-3,W,3);}
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;tileFx(1);
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
@@ -43,7 +43,7 @@ function draw(){
   tileFx(0);
   for(const p of plats)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
-  for(const b of g.barrels){if(b.dead)continue;const p=PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
+  for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
   for(const e of g.en){if(e.dead||!e.active)continue;const T=ET[e.k];const atk=e.at>=0&&T.atk;const key=atk?T.atk:T.walk,M=A.enemies[key],im=EN[key];if(!im.complete)continue;
     let f;if(atk)f=Math.min(3,Math.floor(e.at/6));else if(e.k==='barrel')f=e.ground?(e.cd<12?1:0):(e.vy<0?3:5);else f=Math.floor(e.t/(e.k==='rat'?3:6))%M.n;
     ctx.save();ctx.translate(Math.round(e.x),Math.round(e.y));ctx.scale(-e.face,1);if(e.flash&1)ctx.filter='brightness(3)';ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,-M.fw/2,-M.fh+1,M.fw,M.fh);ctx.restore();}
