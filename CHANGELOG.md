@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.26.0] — 2026-11-20
+### Dodane
+- **Podgląd teł Farmy Badzieja** (poziom 2, w budowie). Włącza się klawiszem **F** na ekranie tytułowym
+  albo adresem z `?farma`. Na razie to same tła na planszy Piwnicy: dalszy plan (wieś, kościół, bocian)
+  i 6 paneli zabudowy (stodoły, obory z kurnikiem, chałupy ze studnią) w kolejności A1·B1·A2·C1·A1·B2·A2·C2,
+  więc przez cały poziom nic się nie powtarza. Ziemia tymczasowo przebarwiona na polną drogę.
+- Tła: wycięte z magentowego tła, wyrównane do jednej linii ziemi, lekko przygaszone, żeby postacie się odcinały;
+  dalszy plan odbity lustrzanie, żeby łączył się bez szwu.
+
 ## [0.25.0] — 2026-11-20
 ### Dodane
 - **Urozmaicone tło piwnicy**: dwa nowe panele ściany (od Nooka) przeplatane z dotychczasowym w kolejności A·B·A·C,
@@ -354,7 +363,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.25.0...HEAD
+[Unreleased]: ../../compare/v0.26.0...HEAD
+[0.26.0]: ../../releases/tag/v0.26.0
 [0.25.0]: ../../releases/tag/v0.25.0
 [0.24.2]: ../../releases/tag/v0.24.2
 [0.24.1]: ../../releases/tag/v0.24.1

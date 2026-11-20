@@ -37,6 +37,7 @@ function showSelect(){if(ac){musInit();musLoad('piwnica');musLoad('win');musLoad
 function pickHero(){slock=true;S.ult();setTimeout(()=>{$('select').classList.remove('on');startGame(ORDER[ssel]);},700);}
 function onKey(code){
   const ok=['Enter','Space','KeyZ','KeyX','KeyJ','KeyK'].includes(code);
+  if(state==='title'&&code==='KeyF'){FARMA=!FARMA;S.ok();}
   if(state==='title'){if(tstate==='press'&&ok)pressStart();else if(tstate==='menu'){if(code==='ArrowUp'||code==='KeyW'){msel=(msel+MENU.length-1)%MENU.length;S.blip();renderMenu();}else if(code==='ArrowDown'||code==='KeyS'){msel=(msel+1)%MENU.length;S.blip();renderMenu();}
       else if(MENU[msel].vol&&(code==='ArrowLeft'||code==='KeyA')){volStep(MENU[msel].vol,-1);renderMenu();}else if(MENU[msel].vol&&(code==='ArrowRight'||code==='KeyD')){volStep(MENU[msel].vol,1);renderMenu();}else if(ok){S.ok();MENU[msel].a();}}
     else if(tstate==='panel'&&(ok||code==='Escape')){$('panel').classList.remove('on');tstate='menu';}}
