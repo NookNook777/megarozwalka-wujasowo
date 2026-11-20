@@ -1,10 +1,14 @@
 'use strict';
 /* Rysowanie: tło, poziom, postacie, HUD, dymki komiksowe */
 /* ---------------- draw ---------------- */
+/* ściana: kilka paneli na zmianę (A B A C), żeby tło się nie powtarzało; każdy łączy się filarem z panelem A */
+function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
+function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
+  let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
 function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-Math.floor(((camX*f)%w+w)%w);for(let x=o;x<W;x+=w)ctx.drawImage(im,x,0);}
 const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillText(s,x+1,y+1);ctx.fillStyle=c||'#f2ead8';ctx.fillText(s,x,y);};
 function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
-  const span=2700,camX=(t*1.6)%span;layer(IM.far,.25,camX);layer(IM.wall,.6,camX);
+  const span=2700,camX=(t*1.6)%span;layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;
@@ -22,7 +26,7 @@ function draw(){
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
   ctx.save();ctx.translate(sx0,0);
-  layer(IM.far,.25,g.camX);layer(IM.wall,.6,g.camX);plinth(g.camX*.6);
+  layer(IM.far,.25,g.camX);layerSeq(wallSeq(),.6,g.camX);plinth(g.camX*.6);
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of deco){const p=PR[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;

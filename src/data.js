@@ -4,6 +4,8 @@
 const A={
  "far": "assets/level/far.webp",
  "wall": "assets/level/wall.webp",
+ "wall2": "assets/level/wall2.webp",
+ "wall3": "assets/level/wall3.webp",
  "tiles": "assets/level/tiles.png",
  "plat": "assets/level/platform.png",
  "props": {
