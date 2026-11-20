@@ -7,6 +7,9 @@ function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
 let FARMA=/farma/i.test(location.search+location.hash);
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
 function bgLayers(camX){if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
+/* platforma: w Farmie na zmianę bele siana, przyczepa i palety (górna krawędź tam, gdzie zwykła platforma) */
+const FPL=['plat_siano','plat_przyczepa','plat_palety'];
+function drawPlat(p){if(FARMA){const im=PF[FPL[(plats.indexOf(p))%3]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
 function tileFx(on){if(FARMA)ctx.filter=on?'sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)':'none';}
 function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
   let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
@@ -18,7 +21,7 @@ function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.
   for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
-  for(const p of plats)if(p.x>cx-150&&p.x<cx+W)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
+  for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
   ctx.restore();
   // golden trio marching (hold the ground: pits are skipped in title view)
   [['b',188,0],['m',262,3],['l',336,5]].forEach(([k,x,off])=>{const im=HS[k].run;if(!im.complete)return;const o=A.heroes[k].meta.run.order,f=o[(Math.floor(t/5)+off)%o.length];
@@ -41,7 +44,7 @@ function draw(){
     ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);
     if(l)pitEdge(x,1);if(r)pitEdge(x+32,-1);}
   tileFx(0);
-  for(const p of plats)ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);
+  for(const p of plats)drawPlat(p);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
   for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
   for(const e of g.en){if(e.dead||!e.active)continue;const T=ET[e.k];const atk=e.at>=0&&T.atk;const key=atk?T.atk:T.walk,M=A.enemies[key],im=EN[key];if(!im.complete)continue;
