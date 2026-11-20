@@ -69,6 +69,7 @@ function update(){
   if(!g.arenaLock&&g.boss.active&&!g.boss.dead&&P.x>ARENA+24)g.arenaLock=true;
   const py=P.y;P.x=Math.max(g.arenaLock&&!g.boss.dead?ARENA+12:g.camX+12,Math.min(LEN-20,P.x+P.vx));P.y+=P.vy;
   if(P.vy>=0){const gy=groundAt(P.x,py,P.y,P.dropT>0);if(gy!==null){P.y=gy;P.vy=0;P.ground=true;}else P.ground=false;}else P.ground=false;
+  if(FARMA&&P.vy>0&&isPit(P.x)&&P.y>=H-26&&P.y-P.vy<H-26){(g.spl=g.spl||[]).push({x:P.x,t:0});noise(.35,.3,700,90);}
   if(P.y>H+60){P.x=Math.max(g.camX+80,P.x-160);while(isPit(P.x))P.x+=20;P.y=-20;P.vy=0;if(!killFall())return;P.inv=Math.max(P.inv,120);}
   if(P.inv>0)P.inv--;if(g.barrier>0)g.barrier--;
   // anim

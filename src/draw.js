@@ -43,7 +43,7 @@ function draw(){
     const l=isPit(x-16),r=isPit(x+48);const top=(tx*7)%4;
     ctx.drawImage(IM.tiles,top*32,0,32,32,x,G,32,32);ctx.drawImage(IM.tiles,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(IM.tiles,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);
     if(l)pitEdge(x,1);if(r)pitEdge(x+32,-1);}
-  tileFx(0);
+  tileFx(0);if(FARMA)drawSplash(g);
   for(const p of plats)drawPlat(p);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
   for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
@@ -156,7 +156,19 @@ function skullBubble(x,y,pop,t){const bob=Math.round(Math.sin(t*.12)*2);y+=bob-M
 
 /* dziura ze ślimem: ciemna przepaść, zielona poświata, falujący ślim z bąblami, kapanie z krawędzi */
 let PITGR=null;
-function drawPitCol(x,tx,t,lp,rp){
+let PITGRF=null;
+/* Farma: gnojówka zamiast ślimu — przewijana faktura z Sorceress, bąble, smród, bryzg przy wpadnięciu */
+function drawPitColF(x,tx,t,lp,rp){const f=ctx.filter;ctx.filter='none';
+  if(!PITGRF){PITGRF=ctx.createLinearGradient(0,G,0,H);PITGRF.addColorStop(0,'#000');PITGRF.addColorStop(.6,'#140c04');PITGRF.addColorStop(1,'#3a2a0c');}
+  ctx.fillStyle=PITGRF;ctx.fillRect(x,G,32,H-G);
+  const im=PF.gnojowka;if(im.complete&&im.width){const sw=im.width,sy=H-31+Math.round(Math.sin(t*.05+tx*.7));let sx=Math.floor(((x+t*.25)%sw+sw)%sw),dx=x,left=32;
+    while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,sy,w,im.height);dx+=w;left-=w;sx=0;}}
+  const ph=(t+tx*53)%170;if(tx%3===0&&ph<64){const b=ph<52?PF.babel:PF.babel_pek;if(b.complete)ctx.drawImage(b,x+1,H-26-b.height+4);}
+  const ps=(t+tx*71)%260;if(tx%4===1&&ps<130&&PF.smrod.complete){ctx.globalAlpha=Math.min(1,ps/20)*Math.max(0,1-ps/130)*.8;ctx.drawImage(PF.smrod,x+4,H-60-ps*.25);ctx.globalAlpha=1;}
+  if(!lp||!rp){const ex=!lp?x+1:x+29,d=(t+tx*19)%70;ctx.fillStyle='#5a4214';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#8a6a2a';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}
+  ctx.filter=f;}
+function drawSplash(g){if(!g.spl)return;for(const s of g.spl){s.t++;const im=s.t<12?PF.bryzg:PF.bryzg2;if(im.complete){ctx.globalAlpha=Math.max(0,1-s.t/30);ctx.drawImage(im,Math.round(s.x-im.width/2),H-26-im.height+6);ctx.globalAlpha=1;}}g.spl=g.spl.filter(s=>s.t<30);}
+function drawPitCol(x,tx,t,lp,rp){if(FARMA)return drawPitColF(x,tx,t,lp,rp);
   if(!PITGR){PITGR=ctx.createLinearGradient(0,G,0,H);PITGR.addColorStop(0,'#000');PITGR.addColorStop(.55,'#04140a');PITGR.addColorStop(1,'#1d6a16');}
   ctx.fillStyle=PITGR;ctx.fillRect(x,G,32,H-G);
   // ślim na dnie — falująca powierzchnia
