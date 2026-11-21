@@ -133,7 +133,7 @@ function boom(x,y,s){for(let i=0;i<10*s;i++){const a=Math.random()*6.28,v=Math.r
 function dnum(x,y,d,c){const g=G_;g.dn=g.dn||[];const n=g.dn.find(q=>q.c===c&&q.age<18&&Math.abs(q.x-x)<70);
   if(n){n.v+=d;n.age=Math.min(n.age,6);n.pop=4;}else g.dn.push({x,y:y-8,v:d,c,age:0,pop:4});}
 function updDnum(){const g=G_;if(!g.dn)return;for(const q of g.dn){q.age++;q.y-=.45;if(q.pop>0)q.pop--;}g.dn=g.dn.filter(q=>q.age<55);}
-function drawDnum(){const g=G_;if(!g.dn)return;ctx.font='8px "Press Start 2P",monospace';ctx.textAlign='center';
+function drawDnum(){const g=G_;if(!g.dn)return;ctx.font='8px "Wujas Pixel",monospace';ctx.textAlign='center';
   for(const q of g.dn){const t=q.v<1?q.v.toFixed(1):q.v<10?q.v.toFixed(1).replace('.0',''):String(Math.round(q.v));const al=q.age>40?(55-q.age)/15:1;ctx.globalAlpha=al;
     const yy=Math.round(q.y-(q.pop>0?2:0));ctx.fillStyle='#000';ctx.fillText('-'+t,Math.round(q.x)+1,yy+1);ctx.fillStyle=q.c;ctx.fillText('-'+t,Math.round(q.x),yy);}
   ctx.globalAlpha=1;ctx.textAlign='left';}
