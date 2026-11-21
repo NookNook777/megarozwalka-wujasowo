@@ -57,3 +57,11 @@ canvas.idle{position:absolute;right:-3%;top:22%;width:38%;image-rendering:pixela
 #bV{width:44px;height:44px;right:calc(68px + env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px));font-size:18px}
 #bP{width:44px;height:44px;right:calc(14px + env(safe-area-inset-right,0px));top:calc(14px + env(safe-area-inset-top,0px))}
 .tb.on{background:var(--padb)}
+
+#panel table.kt td{padding:0 calc(var(--u)*.8)}
+#panel .kc{display:inline-block;min-width:calc(var(--u)*9);text-align:center;padding:0 calc(var(--u)*.6);border:calc(var(--u)*.15) solid #4a4268;color:var(--cream);cursor:pointer;line-height:1.7}
+#panel .kc.sel{border-color:var(--gold);background:rgba(255,208,64,.15)}
+#panel .kc.wait{color:var(--gold);animation:kblink .6s steps(2) infinite}
+@keyframes kblink{50%{opacity:.35}}
+#panel .kfix{margin-top:calc(var(--u)*1);font-size:calc(var(--u)*1.0);color:#b8b0cc}
+#panel .kbtn{margin-top:calc(var(--u)*1)}#panel .kbtn .kc{min-width:calc(var(--u)*14)}

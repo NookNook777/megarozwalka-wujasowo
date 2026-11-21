@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.28.0] — 2026-11-21
+### Dodane
+- **Zmiana klawiszy na PC** (sugestia testerów). W menu **STEROWANIE** każda akcja ma dwa pola na klawisze:
+  wybierasz pole (strzałki + Enter albo kliknięcie), naciskasz nowy klawisz i gotowe. Jeśli klawisz był
+  przypisany gdzie indziej, zostaje tam zwolniony (pole pokazuje „—”). Przycisk **PRZYWRÓĆ DOMYŚLNE** wraca
+  do ustawień fabrycznych. Ustawienia zapamiętują się w przeglądarce.
+- Zarezerwowane i nieprzypisywalne: Enter / Esc / P (pauza) oraz Spacja (zawsze skok), żeby nie dało się
+  zablokować gry. Menu dalej obsługują strzałki/WASD + Enter, a pad działa bez zmian.
+
 ## [0.27.2] — 2026-11-21
 ### Dodane
 - Podgląd New Łódź City: **11 miejskich rekwizytów** (robocia głowa, automat z napojami, Fiat z ramieniem robota,
@@ -414,7 +423,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.27.2...HEAD
+[Unreleased]: ../../compare/v0.28.0...HEAD
+[0.28.0]: ../../releases/tag/v0.28.0
 [0.27.2]: ../../releases/tag/v0.27.2
 [0.27.1]: ../../releases/tag/v0.27.1
 [0.27.0]: ../../releases/tag/v0.27.0
