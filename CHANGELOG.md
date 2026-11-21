@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.29.3] — 2026-11-21
+### Usunięte
+- New Łódź City: właz z parą (nie wyglądał dobrze ani jako przedmiot, ani zatopiony w chodniku).
+
 ## [0.29.2] — 2026-11-21
 ### Poprawione
 - New Łódź City: **właz** nie stoi już na chodniku jak przedmiot — sama pokrywa jest zatopiona w nawierzchni,
@@ -456,7 +460,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.29.2...HEAD
+[Unreleased]: ../../compare/v0.29.3...HEAD
+[0.29.3]: ../../releases/tag/v0.29.3
 [0.29.2]: ../../releases/tag/v0.29.2
 [0.29.1]: ../../releases/tag/v0.29.1
 [0.29.0]: ../../releases/tag/v0.29.0

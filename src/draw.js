@@ -18,11 +18,6 @@ const TILEC={};
 function tintTiles(k,f){if(TILEC[k])return TILEC[k];if(!IM.tiles.complete||!IM.tiles.width)return IM.tiles;const c=document.createElement('canvas');c.width=IM.tiles.width;c.height=IM.tiles.height;const x=c.getContext('2d');x.filter=f;x.drawImage(IM.tiles,0,0);return TILEC[k]=c;}
 function tilesImg(){return FARMA?tintTiles('f','sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)'):LODZ?tintTiles('l','sepia(1) hue-rotate(215deg) saturate(2.2) brightness(.8)'):IM.tiles;}
 function tileFx(on){}
-/* właz w New Łódź City: pokrywa zatopiona w chodniku (połowa pod powierzchnią) + różowa para animowana w kodzie */
-function drawManhole(p,x,cx){if(!p.complete||x<cx-80||x>cx+W+40)return;const t=(typeof G_!=='undefined'&&G_&&G_.t)||st;
-  ctx.drawImage(p,x,G-Math.round(p.height*.5));
-  const mx=x+p.width/2;for(let i=0;i<4;i++){const ph=((t+i*22+x)%88)/88,r=3+ph*9,a=(1-ph)*.45;
-    ctx.fillStyle=`rgba(255,140,230,${a.toFixed(3)})`;ctx.beginPath();ctx.arc(mx+Math.sin(ph*6+i)*4,G-4-ph*34,r,0,6.3);ctx.fill();}}
 /* Farma i Łódź: własny pas ziemi (Sorceress) zamiast kafli — rysowany kolumnami 32 px, z zawijaniem */
 function groundCol(x){if(!FARMA&&!LODZ)return false;const im=FARMA?IM.FM.ziemia:IM.LZ.ziemia;if(!im||!im.complete||!im.width)return false;
   const off=FARMA?8:0,sw=im.width;let sx=((x%sw)+sw)%sw,dx=x,left=32;
@@ -36,7 +31,7 @@ const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillTe
 function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(k==='wlaz'&&LODZ){drawManhole(p,x,cx);continue;}if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;if(!groundCol(x)){ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}}
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
@@ -54,7 +49,7 @@ function draw(){
   ctx.save();ctx.translate(sx0,0);
   bgLayers(g.camX);if(!FARMA&&!LODZ)plinth(g.camX*.6);
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(k==='wlaz'&&LODZ){drawManhole(p,x,cx);continue;}if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();tileFx(1);
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
