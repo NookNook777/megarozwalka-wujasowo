@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.27.1] — 2026-11-21
+### Poprawione
+- **Wydajność podglądów Farmy i New Łódź City**: gra mocno zwalniała, bo przebarwienie ziemi było nakładane filtrem
+  na każdy kafel w każdej klatce. Teraz kafle przebarwiają się raz, przy pierwszym użyciu. Wszystkie trzy mapy
+  znowu chodzą w pełnych 60 kl./s.
+- W New Łódź City dziury mają różowy neonowy ściek (zamiast przebarwionego ślimu).
+
 ## [0.27.0] — 2026-11-21
 ### Dodane
 - **Podgląd teł New Łódź City** (poziom 3, w budowie). Klawisz **F** na ekranie tytułowym przełącza teraz po kolei:
@@ -399,7 +406,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.27.0...HEAD
+[Unreleased]: ../../compare/v0.27.1...HEAD
+[0.27.1]: ../../releases/tag/v0.27.1
 [0.27.0]: ../../releases/tag/v0.27.0
 [0.26.5]: ../../releases/tag/v0.26.5
 [0.26.4]: ../../releases/tag/v0.26.4
