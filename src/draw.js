@@ -11,8 +11,8 @@ function lodzSeq(){const L=IM.LZ;return [L.a1,L.b1,L.a2,L.c1,L.a3,L.b2,L.a4,L.c2
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
 function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
 /* platforma: w Farmie na zmianę bele siana i palety (górna krawędź tam, gdzie zwykła platforma) */
-const FPL=['plat_siano','plat_palety'];
-function drawPlat(p){if(FARMA){const im=PF[FPL[(plats.indexOf(p))%FPL.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
+const FPL=['plat_siano','plat_palety'],LPL=['plat_hover','plat_rusztowanie','plat_skrzynie','plat_klimy'];
+function drawPlat(p){if(FARMA||LODZ){const L=FARMA?FPL:LPL,im=(FARMA?PF:PL)[L[(plats.indexOf(p))%L.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
 /* kafle ziemi przebarwione RAZ do osobnego płótna (filtr na każdym kaflu co klatkę zabijał wydajność) */
 const TILEC={};
 function tintTiles(k,f){if(TILEC[k])return TILEC[k];if(!IM.tiles.complete||!IM.tiles.width)return IM.tiles;const c=document.createElement('canvas');c.width=IM.tiles.width;c.height=IM.tiles.height;const x=c.getContext('2d');x.filter=f;x.drawImage(IM.tiles,0,0);return TILEC[k]=c;}
@@ -25,7 +25,7 @@ const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillTe
 function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
@@ -43,7 +43,7 @@ function draw(){
   ctx.save();ctx.translate(sx0,0);
   bgLayers(g.camX);if(LODZ){ctx.fillStyle='#ff3ad0';ctx.fillRect(0,G-2,W,2);}else if(!FARMA)plinth(g.camX*.6);else{ctx.fillStyle='#4f8a2c';ctx.fillRect(0,G-3,W,3);}
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();tileFx(1);
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
@@ -53,7 +53,7 @@ function draw(){
   tileFx(0);if(FARMA)drawSplash(g);
   for(const p of plats)drawPlat(p);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
-  for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
+  for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:LODZ?PL.toksyk:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
   for(const e of g.en){if(e.dead||!e.active)continue;const T=ET[e.k];const atk=e.at>=0&&T.atk;const key=atk?T.atk:T.walk,M=A.enemies[key],im=EN[key];if(!im.complete)continue;
     let f;if(atk)f=Math.min(3,Math.floor(e.at/6));else if(e.k==='barrel')f=e.ground?(e.cd<12?1:0):(e.vy<0?3:5);else f=Math.floor(e.t/(e.k==='rat'?3:6))%M.n;
     ctx.save();ctx.translate(Math.round(e.x),Math.round(e.y));ctx.scale(-e.face,1);if(e.flash&1)ctx.filter='brightness(3)';ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,-M.fw/2,-M.fh+1,M.fw,M.fh);ctx.restore();}
@@ -165,7 +165,8 @@ function skullBubble(x,y,pop,t){const bob=Math.round(Math.sin(t*.12)*2);y+=bob-M
 let PITGR=null;
 let PITGRF=null;
 /* Farma: gnojówka zamiast ślimu — przewijana faktura z Sorceress, bąble, smród, bryzg przy wpadnięciu */
-function drawPitColF(x,tx,t,lp,rp){
+const PITGRL={};
+function drawPitColF(x,tx,t,lp,rp){if(LODZ)return drawPitColS(x,tx,t,lp,rp);
   if(!PITGRF){PITGRF=ctx.createLinearGradient(0,G,0,H);PITGRF.addColorStop(0,'#000');PITGRF.addColorStop(.6,'#140c04');PITGRF.addColorStop(1,'#3a2a0c');}
   ctx.fillStyle=PITGRF;ctx.fillRect(x,G,32,H-G);
   const im=PF.gnojowka;if(im.complete&&im.width){const sw=im.width,sy=H-31+Math.round(Math.sin(t*.05+tx*.7));let sx=Math.floor(((x+t*.25)%sw+sw)%sw),dx=x,left=32;
@@ -174,11 +175,19 @@ function drawPitColF(x,tx,t,lp,rp){
   const ps=(t+tx*71)%260;if(tx%4===1&&ps<130&&PF.smrod.complete){ctx.globalAlpha=Math.min(1,ps/20)*Math.max(0,1-ps/130)*.8;ctx.drawImage(PF.smrod,x+4,H-60-ps*.25);ctx.globalAlpha=1;}
   if(!lp||!rp){const ex=!lp?x+1:x+29,d=(t+tx*19)%70;ctx.fillStyle='#5a4214';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#8a6a2a';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}
 }
+/* New Łódź City: neonowy ściek — przewijana faktura, różowe bąble rysowane w kodzie */
+function drawPitColS(x,tx,t,lp,rp){
+  if(!PITGRL.g){const g=ctx.createLinearGradient(0,G,0,H);g.addColorStop(0,'#000');g.addColorStop(.6,'#14041e');g.addColorStop(1,'#3a0c4a');PITGRL.g=g;}
+  ctx.fillStyle=PITGRL.g;ctx.fillRect(x,G,32,H-G);
+  const im=PL.sciek;if(im.complete&&im.width){const sw=im.width,sy=H-31+Math.round(Math.sin(t*.06+tx*.7));let sx=Math.floor(((x+t*.35)%sw+sw)%sw),dx=x,left=32;
+    while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,sy,w,im.height);dx+=w;left-=w;sx=0;}}
+  const ph=(t+tx*37)%90;if(ph<60){const bx=x+8+((tx*13)%16),by=H-28-Math.floor(ph/8);ctx.fillStyle='#ffd0fa';ctx.fillRect(bx,by,3,3);ctx.fillStyle='#7a1870';ctx.fillRect(bx+1,by+1,1,1);}
+  if(!lp||!rp){const ex=!lp?x+1:x+29,d=(t+tx*19)%70;ctx.fillStyle='#e03ad0';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#ff9af0';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}}
 function drawSplash(g){if(!g.spl)return;for(const s of g.spl){s.t++;const im=s.t<12?PF.bryzg:PF.bryzg2;if(im.complete){ctx.globalAlpha=Math.max(0,1-s.t/30);ctx.drawImage(im,Math.round(s.x-im.width/2),H-26-im.height+6);ctx.globalAlpha=1;}}g.spl=g.spl.filter(s=>s.t<30);}
 /* kolory dziury: Piwnica = zielony ślim, New Łódź City = różowy neonowy ściek */
 const PITC_P={g:['#000','#04140a','#1d6a16'],a:'#3cc42a',h:'#9aff5a',b:'#d8ff90',d:'#1e7a18'},PITC_L={g:['#000','#14041a','#6a1660'],a:'#e03ad0',h:'#ff9af0',b:'#ffd0fa',d:'#7a1870'};
 const PITGRC={};
-function drawPitCol(x,tx,t,lp,rp){if(FARMA)return drawPitColF(x,tx,t,lp,rp);const C=LODZ?PITC_L:PITC_P,K=LODZ?'l':'p';
+function drawPitCol(x,tx,t,lp,rp){if(FARMA||LODZ)return drawPitColF(x,tx,t,lp,rp);const C=LODZ?PITC_L:PITC_P,K=LODZ?'l':'p';
   if(!PITGRC[K]){const gr=ctx.createLinearGradient(0,G,0,H);gr.addColorStop(0,C.g[0]);gr.addColorStop(.55,C.g[1]);gr.addColorStop(1,C.g[2]);PITGRC[K]=gr;}
   ctx.fillStyle=PITGRC[K];ctx.fillRect(x,G,32,H-G);
   const sy=H-22;

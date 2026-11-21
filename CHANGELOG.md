@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.27.2] — 2026-11-21
+### Dodane
+- Podgląd New Łódź City: **11 miejskich rekwizytów** (robocia głowa, automat z napojami, Fiat z ramieniem robota,
+  projektor holo, wór śmieci, hulajnoga, serwery, wózek z pierogami, parujący właz, neonowa strzałka, kosz z buźką),
+  **toksyczne beczki** zamiast beczek ze ślimem, **neonowy ściek** w dziurach (płynąca faktura z bąblami)
+  i **4 platformy** na zmianę: lewitująca, rusztowanie, skrzynie, rząd klimatyzatorów.
+- Platformy rozjaśnione i z cyjanową krawędzią, żeby nie ginęły na ciemnym tle.
+
 ## [0.27.1] — 2026-11-21
 ### Poprawione
 - **Wydajność podglądów Farmy i New Łódź City**: gra mocno zwalniała, bo przebarwienie ziemi było nakładane filtrem
@@ -406,7 +414,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.27.1...HEAD
+[Unreleased]: ../../compare/v0.27.2...HEAD
+[0.27.2]: ../../releases/tag/v0.27.2
 [0.27.1]: ../../releases/tag/v0.27.1
 [0.27.0]: ../../releases/tag/v0.27.0
 [0.26.5]: ../../releases/tag/v0.26.5

@@ -9,17 +9,21 @@ const PLW=127,PLH=22;
 /* dekoracje Farmy (podgląd): rozkładane tak, żeby nic na siebie nie nachodziło —
    omijają dziury, beczki, checkpointy, niskie platformy (dla wysokich rekwizytów) i siebie nawzajem */
 const DECOF_SZ={strach:[89,84],krasnal:[23,38],labedz:[48,40],wanna:[48,36],ul:[49,48],tv:[36,40],buda:[58,48],rower:[72,44],wiadro:[28,32],gasior:[33,40],butla:[17,40],placek1:[31,15],placek2:[41,19],placek3:[28,21]};
-const decoF=(()=>{const K=['strach','placek2','krasnal','labedz','placek1','wanna','ul','placek3','tv','buda','rower','placek2','wiadro','gasior','placek1','butla','krasnal','labedz','placek3','strach','wanna','buda','placek2','rower','ul','tv','placek1','wiadro'];
+function buildDeco(SZ,K){
   const BAR=[[640,G],[1280,G],[1540,G],[2010,G],[2920,G],[3180,G],[3560,G],[4060,G],[4560,G],[4760,G],[5400,G],[6300,G],[6700,G]];
-  const free=(k,x)=>{const [w,h]=DECOF_SZ[k],a=x-6,b=x+w+6;
+  const free=(k,x)=>{const [w,h]=SZ[k],a=x-6,b=x+w+6;
     for(let t=a;t<=b;t+=4)if(isPit(t))return false;
     for(const [bx] of BAR)if(b>bx-22&&a<bx+22)return false;
     for(const cx of [CPX,CP2])if(b>cx-12&&a<cx+34)return false;
     for(const p of plats)if(G-h<p.y+24&&b>p.x-6&&a<p.x+PLW+6)return false;
     return true;};
   const o=[];let x=60,i=0,tries=0;while(x<ARENA-40&&tries<5000){const k=K[i%K.length];tries++;
-    if(free(k,x)){o.push([k,x]);x+=DECOF_SZ[k][0]+60+((i*97)%110);i++;}else x+=8;}
-  return o;})();
+    if(free(k,x)){o.push([k,x]);x+=SZ[k][0]+60+((i*97)%110);i++;}else x+=8;}
+  return o;}
+const decoF=buildDeco(DECOF_SZ,['strach','placek2','krasnal','labedz','placek1','wanna','ul','placek3','tv','buda','rower','placek2','wiadro','gasior','placek1','butla','krasnal','labedz','placek3','strach','wanna','buda','placek2','rower','ul','tv','placek1','wiadro']);
+/* dekoracje New Łódź City (podgląd) */
+const DECOL_SZ={robot:[50,30],automat:[52,64],auto:[69,50],holo:[39,48],smieci:[68,40],hulajnoga:[40,44],serwery:[67,50],wozek:[68,54],wlaz:[39,40],strzalka:[59,26],kosz:[34,46]};
+const decoL=buildDeco(DECOL_SZ,['automat','wlaz','robot','auto','kosz','holo','smieci','strzalka','hulajnoga','serwery','wozek','wlaz','kosz','robot','automat','smieci','holo','auto','strzalka','hulajnoga','serwery','wozek']);
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
 function startGame(k){beamStop();musPlay('piwnica');
