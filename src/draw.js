@@ -125,7 +125,7 @@ function draw(){
   if(g.armor)ic('kamizelka');if(g.barrier)ic('folia');if(g.magnet)ic('magnes');if(g.fast)ic('klapki');
   for(const k in FXDUR)if(fxOn(k)){const f=g.fx[k]/FXDUR[k];ctx.fillStyle='#000';ctx.fillRect(ix,89,16,3);ctx.fillStyle=f<.25&&(g.t>>3)&1?'#ff5a5a':'#ffd040';ctx.fillRect(ix,89,Math.ceil(16*f),2);ic(k);}
   // ult bar
-  sh('ULT',W/2-70,6,'#c8c0d8');ctx.fillStyle='#000';ctx.fillRect(W/2-40,8,120,8);ctx.fillStyle=g.ult>=100&&(g.t>>3)&1?'#fff':h.c;ctx.fillRect(W/2-39,9,Math.round(118*g.ult/100),6);
+  sh('ULT',W/2-70,20,'#c8c0d8');ctx.fillStyle='#000';ctx.fillRect(W/2-40,20,120,10);ctx.fillStyle=g.ult>=100&&(g.t>>3)&1?'#fff':h.c;ctx.fillRect(W/2-39,22,Math.round(118*g.ult/100),6);/* na równi z paskiem zdrowia */
   if(g.ult>=100)sh('C!',W/2+86,6,'#fff');
   if(bs.active&&!bs.dead){sh('AGENT B.R.S',W-178,6,'#ff8ad0');ctx.fillStyle='#000';ctx.fillRect(W-178,22,170,7);const hpF=Math.max(0,bs.hp/bs.max);bs.chip=bs.chip===undefined?hpF:Math.max(hpF,bs.chip-.002);ctx.fillStyle='#fff';ctx.fillRect(W-177,23,168*bs.chip,5);ctx.fillStyle='#ff4aa0';ctx.fillRect(W-177,23,168*hpF,5);
     const ab=(a,x,lbl)=>{ctx.fillStyle='#000';ctx.fillRect(x,32,80,5);const f=Math.max(0,a.hp/a.max);a.chip=a.chip===undefined?f:Math.max(f,a.chip-.004);if(!a.dead){ctx.fillStyle='#fff';ctx.fillRect(x+1,33,78*a.chip,3);}ctx.fillStyle=a.dead?'#3a3458':'#ffb030';ctx.fillRect(x+1,33,78*f,3);};ab(bs.fa,W-178,'');ab(bs.ba,W-88,'');}

@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.29.1] — 2026-11-21
+### Zmienione
+- Pasek ULT w HUD na tej samej wysokości i tej samej grubości co pasek zdrowia (wcześniej był wyżej i cieńszy).
+
 ## [0.29.0] — 2026-11-21
 ### Dodane
 - **Własna ziemia Farmy i New Łódź City** (od Nooka) zamiast przebarwionych kafli z Piwnicy. Farma: trawa,
@@ -447,7 +451,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.29.0...HEAD
+[Unreleased]: ../../compare/v0.29.1...HEAD
+[0.29.1]: ../../releases/tag/v0.29.1
 [0.29.0]: ../../releases/tag/v0.29.0
 [0.28.3]: ../../releases/tag/v0.28.3
 [0.28.2]: ../../releases/tag/v0.28.2
