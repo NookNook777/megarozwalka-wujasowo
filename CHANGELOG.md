@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.30.0] — 2026-11-21
+### Dodane
+- **Ekran tytułowy pokazuje wszystkie trzy mapy**: Piwnica → Farma → New Łódź City i od nowa. Kamera jedzie
+  bez przerwy, każda mapa trwa ok. 12 s, a zmiana to płynne 1,5-sekundowe przenikanie, z trójką bohaterów
+  maszerującą przez cały czas. Wybór podglądu klawiszem F nadal decyduje o mapie w grze.
+
 ## [0.29.3] — 2026-11-21
 ### Usunięte
 - New Łódź City: właz z parą (nie wyglądał dobrze ani jako przedmiot, ani zatopiony w chodniku).
@@ -460,7 +466,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.29.3...HEAD
+[Unreleased]: ../../compare/v0.30.0...HEAD
+[0.30.0]: ../../releases/tag/v0.30.0
 [0.29.3]: ../../releases/tag/v0.29.3
 [0.29.2]: ../../releases/tag/v0.29.2
 [0.29.1]: ../../releases/tag/v0.29.1

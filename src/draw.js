@@ -28,6 +28,15 @@ function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return la
   let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
 function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-Math.floor(((camX*f)%w+w)%w);for(let x=o;x<W;x+=w)ctx.drawImage(im,x,0);}
 const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillText(s,x+1,y+1);ctx.fillStyle=c||'#f2ead8';ctx.fillText(s,x,y);};
+/* ekran tytułowy: wszystkie trzy mapy na zmianę, kamera jedzie bez przerwy, mapy przenikają się płynnie */
+const TCYC=720,TFADE=90;let TBUF=null;
+function titleMap(i,t){const f=FARMA,l=LODZ;FARMA=i===1;LODZ=i===2;try{drawTitle(t);}finally{FARMA=f;LODZ=l;}}
+function drawTitleCycle(t){const i=Math.floor(t/TCYC)%3,ph=t%TCYC;
+  if(ph<TCYC-TFADE){titleMap(i,t);return;}
+  const a=(ph-(TCYC-TFADE))/TFADE;
+  titleMap((i+1)%3,t);if(!TBUF){TBUF=document.createElement('canvas');TBUF.width=cv.width;TBUF.height=cv.height;}
+  const b=TBUF.getContext('2d');b.setTransform(1,0,0,1,0,0);b.clearRect(0,0,TBUF.width,TBUF.height);b.drawImage(cv,0,0);
+  titleMap(i,t);ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=a;ctx.drawImage(TBUF,0,0,cv.width,cv.height,0,0,W,H);ctx.globalAlpha=1;}
 function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
@@ -42,7 +51,7 @@ function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.
     ctx.drawImage(im,f*FW,0,FW,FW,x-(FW/2-4),G-(FW-1),FW,FW);});
   ctx.fillStyle='rgba(5,3,12,.25)';ctx.fillRect(0,0,W,H);}
 function draw(){
-  if(state==='title'){drawTitle(st);return;}
+  if(state==='title'){drawTitleCycle(st);return;}
   const g=G_;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
