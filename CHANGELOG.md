@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.28.3] — 2026-11-21
+### Poprawione
+- **Małe ą i ę** w czcionce: miały literę ściśniętą do góry, żeby zmieścić ogonek. Teraz są normalnej wysokości
+  jak a i e, a ogonek zwisa pod linią — „taśmą”, „się”, „Ciężki” czytają się naturalnie.
+
 ## [0.28.2] — 2026-11-21
 ### Poprawione
 - **Polskie wielkie litery w czcionce**: Ą Ć Ę Ń Ó Ś Ź Ż wyglądały jak małe (czcionka ściskała literę, żeby zmieścić
@@ -435,7 +440,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.28.2...HEAD
+[Unreleased]: ../../compare/v0.28.3...HEAD
+[0.28.3]: ../../releases/tag/v0.28.3
 [0.28.2]: ../../releases/tag/v0.28.2
 [0.28.1]: ../../releases/tag/v0.28.1
 [0.28.0]: ../../releases/tag/v0.28.0

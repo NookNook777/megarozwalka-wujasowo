@@ -12,7 +12,7 @@ Pochodzenie:
 Przed upublicznieniem repozytorium sprawdź aktualne warunki licencyjne SpriteCook
 dla wygenerowanych zasobów.
 
-Czcionka **Wujas Pixel** (`assets/fonts/wujas-pixel-*.woff2`) to zmodyfikowana **Press Start 2P** (CodeMan38, z pakietu @fontsource): dorysowane pełnej wysokości wielkie Ą Ć Ę Ń Ó Ś Ź Ż i wyższe metryki. Licencja SIL Open Font License 1.1 (tekst w `assets/fonts/OFL.txt`); zgodnie z nią zmieniona wersja nosi inną nazwę, bo „Press Start 2P” jest zastrzeżoną nazwą czcionki.
+Czcionka **Wujas Pixel** (`assets/fonts/wujas-pixel-*.woff2`) to zmodyfikowana **Press Start 2P** (CodeMan38, z pakietu @fontsource): dorysowane pełnej wysokości wielkie Ą Ć Ę Ń Ó Ś Ź Ż, poprawione małe ą ę i wyższe metryki. Licencja SIL Open Font License 1.1 (tekst w `assets/fonts/OFL.txt`); zgodnie z nią zmieniona wersja nosi inną nazwę, bo „Press Start 2P” jest zastrzeżoną nazwą czcionki.
 
 
 ## Muzyka
