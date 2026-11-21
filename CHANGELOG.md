@@ -8,6 +8,15 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.27.0] — 2026-11-21
+### Dodane
+- **Podgląd teł New Łódź City** (poziom 3, w budowie). Klawisz **F** na ekranie tytułowym przełącza teraz po kolei:
+  Piwnica → Farma → New Łódź City (albo adres z `?lodz`). Nocna panorama z różowym księżycem, billboardami
+  z pierogiem i kotem, oraz 8 paneli: kamienice z neonami (4 warianty z latarniami po bokach), fabryki z czerwonej cegły
+  (2) i przystanki tramwajowe (2) w kolejności A·B·A·C·A·B·A·C, więc nic się nie powtarza w obrębie poziomu.
+- Tła wycięte z zielonego tła (magenta zlewałaby się z neonami), wyrównane do jednej linii ziemi i lekko przygaszone;
+  ziemia tymczasowo przebarwiona na fiolet, krawężnik z różowym neonem.
+
 ## [0.26.5] — 2026-11-20
 ### Poprawione
 - Podgląd Farmy: rekwizyty nie nachodzą już na siebie ani na inne elementy. Rozkład omija dziury z gnojówką,
@@ -390,7 +399,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.26.5...HEAD
+[Unreleased]: ../../compare/v0.27.0...HEAD
+[0.27.0]: ../../releases/tag/v0.27.0
 [0.26.5]: ../../releases/tag/v0.26.5
 [0.26.4]: ../../releases/tag/v0.26.4
 [0.26.3]: ../../releases/tag/v0.26.3

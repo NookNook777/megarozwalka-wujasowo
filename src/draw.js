@@ -4,13 +4,16 @@
 /* ściana: kilka paneli na zmianę (A B A C), żeby tło się nie powtarzało; każdy łączy się filarem z panelem A */
 function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
 /* PODGLĄD Farmy Badzieja (adres z ?farma albo klawisz F na ekranie tytułowym): tylko tła i barwa ziemi, rozgrywka dalej z Piwnicy */
-let FARMA=/farma/i.test(location.search+location.hash);
+let FARMA=/farma/i.test(location.search+location.hash),LODZ=/lodz/i.test(location.search+location.hash);
+/* klawisz F na ekranie tytułowym przełącza podgląd: Piwnica → Farma → New Łódź City */
+function cyclePreview(){if(!FARMA&&!LODZ)FARMA=true;else if(FARMA){FARMA=false;LODZ=true;}else LODZ=false;}
+function lodzSeq(){const L=IM.LZ;return [L.a1,L.b1,L.a2,L.c1,L.a3,L.b2,L.a4,L.c2];}
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
-function bgLayers(camX){if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
+function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
 /* platforma: w Farmie na zmianę bele siana i palety (górna krawędź tam, gdzie zwykła platforma) */
 const FPL=['plat_siano','plat_palety'];
 function drawPlat(p){if(FARMA){const im=PF[FPL[(plats.indexOf(p))%FPL.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
-function tileFx(on){if(FARMA)ctx.filter=on?'sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)':'none';}
+function tileFx(on){if(FARMA)ctx.filter=on?'sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)':'none';else if(LODZ)ctx.filter=on?'sepia(1) hue-rotate(215deg) saturate(2.2) brightness(.8)':'none';}
 function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
   let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
 function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-Math.floor(((camX*f)%w+w)%w);for(let x=o;x<W;x+=w)ctx.drawImage(im,x,0);}
@@ -34,7 +37,7 @@ function draw(){
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
   ctx.save();ctx.translate(sx0,0);
-  bgLayers(g.camX);if(!FARMA)plinth(g.camX*.6);else{ctx.fillStyle='#4f8a2c';ctx.fillRect(0,G-3,W,3);}
+  bgLayers(g.camX);if(LODZ){ctx.fillStyle='#ff3ad0';ctx.fillRect(0,G-2,W,2);}else if(!FARMA)plinth(g.camX*.6);else{ctx.fillStyle='#4f8a2c';ctx.fillRect(0,G-3,W,3);}
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of (FARMA?decoF:deco)){const p=(FARMA?PF:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1;tileFx(1);

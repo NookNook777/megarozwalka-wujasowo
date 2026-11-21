@@ -6,6 +6,7 @@ const A={
  "wall": "assets/level/wall.webp",
  "wall2": "assets/level/wall2.webp",
  "wall3": "assets/level/wall3.webp",
+ "lodz": {"far": "assets/level/lodz/far.webp", "a1": "assets/level/lodz/a1.webp", "a2": "assets/level/lodz/a2.webp", "a3": "assets/level/lodz/a3.webp", "a4": "assets/level/lodz/a4.webp", "b1": "assets/level/lodz/b1.webp", "b2": "assets/level/lodz/b2.webp", "c1": "assets/level/lodz/c1.webp", "c2": "assets/level/lodz/c2.webp"},
  "farma": {"far":"assets/level/farma/far.webp","a1":"assets/level/farma/a1.webp","a2":"assets/level/farma/a2.webp","b1":"assets/level/farma/b1.webp","b2":"assets/level/farma/b2.webp","c1":"assets/level/farma/c1.webp","c2":"assets/level/farma/c2.webp"},
  "tiles": "assets/level/tiles.png",
  "plat": "assets/level/platform.png",
