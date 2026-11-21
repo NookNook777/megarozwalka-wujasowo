@@ -38,7 +38,7 @@ function startGame(k){beamStop();musPlay('piwnica');
   const C=G_.coinsL;const row=(x0,y,n)=>{for(let i=0;i<n;i++)C.push({x:x0+i*22,y,got:false});};
   row(3500,G-30,5);row(3905,170,5);row(4335,120,5);row(5205,140,5);row(5795,116,5);row(6505,166,5);row(6800,G-30,6);
   row(260,G-30,5);row(580,170,5);row(1050,G-60,6);row(1725,184,5);row(2255,166,5);row(2445,110,5);row(2760,G-30,6);row(3000,G-70,5);
-  msgShow(h.name+' W PIWNICY MAREWIKA!',120);
+  msgShow(h.name+(FARMA?' NA FARMIE BADZIEJA!':LODZ?' W NEW ŁODZ CITY!':' W PIWNICY MAREWIKA!'),120);
 }
 function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins=o.coins,ds=o.dialogSeen;startGame(k);const g=G_;g.coins=coins;g.dialogSeen=ds;
   const x=c2?CP2+30:c1?CPX+30:120;g.P.x=x;g.camX=Math.max(0,x-256);g.cpDone=c1||c2;g.cp2Done=c2;

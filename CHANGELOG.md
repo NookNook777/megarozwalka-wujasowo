@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.28.1] — 2026-11-21
+### Poprawione
+- Nazwa mapy na starcie poziomu zgodna z podglądem: „… NA FARMIE BADZIEJA!”, „… W NEW ŁODZ CITY!”
+  (wcześniej zawsze była Piwnica). To samo na ekranie wygranej: „FARMA ZALICZONA!”, „NEW ŁODZ CITY ZALICZONE!” (bez Ó i Ź, bo pikselowa czcionka nie ma ich wielkich wersji).
+
 ## [0.28.0] — 2026-11-21
 ### Dodane
 - **Zmiana klawiszy na PC** (sugestia testerów). W menu **STEROWANIE** każda akcja ma dwa pola na klawisze:
@@ -423,7 +428,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.28.0...HEAD
+[Unreleased]: ../../compare/v0.28.1...HEAD
+[0.28.1]: ../../releases/tag/v0.28.1
 [0.28.0]: ../../releases/tag/v0.28.0
 [0.27.2]: ../../releases/tag/v0.27.2
 [0.27.1]: ../../releases/tag/v0.27.1
