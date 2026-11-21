@@ -46,7 +46,7 @@ function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
   ctx.restore();
   // golden trio marching (hold the ground: pits are skipped in title view)
-  [['b',188,0],['m',262,3],['l',336,5]].forEach(([k,x,off])=>{const im=HS[k].run;if(!im.complete)return;const o=A.heroes[k].meta.run.order,f=o[(Math.floor(t/5)+off)%o.length];
+  [['b',W/2-74,0],['m',W/2,3],['l',W/2+74,5]].forEach(([k,x,off])=>{const im=HS[k].run;if(!im.complete)return;const o=A.heroes[k].meta.run.order,f=o[(Math.floor(t/5)+off)%o.length];
     ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x,G+2,13,3.5,0,0,6.3);ctx.fill();
     ctx.drawImage(im,f*FW,0,FW,FW,x-(FW/2-4),G-(FW-1),FW,FW);});
   ctx.fillStyle='rgba(5,3,12,.25)';ctx.fillRect(0,0,W,H);}

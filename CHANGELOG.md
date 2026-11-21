@@ -8,6 +8,10 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.30.1] — 2026-11-21
+### Zmienione
+- Trójka bohaterów na ekranie tytułowym maszeruje dokładnie na środku ekranu, pod logo (Marewik w samym środku).
+
 ## [0.30.0] — 2026-11-21
 ### Dodane
 - **Ekran tytułowy pokazuje wszystkie trzy mapy**: Piwnica → Farma → New Łódź City i od nowa. Kamera jedzie
@@ -466,7 +470,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.30.0...HEAD
+[Unreleased]: ../../compare/v0.30.1...HEAD
+[0.30.1]: ../../releases/tag/v0.30.1
 [0.30.0]: ../../releases/tag/v0.30.0
 [0.29.3]: ../../releases/tag/v0.29.3
 [0.29.2]: ../../releases/tag/v0.29.2
