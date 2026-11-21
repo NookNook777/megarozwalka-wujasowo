@@ -22,7 +22,7 @@ function buildDeco(SZ,K){
   return o;}
 const decoF=buildDeco(DECOF_SZ,['strach','placek2','krasnal','labedz','placek1','wanna','ul','placek3','tv','buda','rower','placek2','wiadro','gasior','placek1','butla','krasnal','labedz','placek3','strach','wanna','buda','placek2','rower','ul','tv','placek1','wiadro']);
 /* dekoracje New Łódź City (podgląd) */
-const DECOL_SZ={robot:[50,30],automat:[52,64],auto:[69,50],holo:[39,48],smieci:[68,40],hulajnoga:[40,44],serwery:[67,50],wozek:[68,54],wlaz:[39,40],strzalka:[59,26],kosz:[34,46]};
+const DECOL_SZ={robot:[50,30],automat:[52,64],auto:[69,50],holo:[39,48],smieci:[68,40],hulajnoga:[40,44],serwery:[67,50],wozek:[68,54],wlaz:[39,17],strzalka:[59,26],kosz:[34,46]};
 const decoL=buildDeco(DECOL_SZ,['automat','wlaz','robot','auto','kosz','holo','smieci','strzalka','hulajnoga','serwery','wozek','wlaz','kosz','robot','automat','smieci','holo','auto','strzalka','hulajnoga','serwery','wozek']);
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
