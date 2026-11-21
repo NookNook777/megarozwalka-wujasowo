@@ -3,7 +3,7 @@
 /* ---------------- screens ---------------- */
 let state='title';
 const $=id=>document.getElementById(id);
-$('select').style.backgroundImage=`url(${A.selbg})`;$('logo').src=A.logo;
+$('logo').src=A.logo;
 let tstate='intro',msel=0,psel=0;
 /* suwaki głośności: 'm' = muzyka, 's' = efekty */
 function volGet(k){return k==='m'?MVOL:VOL;}function volStep(k,d){if(k==='m')setMVol(MVOL+d);else setVol(VOL+d);}

@@ -33,7 +33,7 @@ canvas#c{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixela
 #panel{max-height:88%;overflow-y:auto}
 #panel .hint{margin-top:calc(var(--u)*1.2);color:#b8b0cc;font-size:calc(var(--u)*1.06)}
 /* select */
-#select{background:center/cover no-repeat}
+#select{background:transparent}
 #select h1{position:absolute;top:4%;left:0;right:0;margin:0;text-align:center;color:var(--gold);font-size:calc(var(--u)*2.9);letter-spacing:calc(var(--u)*.35);text-shadow:calc(var(--u)*.35) calc(var(--u)*.35) 0 var(--shadow)}
 #cards{position:absolute;left:4%;right:4%;top:15%;bottom:11%;display:flex;gap:3%;justify-content:center}
 .card{position:relative;flex:1;max-width:30%;background:rgba(12,9,24,.85);border:calc(var(--u)*.3) solid #3a3458;box-shadow:calc(var(--u)*.5) calc(var(--u)*.5) 0 #000;display:flex;flex-direction:column;align-items:center;padding:calc(var(--u)*1.2);cursor:pointer;transition:transform .15s,filter .2s;filter:saturate(.45) brightness(.7)}

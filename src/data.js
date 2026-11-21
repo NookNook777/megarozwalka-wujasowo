@@ -1138,7 +1138,6 @@ const A={
   "nalewka": "assets/pickups/nalewka.png"
  },
  "title": "assets/ui/title_bg.webp",
- "selbg": "assets/ui/select_bg.webp",
  "logo": "assets/ui/logo.webp",
  "music": "assets/music/maintheme.mp3",
  "musicLvl": "assets/music/piwnica.mp3",

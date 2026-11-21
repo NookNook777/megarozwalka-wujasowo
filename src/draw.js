@@ -30,14 +30,14 @@ function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-
 const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillText(s,x+1,y+1);ctx.fillStyle=c||'#f2ead8';ctx.fillText(s,x,y);};
 /* ekran tytułowy: wszystkie trzy mapy na zmianę, kamera jedzie bez przerwy, mapy przenikają się płynnie */
 const TCYC=720,TFADE=90;let TBUF=null;
-function titleMap(i,t){const f=FARMA,l=LODZ;FARMA=i===1;LODZ=i===2;try{drawTitle(t);}finally{FARMA=f;LODZ=l;}}
-function drawTitleCycle(t){const i=Math.floor(t/TCYC)%3,ph=t%TCYC;
-  if(ph<TCYC-TFADE){titleMap(i,t);return;}
+function titleMap(i,t,nt){const f=FARMA,l=LODZ;FARMA=i===1;LODZ=i===2;try{drawTitle(t,nt);}finally{FARMA=f;LODZ=l;}}
+function drawTitleCycle(t,nt){const i=Math.floor(t/TCYC)%3,ph=t%TCYC;
+  if(ph<TCYC-TFADE){titleMap(i,t,nt);return;}
   const a=(ph-(TCYC-TFADE))/TFADE;
-  titleMap((i+1)%3,t);if(!TBUF){TBUF=document.createElement('canvas');TBUF.width=cv.width;TBUF.height=cv.height;}
+  titleMap((i+1)%3,t,nt);if(!TBUF){TBUF=document.createElement('canvas');TBUF.width=cv.width;TBUF.height=cv.height;}
   const b=TBUF.getContext('2d');b.setTransform(1,0,0,1,0,0);b.clearRect(0,0,TBUF.width,TBUF.height);b.drawImage(cv,0,0);
-  titleMap(i,t);ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=a;ctx.drawImage(TBUF,0,0,cv.width,cv.height,0,0,W,H);ctx.globalAlpha=1;}
-function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
+  titleMap(i,t,nt);ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=a;ctx.drawImage(TBUF,0,0,cv.width,cv.height,0,0,W,H);ctx.globalAlpha=1;}
+function drawTitle(t,noTrio){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
@@ -46,12 +46,13 @@ function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
   ctx.restore();
   // golden trio marching (hold the ground: pits are skipped in title view)
-  [['b',W/2-74,0],['m',W/2,3],['l',W/2+74,5]].forEach(([k,x,off])=>{const im=HS[k].run;if(!im.complete)return;const o=A.heroes[k].meta.run.order,f=o[(Math.floor(t/5)+off)%o.length];
+  if(!noTrio)[['b',W/2-74,0],['m',W/2,3],['l',W/2+74,5]].forEach(([k,x,off])=>{const im=HS[k].run;if(!im.complete)return;const o=A.heroes[k].meta.run.order,f=o[(Math.floor(t/5)+off)%o.length];
     ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x,G+2,13,3.5,0,0,6.3);ctx.fill();
     ctx.drawImage(im,f*FW,0,FW,FW,x-(FW/2-4),G-(FW-1),FW,FW);});
   ctx.fillStyle='rgba(5,3,12,.25)';ctx.fillRect(0,0,W,H);}
 function draw(){
   if(state==='title'){drawTitleCycle(st);return;}
+  if(state==='select'){drawTitleCycle(st,true);ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='rgba(6,4,14,.55)';ctx.fillRect(0,0,W,H);return;}
   const g=G_;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
