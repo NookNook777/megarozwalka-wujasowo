@@ -18,6 +18,12 @@ const TILEC={};
 function tintTiles(k,f){if(TILEC[k])return TILEC[k];if(!IM.tiles.complete||!IM.tiles.width)return IM.tiles;const c=document.createElement('canvas');c.width=IM.tiles.width;c.height=IM.tiles.height;const x=c.getContext('2d');x.filter=f;x.drawImage(IM.tiles,0,0);return TILEC[k]=c;}
 function tilesImg(){return FARMA?tintTiles('f','sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)'):LODZ?tintTiles('l','sepia(1) hue-rotate(215deg) saturate(2.2) brightness(.8)'):IM.tiles;}
 function tileFx(on){}
+/* Farma i Łódź: własny pas ziemi (Sorceress) zamiast kafli — rysowany kolumnami 32 px, z zawijaniem */
+function groundCol(x){if(!FARMA&&!LODZ)return false;const im=FARMA?IM.FM.ziemia:IM.LZ.ziemia;if(!im||!im.complete||!im.width)return false;
+  const off=FARMA?8:0,sw=im.width;let sx=((x%sw)+sw)%sw,dx=x,left=32;
+  while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,G-off,w,im.height);dx+=w;left-=w;sx=0;}
+  if(im.height-off<H-G){ctx.fillStyle=FARMA?'#2a1408':'#0c0a1c';ctx.fillRect(x,G-off+im.height,32,H-G-im.height+off);}
+  return true;}
 function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
   let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
 function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-Math.floor(((camX*f)%w+w)%w);for(let x=o;x<W;x+=w)ctx.drawImage(im,x,0);}
@@ -27,7 +33,7 @@ function drawTitle(t){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();
-  for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
+  for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;if(!groundCol(x)){ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}}
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
   ctx.restore();
   // golden trio marching (hold the ground: pits are skipped in title view)
@@ -41,14 +47,14 @@ function draw(){
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
   ctx.save();ctx.translate(sx0,0);
-  bgLayers(g.camX);if(LODZ){ctx.fillStyle='#ff3ad0';ctx.fillRect(0,G-2,W,2);}else if(!FARMA)plinth(g.camX*.6);else{ctx.fillStyle='#4f8a2c';ctx.fillRect(0,G-3,W,3);}
+  bgLayers(g.camX);if(!FARMA&&!LODZ)plinth(g.camX*.6);
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
   for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();tileFx(1);
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
     const l=isPit(x-16),r=isPit(x+48);const top=(tx*7)%4;
-    ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);
+    if(!groundCol(x)){ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}
     if(l)pitEdge(x,1);if(r)pitEdge(x+32,-1);}
   tileFx(0);if(FARMA)drawSplash(g);
   for(const p of plats)drawPlat(p);
@@ -198,6 +204,7 @@ function drawPitCol(x,tx,t,lp,rp){if(FARMA||LODZ)return drawPitColF(x,tx,t,lp,rp
 
 /* czysta pionowa krawędź urwiska przy dziurze (zamiast klinowatego kafla) */
 function pitEdge(ex,dir){const o=dir>0?0:-1;
+  if(FARMA||LODZ){ctx.fillStyle=FARMA?'#1a0c04':'#06040e';ctx.fillRect(ex+o*3,G,3,H-G);ctx.fillStyle=FARMA?'#7a5428':'#7a5ab0';ctx.fillRect(ex+(dir>0?3:-4),G,1,H-G);return;}
   ctx.fillStyle='#101014';ctx.fillRect(ex+o*4,G+3,4,H-G);           // cień ściany
   ctx.fillStyle='#55555e';ctx.fillRect(ex+(dir>0?4:-5),G+3,1,H-G);    // światło na krawędzi
   ctx.fillStyle='#8a8a94';ctx.fillRect(ex+(dir>0?0:-5),G,5,2);         // obłamany brzeg płyty
