@@ -26,7 +26,7 @@ const DECOL_SZ={robot:[50,30],automat:[52,64],auto:[69,50],holo:[39,48],smieci:[
 const decoL=buildDeco(DECOL_SZ,['automat','robot','auto','kosz','holo','smieci','strzalka','hulajnoga','serwery','wozek','kosz','robot','automat','smieci','holo','auto','strzalka','hulajnoga','serwery','wozek']);
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
-function startGame(k){beamStop();musPlay(LODZ?'lodz':'piwnica');
+function startGame(k){beamStop();musPlay(LODZ?'lodz':FARMA?'farma':'piwnica');
   state='play';const h=HEROES[k];
   G_={st:{enTotal:SPAWN.length,time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
     P:{x:120,y:G,vx:0,vy:0,face:1,ground:true,coyote:0,buf:0,cd:0,anim:'idle',fr:0,fi:0,ft:0,inv:60,shotT:0,flashT:0,hitT:0,kb:0,dead:false},

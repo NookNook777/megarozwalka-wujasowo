@@ -8,10 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.35.0] — 2026-11-22
+### Dodane
+- **Muzyka Farmy Badzieja** (autor: Nook, 144 BPM). Każda z trzech map ma teraz własny utwór.
+- Plik miał szczyty tuż pod 0 dB (ryzyko przesteru po kompresji do MP3): delikatny limiter do −1,5 dB i wyrównanie
+  głośności do ok. −14 LUFS jak reszta muzyki; szew pętli wygładzony mikroprzenikaniem 2 ms.
+
 ## [0.34.0] — 2026-11-22
 ### Dodane
 - **Muzyka New Łódź City** (autor: Nook, 110 BPM). Gra na mapie Łodzi (podgląd: F na ekranie tytułowym);
-  Piwnica i Farma mają na razie muzykę Piwnicy. Walka z bossem i dżingle bez zmian.
+  Walka z bossem i dżingle bez zmian.
 - Szew pętli wygładzony mikroprzenikaniem 2 ms (koniec i początek pliku były na różnych poziomach — groził klik).
 
 ## [0.33.1] — 2026-11-22
@@ -521,7 +527,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.34.0...HEAD
+[Unreleased]: ../../compare/v0.35.0...HEAD
+[0.35.0]: ../../releases/tag/v0.35.0
 [0.34.0]: ../../releases/tag/v0.34.0
 [0.33.1]: ../../releases/tag/v0.33.1
 [0.33.0]: ../../releases/tag/v0.33.0

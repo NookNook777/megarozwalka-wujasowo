@@ -25,7 +25,7 @@ const S={blip:()=>beep(880,null,.05,.06),ok:()=>{beep(660,null,.07,.09);setTimeo
    Tor: źródło -> wzmacniacz źródła (pojawianie/wyciszanie, przenikanie utworów) -> musDuckN (przyciszenie w pauzie itp.)
         -> musVolN (suwak MUZYKA, tylko .value) -> wyjście.
    MP3 ma opóźnienie kodera (~1105 próbek); jeśli przeglądarka go nie przycina, przesuwamy punkty pętli. */
-const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000},lodz:{src:A.musicLodz,len:7508746/48000},boss:{src:A.musicBoss,len:7724950/48000},win:{src:A.musicWin,once:true},over:{src:A.musicOver,once:true}};
+const TRACKS={menu:{src:A.music,len:3894063/48000},piwnica:{src:A.musicLvl,len:7253021/48000},farma:{src:A.musicFarma,len:6399696/48000},lodz:{src:A.musicLodz,len:7508746/48000},boss:{src:A.musicBoss,len:7724950/48000},win:{src:A.musicWin,once:true},over:{src:A.musicOver,once:true}};
 let musVolN=null,musDuckN=null,musSrc=null,musWant=null,musDuck=1,musJ=null,musPrev=null;
 function mvolGain(){return .55*Math.pow(MVOL/10,1.6);}
 function musInit(){if(!ac||musVolN)return;musVolN=ac.createGain();musVolN.gain.value=mvolGain();musVolN.connect(ac.destination);musDuckN=ac.createGain();musDuckN.gain.value=1;musDuckN.connect(musVolN);
