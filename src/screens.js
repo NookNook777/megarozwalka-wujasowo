@@ -6,8 +6,9 @@ const $=id=>document.getElementById(id);
 $('logo').src=A.logo;
 let tstate='intro',msel=0,psel=0;
 /* suwaki głośności: 'm' = muzyka, 's' = efekty */
-function volGet(k){return k==='m'?MVOL:VOL;}function volStep(k,d){if(k==='m')setMVol(MVOL+d);else setVol(VOL+d);}
-const MENU=[{t:'START GRY',a:()=>showSelect()},{t:'MUZYKA',vol:'m',a:()=>{volStep('m',MVOL>=10?-MVOL:1);renderMenu();}},{t:'EFEKTY',vol:'s',a:()=>{volStep('s',VOL>=10?-VOL:1);renderMenu();}},{t:'STEROWANIE',a:()=>panel('ctrl')},{t:'AUTORZY',a:()=>panel('cred')}];
+const MAPN=['PIWNICA','FARMA','ŁÓDŹ'];
+function volGet(k){return k==='map'?MAPN[mapIdx()]:k==='m'?MVOL:VOL;}function volStep(k,d){if(k==='map'){cyclePreview(d);S.blip();}else if(k==='m')setMVol(MVOL+d);else setVol(VOL+d);}
+const MENU=[{t:'START GRY',a:()=>showSelect()},{t:'MAPA',vol:'map',a:()=>{volStep('map',1);renderMenu();}},{t:'MUZYKA',vol:'m',a:()=>{volStep('m',MVOL>=10?-MVOL:1);renderMenu();}},{t:'EFEKTY',vol:'s',a:()=>{volStep('s',VOL>=10?-VOL:1);renderMenu();}},{t:'STEROWANIE',a:()=>panel('ctrl')},{t:'AUTORZY',a:()=>panel('cred')}];
 /* menu budowane raz; przy zmianach tylko aktualizujemy klasy i tekst (wcześniej przebudowa DOM gubiła kliknięcia) */
 function renderMenu(){const m=$('menu');
   if(m.children.length!==MENU.length){m.innerHTML='';MENU.forEach((it,i)=>{const d=document.createElement('div');
@@ -61,7 +62,7 @@ function showSelect(){if(ac){musInit();musLoad(LODZ?'lodz':FARMA?'farma':'piwnic
 function pickHero(){slock=true;S.ult();setTimeout(()=>{$('select').classList.remove('on');startGame(ORDER[ssel]);},700);}
 function onKey(code){
   const ok=['Enter','Space','KeyZ','KeyX','KeyJ','KeyK'].includes(code);
-  if(state==='title'&&code==='KeyF'){cyclePreview();S.ok();}
+  if(state==='title'&&code==='KeyF'){cyclePreview();S.ok();if(tstate==='menu')renderMenu();}
   if(state==='title'){if(tstate==='press'&&ok)pressStart();else if(tstate==='menu'){if(code==='ArrowUp'||code==='KeyW'){msel=(msel+MENU.length-1)%MENU.length;S.blip();renderMenu();}else if(code==='ArrowDown'||code==='KeyS'){msel=(msel+1)%MENU.length;S.blip();renderMenu();}
       else if(MENU[msel].vol&&(code==='ArrowLeft'||code==='KeyA')){volStep(MENU[msel].vol,-1);renderMenu();}else if(MENU[msel].vol&&(code==='ArrowRight'||code==='KeyD')){volStep(MENU[msel].vol,1);renderMenu();}else if(ok){S.ok();MENU[msel].a();}}
     else if(tstate==='panel'){if(PANELK==='ctrl')ctrlKey(code);else if(ok||code==='Escape')closePanel();}}

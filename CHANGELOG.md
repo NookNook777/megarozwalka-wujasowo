@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.36.0] — 2026-11-22
+### Dodane
+- **Wybór mapy w menu głównym**: pozycja **MAPA** (← / → albo klik: Piwnica / Farma / Łódź). Wcześniej był tylko
+  ukryty klawisz F i — odkąd ekran tytułowy przewija wszystkie mapy — nie było widać, która jest wybrana.
+  Po zmianie tło od razu przeskakuje na wybraną mapę, a wybór zapamiętuje się w przeglądarce. Klawisz F dalej działa.
+### Zmienione
+- Pozycje menu głównego trochę mniejsze, żeby sześć pozycji zmieściło się pod maszerującą trójką.
+
 ## [0.35.1] — 2026-11-22
 ### Poprawione
 - **Statystyki: wrogowie i złotówki dawały się nabijać.** Po „kontynuuj” wracali wrogowie, beczki i złotówki zza
@@ -535,7 +543,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.35.1...HEAD
+[Unreleased]: ../../compare/v0.36.0...HEAD
+[0.36.0]: ../../releases/tag/v0.36.0
 [0.35.1]: ../../releases/tag/v0.35.1
 [0.35.0]: ../../releases/tag/v0.35.0
 [0.34.0]: ../../releases/tag/v0.34.0

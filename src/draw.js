@@ -6,7 +6,11 @@ function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
 /* PODGLĄD Farmy Badzieja (adres z ?farma albo klawisz F na ekranie tytułowym): tylko tła i barwa ziemi, rozgrywka dalej z Piwnicy */
 let FARMA=/farma/i.test(location.search+location.hash),LODZ=/lodz/i.test(location.search+location.hash);
 /* klawisz F na ekranie tytułowym przełącza podgląd: Piwnica → Farma → New Łódź City */
-function cyclePreview(){if(!FARMA&&!LODZ)FARMA=true;else if(FARMA){FARMA=false;LODZ=true;}else LODZ=false;}
+function mapIdx(){return LODZ?2:FARMA?1:0;}
+function setMap(i){i=((i%3)+3)%3;FARMA=i===1;LODZ=i===2;try{localStorage.setItem('megarozwalka_map',i);}catch(e){}
+  if(state==='title')st=i*TCYC+(st%TCYC<TCYC-TFADE?st%TCYC:0);/* tło tytułowe od razu pokazuje wybraną mapę */}
+function cyclePreview(d){setMap(mapIdx()+(d||1));}
+try{const m=+localStorage.getItem('megarozwalka_map');if(!/farma|lodz/i.test(location.search+location.hash)&&m>0&&m<3){FARMA=m===1;LODZ=m===2;}}catch(e){}
 function lodzSeq(){const L=IM.LZ;return [L.a1,L.b1,L.a2,L.c1,L.a3,L.b2,L.a4,L.c2];}
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
 function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
