@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.33.0] — 2026-11-22
+### Zmienione
+- **Ranga liczona ze wszystkich statystyk** (0–100 pkt): deseczki 30 (0 śmierci = 30, 1 = 15, 2 = 5),
+  obrażenia 20 (0 → 150), czas mapy 15 (≤4:00 → 10:00), czas bossa 10 (≤1:00 → 3:00), wrogowie 10 (odsetek zabitych),
+  celność 10 (≥60% → 20%; Łysa z minigunem ≥45% → 15%), złotówki 5 (do 100).
+  Progi: **SZ** ≥90 pkt **i zero deseczek**, A ≥75, B ≥55, C ≥35, D poniżej.
+- Na ekranie wygranej i w kopiowanym wyniku widać punkty oraz zabitych wrogów jako „x/37”.
+
 ## [0.32.1] — 2026-11-22
 ### Zmienione
 - **Rangi mają nazwy** (od Nooka): **SZ** — Sztos Nad Sztosami (zamiast S), **A** — Admin Serwa,
@@ -502,7 +510,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.32.1...HEAD
+[Unreleased]: ../../compare/v0.33.0...HEAD
+[0.33.0]: ../../releases/tag/v0.33.0
 [0.32.1]: ../../releases/tag/v0.32.1
 [0.32.0]: ../../releases/tag/v0.32.0
 [0.31.0]: ../../releases/tag/v0.31.0

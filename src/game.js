@@ -28,7 +28,7 @@ const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet
 let G_={};
 function startGame(k){beamStop();musPlay('piwnica');
   state='play';const h=HEROES[k];
-  G_={st:{time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
+  G_={st:{enTotal:SPAWN.length,time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
     P:{x:120,y:G,vx:0,vy:0,face:1,ground:true,coyote:0,buf:0,cd:0,anim:'idle',fr:0,fi:0,ft:0,inv:60,shotT:0,flashT:0,hitT:0,kb:0,dead:false},
     bullets:[],eb:[],parts:[],items:[],camX:0,
     barrels:[[640,G],[1280,G],[1540,G],[2010,G],[2470,140],[2920,G],[3180,G],[3560,G],[3950,200],[4060,G],[4560,G],[4760,G],[5400,G],[5820,146],[6300,G],[6700,G]].map(([x,y])=>({x,y,hp:3,dead:false,flash:0})),

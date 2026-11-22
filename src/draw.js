@@ -245,19 +245,26 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   ctx.globalAlpha=1;}
 /* ---- statystyki po mapie ---- */
 const fmtT=f=>{const s=Math.floor(f/60);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
-function statRank(st){return st.deaths===0&&st.dmg<=60?'SZ':st.deaths===0?'A':st.deaths<=1?'B':st.deaths<=2?'C':'D';}
+/* punkty 0–100 ze wszystkich statystyk; SZ wymaga ≥90 pkt i zera deseczek */
+const lin=(v,full,zero)=>Math.max(0,Math.min(1,(v-zero)/(full-zero)));
+function statScore(g){const st=g.st,acc=st.shots?st.hits/st.shots:0,lysa=g.hero==='l';
+  const bt=st.bossT0>=0?(st.bossEnd>=0?st.bossEnd:st.time)-st.bossT0:99999;
+  const p={desk:[30,15,5][st.deaths]||0,dmg:20*lin(st.dmg,0,150),time:15*lin(st.time,240*60,600*60),boss:10*lin(bt,60*60,180*60),
+    kills:10*Math.min(1,st.kills/Math.max(1,st.enTotal||37)),acc:10*(lysa?lin(acc,.45,.15):lin(acc,.6,.2)),coins:5*Math.min(1,g.coins/100)};
+  return Math.round(Object.values(p).reduce((a,b)=>a+b,0));}
+function statRank(g){const s=statScore(g),st=g.st;return s>=90&&st.deaths===0?'SZ':s>=75?'A':s>=55?'B':s>=35?'C':'D';}
 function statRows(g){const st=g.st,acc=st.shots?Math.round(100*st.hits/st.shots):0,bt=st.bossT0>=0?fmtT((st.bossEnd>=0?st.bossEnd:st.time)-st.bossT0):'—';
-  return {L:[['CZAS',fmtT(st.time)],['BOSS',bt],['WROGOWIE',st.kills],['ZŁOTÓWKI',g.coins]],R:[['DESECZKI',st.deaths],['OBRAŻENIA',Math.round(st.dmg)],['CELNOŚĆ',acc+'%'],['RANGA',statRank(st)]]};}
+  return {L:[['CZAS',fmtT(st.time)],['BOSS',bt],['WROGOWIE',st.kills+'/'+(st.enTotal||37)],['ZŁOTÓWKI',g.coins],['PUNKTY',statScore(g)+'/100']],R:[['DESECZKI',st.deaths],['OBRAŻENIA',Math.round(st.dmg)],['CELNOŚĆ',acc+'%'],['RANGA',statRank(g)]]};}
 const RANKN={SZ:'SZTOS NAD SZTOSAMI',A:'ADMIN SERWA',B:'BITO ALE I OBITO',C:'CO JA ROBIĘ',D:'DESKA KLUB'};
 const RANKC={SZ:'#ffd040',A:'#7dff8a',B:'#5ad0ff',C:'#ff9a5a',D:'#ff5a7a'};
 function drawStats(g,t){if(t<30)return;const {L,R}=statRows(g);ctx.font='8px "Wujas Pixel",monospace';
-  for(const [bx,bw,bh] of [[18,140,94],[W-178,160,112]]){ctx.fillStyle='rgba(6,4,14,.72)';ctx.fillRect(bx,114,bw,bh);ctx.fillStyle=HEROES[g.hero].c;ctx.fillRect(bx,114,bw,2);}
+  for(const [bx,bw,bh] of [[18,140,112],[W-178,160,112]]){ctx.fillStyle='rgba(6,4,14,.72)';ctx.fillRect(bx,114,bw,bh);ctx.fillStyle=HEROES[g.hero].c;ctx.fillRect(bx,114,bw,2);}
   const row=(r,i,x,al)=>{const y=122+i*21,[k,v]=r,big=k==='RANGA';sh(k,x,y,'#b8b0cc',al);if(big){ctx.font='16px "Wujas Pixel",monospace';sh(String(v),x,y+10,RANKC[v],al);ctx.font='8px "Wujas Pixel",monospace';sh(RANKN[v],x,y+30,RANKC[v],al);}else sh(String(v),x,y+10,'#fff3dc',al);};
   L.forEach((r,i)=>row(r,i,28,'left'));R.forEach((r,i)=>row(r,i,W-28,'right'));}
 function statsText(g){const {L,R}=statRows(g),map=FARMA?'Farma Badzieja':LODZ?'New Łódź City':'Piwnica Marewika',v=(document.getElementById('ver')||{}).textContent||'';
   const o=Object.fromEntries(L.concat(R));
   return '🏆 Megarozwałka w Wujasowie '+v+'\n'+map+' zaliczona — '+g.h.name+' · ranga '+o.RANGA+' — '+RANKN[o.RANGA].charAt(0)+RANKN[o.RANGA].slice(1).toLowerCase().replace(/ (\S)/g,(m,c)=>' '+c.toUpperCase())+'\n'
-   +'⏱ czas '+o.CZAS+' · boss '+o.BOSS+'\n💀 wrogowie '+o.WROGOWIE+' · 🪵 deseczki '+o.DESECZKI+'\n❤️ obrażenia '+o['OBRAŻENIA']+' · 🎯 celność '+o['CELNOŚĆ']+'\n💰 złotówki '+o['ZŁOTÓWKI'];}
+   +'⏱ czas '+o.CZAS+' · boss '+o.BOSS+'\n💀 wrogowie '+o.WROGOWIE+' · 🪵 deseczki '+o.DESECZKI+'\n❤️ obrażenia '+o['OBRAŻENIA']+' · 🎯 celność '+o['CELNOŚĆ']+'\n💰 złotówki '+o['ZŁOTÓWKI']+' · 🏅 punkty '+o.PUNKTY;}
 function copyStats(){const g=G_,txt=statsText(g);g.copied=150;g.copyOk=true;
   const fb=()=>{try{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();g.copyOk=document.execCommand('copy');ta.remove();}catch(e){g.copyOk=false;}};
   try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>{g.copyOk=true;},fb);else fb();}catch(e){fb();}S.ok();}
