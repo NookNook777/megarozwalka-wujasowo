@@ -28,21 +28,25 @@ const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet
 let G_={};
 function startGame(k){beamStop();musPlay(LODZ?'lodz':FARMA?'farma':'piwnica');
   state='play';const h=HEROES[k];
-  G_={st:{enTotal:SPAWN.length,time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
+  G_={st:{deadE:[],deadB:[],gotC:[],enTotal:SPAWN.length,time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
     P:{x:120,y:G,vx:0,vy:0,face:1,ground:true,coyote:0,buf:0,cd:0,anim:'idle',fr:0,fi:0,ft:0,inv:60,shotT:0,flashT:0,hitT:0,kb:0,dead:false},
     bullets:[],eb:[],parts:[],items:[],camX:0,
     barrels:[[640,G],[1280,G],[1540,G],[2010,G],[2470,140],[2920,G],[3180,G],[3560,G],[3950,200],[4060,G],[4560,G],[4760,G],[5400,G],[5820,146],[6300,G],[6700,G]].map(([x,y])=>({x,y,hp:3,dead:false,flash:0})),
     coinsL:[],caps:[{x:700,spawned:false},{x:1600,spawned:false},{x:2450,spawned:false},{x:3800,spawned:false},{x:4900,spawned:false},{x:6350,spawned:false,k:'dopalka'}],capsA:[],
-    en:SPAWN.map(([k,x,y])=>({k,x,y:y||G,vx:0,vy:0,hp:ET[k].hp,face:-1,active:false,t:0,cd:60+Math.random()*60,at:-1,flash:0,dead:false,ground:true})),
+    en:SPAWN.map(([k,x,y],id)=>({id,k,x,y:y||G,vx:0,vy:0,hp:ET[k].hp,face:-1,active:false,t:0,cd:60+Math.random()*60,at:-1,flash:0,dead:false,ground:true})),
     boss:{x:LEN-270,hp:160,max:160,yo:0,vy:0,phase:1,talk:null,flash:0,dead:false,t:0,cd:120,active:false,st:'walk',stT:0,dir:-1,step:0,at:0,fa:{hp:45,max:45,dead:false,flash:0,cd:40,t:-1,vul:0},ba:{hp:45,max:45,dead:false,flash:0,cd:95,t:-1,vul:0}}};
   const C=G_.coinsL;const row=(x0,y,n)=>{for(let i=0;i<n;i++)C.push({x:x0+i*22,y,got:false});};
   row(3500,G-30,5);row(3905,170,5);row(4335,120,5);row(5205,140,5);row(5795,116,5);row(6505,166,5);row(6800,G-30,6);
   row(260,G-30,5);row(580,170,5);row(1050,G-60,6);row(1725,184,5);row(2255,166,5);row(2445,110,5);row(2760,G-30,6);row(3000,G-70,5);
+  G_.coinsL.forEach((c,i)=>c.id=i);G_.barrels.forEach((b,i)=>b.id=i);/* id-ki do statystyk i kontynuacji */
   msgShow(h.name+(FARMA?' NA FARMIE BADZIEJA!':LODZ?' W NEW ŁÓDŹ CITY!':' W PIWNICY MAREWIKA!'),120);
 }
 function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins=o.coins,ds=o.dialogSeen,stt=o.st;startGame(k);const g=G_;g.coins=coins;g.dialogSeen=ds;g.st=stt;g.st.bossT0=-1;
   const x=c2?CP2+30:c1?CPX+30:120;g.P.x=x;g.camX=Math.max(0,x-256);g.cpDone=c1||c2;g.cp2Done=c2;
-  g.en=g.en.filter(e=>e.x>x+80);g.barrels=g.barrels.filter(b=>b.x>x);for(const c of g.caps)if(c.x<x)c.spawned=true;g.coinsL=g.coinsL.filter(c=>c.x>x);
+  /* to, co już zabite / rozwalone / zebrane, nie wraca po kontynuacji (wcześniej dało się nabijać wrogów i złotówki) */
+  const st=g.st,uni=(a,b)=>[...new Set(a.concat(b))];
+  st.deadE=uni(st.deadE,o.en.filter(e=>e.dead&&e.id!==undefined).map(e=>e.id));st.deadB=uni(st.deadB,o.barrels.filter(b=>b.dead).map(b=>b.id));st.gotC=uni(st.gotC,o.coinsL.filter(c=>c.got&&c.id!==undefined).map(c=>c.id));
+  g.en=g.en.filter(e=>e.x>x+80&&!st.deadE.includes(e.id));g.barrels=g.barrels.filter(b=>b.x>x&&!st.deadB.includes(b.id));for(const c of g.caps)if(c.x<x)c.spawned=true;g.coinsL=g.coinsL.filter(c=>c.x>x&&!st.gotC.includes(c.id));
   msgShow(c2?'DRUGIE PODEJŚCIE DO B.R.S!':'WRACAMY DO AKCJI!',100);}
 function msgShow(m,t,sub){G_.msg=m;G_.msg2=sub||'';G_.msgT=t||90;}
 const META=k=>A.heroes[G_.hero].meta[k];

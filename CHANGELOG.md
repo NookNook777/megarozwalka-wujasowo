@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.35.1] — 2026-11-22
+### Poprawione
+- **Statystyki: wrogowie i złotówki dawały się nabijać.** Po „kontynuuj” wracali wrogowie, beczki i złotówki zza
+  checkpointu, które gracz już zabił / rozwalił / zebrał — więc można było mieć np. 52/37 wrogów i podwójne monety.
+  Teraz to, co raz zniknęło, nie wraca przy kolejnych kontynuacjach.
+- **Szczury wzywane przez B.R.S.** w szale nie liczą się już do licznika wrogów (licznik dotyczy tylko 37 wrogów
+  rozstawionych na mapie, więc nie przekroczy już x/37).
+
 ## [0.35.0] — 2026-11-22
 ### Dodane
 - **Muzyka Farmy Badzieja** (autor: Nook, 144 BPM). Każda z trzech map ma teraz własny utwór.
@@ -527,7 +535,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.35.0...HEAD
+[Unreleased]: ../../compare/v0.35.1...HEAD
+[0.35.1]: ../../releases/tag/v0.35.1
 [0.35.0]: ../../releases/tag/v0.35.0
 [0.34.0]: ../../releases/tag/v0.34.0
 [0.33.1]: ../../releases/tag/v0.33.1
