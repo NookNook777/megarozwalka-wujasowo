@@ -25,7 +25,7 @@ function tuptusAI(g){const t=g.tup,P=g.P;let tx=P.x-26*P.face;if(tx<g.camX+12||t
   const bs=g.boss;if(!best&&bs.active&&!bs.dead){const HB=bxr(bs,48,118),hd=bs.st==='whistle'||bs.st==='stagger';best={x:(HB[0]+HB[1])/2,y:(hd?G-160:G-80)+bs.yo};}/* głowa, gdy odsłonięta */
   if(!best){t.cd=10;return;}
   const sx=t.x,sy=t.y-8,dx=best.x-sx,dy=best.y-sy,l=Math.hypot(dx,dy)||1;t.face=dx>0?1:-1;
-  g.bullets.push({x:sx,y:sy,vx:dx/l*7,vy:dy/l*7,life:70,dmg:1.2,sc:1,seed:true});t.cd=34;beep(1400,1900,.03,.03,'square');}
+  g.bullets.push({x:sx,y:sy,vx:dx/l*7,vy:dy/l*7,life:Math.round(SHOT_RANGE/7),dmg:1.2,sc:1,seed:true});t.cd=34;beep(1400,1900,.03,.03,'square');}
 function drawFxWorld(g){const P=g.P;
   if(g.tup&&PU.tuptus.complete){const t=g.tup,hy=t.hop<6?-Math.abs(Math.sin(t.hop/6*Math.PI))*3:0;ctx.fillStyle='rgba(0,0,0,.4)';ctx.beginPath();ctx.ellipse(Math.round(t.x),Math.round(t.y)+2,7,2,0,0,6.3);ctx.fill();
     ctx.save();ctx.translate(Math.round(t.x),Math.round(t.y+hy));ctx.scale(t.face,1);ctx.drawImage(PU.tuptus,-8,-16,16,16);ctx.restore();}

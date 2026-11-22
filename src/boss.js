@@ -41,6 +41,10 @@ function drawArm(bs,front,t){const a=front?bs.fa:bs.ba,p=front?faPos(bs):baPos(b
   if((front&&a.t>=0&&a.t<24)||(!front&&a.t>=0&&a.t<14)){if((t>>1)&1)ctx.filter='brightness(1.7) sepia(1) hue-rotate(-40deg) saturate(3)';}
   ctx.drawImage(im,-A2.ax,-A2.ay);ctx.restore();
   if(a.t>=0||a.vul>0){const pulse=.5+.5*Math.sin(t*.4);ctx.fillStyle=`rgba(255,220,60,${.35+.4*pulse})`;ctx.beginPath();ctx.arc(Math.round(p.x),Math.round(p.y),7+pulse*2,0,6.3);ctx.fill();ctx.fillStyle='#fff';ctx.fillRect(Math.round(p.x)-1,Math.round(p.y)-1,3,3);}}
+/* zasięg strzału w pikselach (ok. 55% szerokości ekranu) — pociski nie dolatują już za krawędź ekranu */
+const SHOT_RANGE=360;
+/* gdy tylne ramię jest odsłonięte, pociski na jego wysokości przelatują przez korpus i mogą je trafić */
+function baBand(bs,b){const a=bs.ba;if(a.dead||!(a.t>=0||a.vul>0))return false;const p=baPos(bs);return b.y>p.y-58&&b.y<p.y+6;}
 function armHit(bs,b){// returns 'fa'/'ba' if bullet hits a living, currently vulnerable arm (armored arms let bullets through to the body)
   const vuln=a=>a.t>=0||a.vul>0;
   const fc=bs.face||-1;
@@ -121,7 +125,7 @@ function fire(){const g=G_,P=g.P,h=g.h;let dx=P.face,dy=0;
   if(P.anim==='up')dy=-1;else if(P.anim==='down')dy=1;else if(P.anim==='jump'){if(I.u)dy=-1;else if(I.d)dy=1;}
   const m=muzzle();let sx=m.x,sy=m.y;if(P.anim==='jump'&&dy!==0){sx=P.x+14*P.face;sy=dy<0?P.y-50:P.y-24;}
   const wl=g.wl;
-  const base=Math.atan2(dy,dx);const add=(a,o)=>g.bullets.push(Object.assign({x:sx,y:sy,vx:Math.cos(a)*h.spd,vy:Math.sin(a)*h.spd,life:90,dmg:h.dmg,sc:1},o));
+  const base=Math.atan2(dy,dx);const add=(a,o)=>g.bullets.push(Object.assign({x:sx,y:sy,vx:Math.cos(a)*h.spd,vy:Math.sin(a)*h.spd,life:Math.round(SHOT_RANGE/h.spd),dmg:h.dmg,sc:1},o));
   if(g.hero==='b'){if(wl===1)add(base);else if(wl===2){const nx=-Math.sin(base)*3,ny=Math.cos(base)*3;add(base,{x:sx+nx,y:sy+ny});add(base,{x:sx-nx,y:sy-ny});}else[-.12,0,.12].forEach(d=>add(base+d));}
   else if(g.hero==='m'){if(wl>=3)add(base,{pierce:true,heavy:true,dmg:h.dmg+1.2,sc:1.45});else add(base,{pierce:true});}
   else{if(wl===1)add(base);else if(wl===2)add(base,{dmg:h.dmg+1,sc:1.4});else[-.16,0,.16].forEach(d=>add(base+d,{dmg:h.dmg+.5,sc:1.2}));}

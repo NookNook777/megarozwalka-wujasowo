@@ -8,6 +8,19 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.31.0] — 2026-11-22
+### Zmienione
+- **Krótszy zasięg strzałów**: pociski lecą ok. 360 px (ponad pół ekranu) i znikają, zamiast przelatywać cały ekran.
+  Dotyczy też pestek chomika Tuptusia.
+- **Trafienia tylko w to, co widać**: wrogowie i beczki przy samej krawędzi ekranu (częściowo poza kadrem)
+  nie przyjmują już obrażeń — trzeba ich mieć w polu widzenia.
+### Poprawione
+- **Tylne ramię B.R.S.** dało się trafić tylko teoretycznie: korpus łapał wszystkie pociski, zanim doleciały.
+  Teraz, gdy ramię jest odsłonięte (rzut torbą i chwilę po nim), pociski na jego wysokości przelatują przez korpus
+  i je ranią.
+- **Szczury przy przepaściach** zawsze zawracają na krawędzi, także tuż po zmianie kierunku w pogoni za graczem
+  (wcześniej w tej chwili potrafiły wbiec w dziurę).
+
 ## [0.30.2] — 2026-11-21
 ### Zmienione
 - **Ekran wyboru postaci** ma w tle tę samą pętlę map co ekran tytułowy (Piwnica → Farma → New Łódź City
@@ -475,7 +488,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.30.2...HEAD
+[Unreleased]: ../../compare/v0.31.0...HEAD
+[0.31.0]: ../../releases/tag/v0.31.0
 [0.30.2]: ../../releases/tag/v0.30.2
 [0.30.1]: ../../releases/tag/v0.30.1
 [0.30.0]: ../../releases/tag/v0.30.0
