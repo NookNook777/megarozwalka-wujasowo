@@ -239,7 +239,27 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(fx-r*2.2,fy2-1,r*4.4,3);ctx.fillRect(fx-1,fy2-r*2.2,3,r*4.4);if(ph===0){ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(0,0,W,H);}}
   ctx.font='14px "Wujas Pixel",monospace';sh(FARMA?'FARMA ZALICZONA!':LODZ?'NEW ŁÓDŹ CITY ZALICZONE!':'PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
   ctx.font='8px "Wujas Pixel",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,HEROES[k].c,'center');/* kolor postaci jak na ekranie wyboru */
-  sh('Zebrane złotówki: '+g.coins,W/2,290,'#fff','center');if(t>60&&(t>>4)&1)sh('Enter: wróć do menu',W/2,316,'#c8c0d8','center');ctx.globalAlpha=1;}
+  drawStats(g,t);
+  if(t>60&&(t>>4)&1)sh('Enter: menu  ·  C: kopiuj wynik',W/2,318,'#c8c0d8','center');
+  if(g.copied>0){g.copied--;sh(g.copied>0&&g.copyOk?'SKOPIOWANO! WKLEJ NA DISCORDA':'NIE UDAŁO SIĘ SKOPIOWAĆ',W/2,300,g.copyOk?'#7dff8a':'#ff6a6a','center');}
+  ctx.globalAlpha=1;}
+/* ---- statystyki po mapie ---- */
+const fmtT=f=>{const s=Math.floor(f/60);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+function statRank(st){return st.deaths===0&&st.dmg<=60?'S':st.deaths===0?'A':st.deaths<=1?'B':st.deaths<=2?'C':'D';}
+function statRows(g){const st=g.st,acc=st.shots?Math.round(100*st.hits/st.shots):0,bt=st.bossT0>=0?fmtT((st.bossEnd>=0?st.bossEnd:st.time)-st.bossT0):'—';
+  return {L:[['CZAS',fmtT(st.time)],['BOSS',bt],['WROGOWIE',st.kills],['ZŁOTÓWKI',g.coins]],R:[['DESECZKI',st.deaths],['OBRAŻENIA',Math.round(st.dmg)],['CELNOŚĆ',acc+'%'],['RANGA',statRank(st)]]};}
+const RANKC={S:'#ffd040',A:'#7dff8a',B:'#5ad0ff',C:'#ff9a5a',D:'#ff5a7a'};
+function drawStats(g,t){if(t<30)return;const {L,R}=statRows(g);ctx.font='8px "Wujas Pixel",monospace';
+  for(const bx of [18,W-158]){ctx.fillStyle='rgba(6,4,14,.72)';ctx.fillRect(bx,114,140,94);ctx.fillStyle=HEROES[g.hero].c;ctx.fillRect(bx,114,140,2);}
+  const row=(r,i,x,al)=>{const y=122+i*21,[k,v]=r,big=k==='RANGA';sh(k,x,y,'#b8b0cc',al);if(big){ctx.font='16px "Wujas Pixel",monospace';sh(String(v),al==='left'?x:x,y+10,RANKC[v],al);ctx.font='8px "Wujas Pixel",monospace';}else sh(String(v),x,y+10,'#fff3dc',al);};
+  L.forEach((r,i)=>row(r,i,28,'left'));R.forEach((r,i)=>row(r,i,W-28,'right'));}
+function statsText(g){const {L,R}=statRows(g),map=FARMA?'Farma Badzieja':LODZ?'New Łódź City':'Piwnica Marewika',v=(document.getElementById('ver')||{}).textContent||'';
+  const o=Object.fromEntries(L.concat(R));
+  return '🏆 Megarozwałka w Wujasowie '+v+'\n'+map+' zaliczona — '+g.h.name+' · ranga '+o.RANGA+'\n'
+   +'⏱ czas '+o.CZAS+' · boss '+o.BOSS+'\n💀 wrogowie '+o.WROGOWIE+' · 🪵 deseczki '+o.DESECZKI+'\n❤️ obrażenia '+o['OBRAŻENIA']+' · 🎯 celność '+o['CELNOŚĆ']+'\n💰 złotówki '+o['ZŁOTÓWKI'];}
+function copyStats(){const g=G_,txt=statsText(g);g.copied=150;g.copyOk=true;
+  const fb=()=>{try{const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();g.copyOk=document.execCommand('copy');ta.remove();}catch(e){g.copyOk=false;}};
+  try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>{g.copyOk=true;},fb);else fb();}catch(e){fb();}S.ok();}
 
 function drawTaunt(g,P){const k=g.hero,M=A.heroes[k].meta.victory,im=HS[k].victory;if(!im.complete)return;const f=Math.min(M.n-1,Math.floor((TAUNT_T-P.taunt)/TAUNT_T*M.n));
   ctx.save();ctx.translate(Math.round(P.x),Math.round(P.y));ctx.scale(P.face,1);const x0=M.ox!==undefined?M.ox:-Math.round(M.fw/2),y0=M.oy!==undefined?M.oy:-M.fh+2;ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,x0,y0,M.fw,M.fh);

@@ -68,5 +68,8 @@ function onKey(code){
   else if(state==='select'&&!slock){if(code==='ArrowLeft'||code==='KeyA'){ssel=(ssel+2)%3;S.blip();renderSel();}else if(code==='ArrowRight'||code==='KeyD'){ssel=(ssel+1)%3;S.blip();renderSel();}else if(ok)pickHero();else if(code==='Escape')showTitle();}
   else if(state==='pause'){if(code==='ArrowUp'||code==='KeyW'||code==='ArrowDown'||code==='KeyS'){psel=1-psel;S.blip();}else if(code==='ArrowLeft'||code==='KeyA')volStep(psel?'s':'m',-1);else if(code==='ArrowRight'||code==='KeyD')volStep(psel?'s':'m',1);}
   else if(state==='over'&&G_.t>60){if(ok)continueGame();else if(code==='Escape')showTitle();}
+  else if(state==='win'&&code==='KeyC'&&G_.t>30)copyStats();
   else if(state==='win'&&(ok||code==='Escape')&&G_.t>60)showTitle();
 }
+/* dotyk / klik w ekran wygranej: kopiuje wynik (na telefonie nie ma klawisza C) */
+cv.addEventListener('pointerdown',()=>{if(state==='win'&&G_&&G_.t>30)copyStats();});

@@ -8,6 +8,14 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.32.0] — 2026-11-22
+### Dodane
+- **Statystyki po mapie** na ekranie wygranej: czas przejścia, czas walki z bossem, zabici wrogowie, zebrane złotówki,
+  deseczki (śmierci), przyjęte obrażenia, celność i **ranga** (S: bez śmierci i ≤60 obrażeń, A: bez śmierci,
+  B: 1 śmierć, C: 2, D: więcej). Statystyki przechodzą przez „kontynuuj”.
+- **Kopiowanie wyniku na Discorda**: klawisz **C** (albo stuknięcie w ekran na telefonie) kopiuje gotowy tekst
+  z emotkami do schowka.
+
 ## [0.31.0] — 2026-11-22
 ### Zmienione
 - **Krótszy zasięg strzałów**: pociski lecą ok. 360 px (ponad pół ekranu) i znikają, zamiast przelatywać cały ekran.
@@ -488,7 +496,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.31.0...HEAD
+[Unreleased]: ../../compare/v0.32.0...HEAD
+[0.32.0]: ../../releases/tag/v0.32.0
 [0.31.0]: ../../releases/tag/v0.31.0
 [0.30.2]: ../../releases/tag/v0.30.2
 [0.30.1]: ../../releases/tag/v0.30.1
