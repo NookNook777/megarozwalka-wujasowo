@@ -1142,6 +1142,7 @@ const A={
  "music": "assets/music/maintheme.mp3",
  "musicLvl": "assets/music/piwnica.mp3",
  "musicBoss": "assets/music/boss.mp3",
+ "musicLodz": "assets/music/lodz.mp3",
  "musicWin": "assets/music/victory.mp3",
  "musicOver": "assets/music/gameover.mp3",
  "ult": {
