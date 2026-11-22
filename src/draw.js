@@ -249,7 +249,7 @@ const fmtT=f=>{const s=Math.floor(f/60);return Math.floor(s/60)+':'+String(s%60)
 const lin=(v,full,zero)=>Math.max(0,Math.min(1,(v-zero)/(full-zero)));
 function statScore(g){const st=g.st,acc=st.shots?st.hits/st.shots:0,lysa=g.hero==='l';
   const bt=st.bossT0>=0?(st.bossEnd>=0?st.bossEnd:st.time)-st.bossT0:99999;
-  const p={desk:[30,15,5][st.deaths]||0,dmg:20*lin(st.dmg,0,150),time:15*lin(st.time,240*60,600*60),boss:10*lin(bt,60*60,180*60),
+  const p={desk:[30,15,5][st.deaths]||0,dmg:20*lin(st.dmg,0,150),time:15*lin(st.time,105*60,300*60),boss:10*lin(bt,45*60,150*60),
     kills:10*Math.min(1,st.kills/Math.max(1,st.enTotal||37)),acc:10*(lysa?lin(acc,.45,.15):lin(acc,.6,.2)),coins:5*Math.min(1,g.coins/100)};
   return Math.round(Object.values(p).reduce((a,b)=>a+b,0));}
 function statRank(g){const s=statScore(g),st=g.st;return s>=90&&st.deaths===0?'SZ':s>=75?'A':s>=55?'B':s>=35?'C':'D';}

@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.33.1] — 2026-11-22
+### Zmienione
+- Progi czasu w punktacji dopasowane do realnych przejść (ok. 2 min, najlepsi trochę szybciej):
+  czas mapy — pełne 15 pkt do **1:45**, zero przy 5:00; czas bossa — pełne 10 pkt do **0:45**, zero przy 2:30.
+
 ## [0.33.0] — 2026-11-22
 ### Zmienione
 - **Ranga liczona ze wszystkich statystyk** (0–100 pkt): deseczki 30 (0 śmierci = 30, 1 = 15, 2 = 5),
@@ -510,7 +515,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.33.0...HEAD
+[Unreleased]: ../../compare/v0.33.1...HEAD
+[0.33.1]: ../../releases/tag/v0.33.1
 [0.33.0]: ../../releases/tag/v0.33.0
 [0.32.1]: ../../releases/tag/v0.32.1
 [0.32.0]: ../../releases/tag/v0.32.0
