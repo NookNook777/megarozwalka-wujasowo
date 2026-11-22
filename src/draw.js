@@ -13,7 +13,7 @@ function cyclePreview(d){setMap(mapIdx()+(d||1));}
 try{const m=+localStorage.getItem('megarozwalka_map');if(!/farma|lodz/i.test(location.search+location.hash)&&m>0&&m<3){FARMA=m===1;LODZ=m===2;}}catch(e){}
 function lodzSeq(){const L=IM.LZ;return [L.a1,L.b1,L.a2,L.c1,L.a3,L.b2,L.a4,L.c2];}
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
-function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
+function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX,8);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX,8);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
 /* platforma: w Farmie na zmianę bele siana i palety (górna krawędź tam, gdzie zwykła platforma) */
 const FPL=['plat_siano','plat_palety'],LPL=['plat_hover','plat_rusztowanie','plat_skrzynie','plat_klimy'];
 function drawPlat(p){if(FARMA||LODZ){const L=FARMA?FPL:LPL,im=(FARMA?PF:PL)[L[(plats.indexOf(p))%L.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
@@ -28,8 +28,8 @@ function groundCol(x){if(!FARMA&&!LODZ)return false;const im=FARMA?IM.FM.ziemia:
   while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,G-off,w,im.height);dx+=w;left-=w;sx=0;}
   if(im.height-off<H-G){ctx.fillStyle=FARMA?'#2a1408':'#0c0a1c';ctx.fillRect(x,G-off+im.height,32,H-G-im.height+off);}
   return true;}
-function layerSeq(arr,f,camX){if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
-  let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),0);}
+function layerSeq(arr,f,camX,dy){dy=dy||0;if(arr.some(im=>!im.complete||!im.width))return layer(IM.wall,f,camX);const tot=arr.reduce((s,im)=>s+im.width,0),p=((camX*f)%tot+tot)%tot;
+  let i=0,x=-p;while(x+arr[i].width<=0){x+=arr[i].width;i=(i+1)%arr.length;}for(;x<W;x+=arr[i].width,i=(i+1)%arr.length)ctx.drawImage(arr[i],Math.round(x),dy);}
 function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-Math.floor(((camX*f)%w+w)%w);for(let x=o;x<W;x+=w)ctx.drawImage(im,x,0);}
 const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillText(s,x+1,y+1);ctx.fillStyle=c||'#f2ead8';ctx.fillText(s,x,y);};
 /* ekran tytułowy: wszystkie trzy mapy na zmianę, kamera jedzie bez przerwy, mapy przenikają się płynnie */

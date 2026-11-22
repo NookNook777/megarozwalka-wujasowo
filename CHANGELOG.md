@@ -8,6 +8,11 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.36.1] — 2026-11-22
+### Poprawione
+- Farma i New Łódź City: tło zabudowy wisiało kilka pikseli nad ziemią (podstawy budynków nad poziomem,
+  na którym stoją postacie i rekwizyty). Panele obniżone o 8 px — budynki stoją teraz na trawie / chodniku.
+
 ## [0.36.0] — 2026-11-22
 ### Dodane
 - **Wybór mapy w menu głównym**: pozycja **MAPA** (← / → albo klik: Piwnica / Farma / Łódź). Wcześniej był tylko
@@ -543,7 +548,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.36.0...HEAD
+[Unreleased]: ../../compare/v0.36.1...HEAD
+[0.36.1]: ../../releases/tag/v0.36.1
 [0.36.0]: ../../releases/tag/v0.36.0
 [0.35.1]: ../../releases/tag/v0.35.1
 [0.35.0]: ../../releases/tag/v0.35.0
