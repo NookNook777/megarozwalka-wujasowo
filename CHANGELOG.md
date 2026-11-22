@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.32.1] — 2026-11-22
+### Zmienione
+- **Rangi mają nazwy** (od Nooka): **SZ** — Sztos Nad Sztosami (zamiast S), **A** — Admin Serwa,
+  **B** — Bito Ale I Obito, **C** — Co Ja Robię, **D** — Deska Klub. Nazwa widnieje pod literą rangi
+  i trafia do kopiowanego wyniku.
+
 ## [0.32.0] — 2026-11-22
 ### Dodane
 - **Statystyki po mapie** na ekranie wygranej: czas przejścia, czas walki z bossem, zabici wrogowie, zebrane złotówki,
@@ -496,7 +502,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.32.0...HEAD
+[Unreleased]: ../../compare/v0.32.1...HEAD
+[0.32.1]: ../../releases/tag/v0.32.1
 [0.32.0]: ../../releases/tag/v0.32.0
 [0.31.0]: ../../releases/tag/v0.31.0
 [0.30.2]: ../../releases/tag/v0.30.2
