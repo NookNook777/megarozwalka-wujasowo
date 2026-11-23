@@ -8,6 +8,13 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.36.2] — 2026-11-23
+### Poprawione
+- **Badziejek: „pusty obrys” nad włosami.** W kilku klatkach biegu, stania, skoku, strzału i trafienia nad fryzurą
+  wisiały resztki konturu bez wypełnienia (widać było, jak „podnosi się” obrys). Usunięte.
+- **Badziejek: ucięta broń przy celowaniu w górę.** Lufa była oderwana od karabinu (wisiała osobno przy twarzy).
+  W każdej klatce celowania w górę dorysowana ciągła lufa od rąk do wylotu, w którym pojawiają się pociski.
+
 ## [0.36.1] — 2026-11-22
 ### Poprawione
 - Farma i New Łódź City: tło zabudowy wisiało kilka pikseli nad ziemią (podstawy budynków nad poziomem,
@@ -548,7 +555,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.36.1...HEAD
+[Unreleased]: ../../compare/v0.36.2...HEAD
+[0.36.2]: ../../releases/tag/v0.36.2
 [0.36.1]: ../../releases/tag/v0.36.1
 [0.36.0]: ../../releases/tag/v0.36.0
 [0.35.1]: ../../releases/tag/v0.35.1
