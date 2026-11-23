@@ -6,7 +6,7 @@ const $=id=>document.getElementById(id);
 $('logo').src=A.logo;
 let tstate='intro',msel=0,psel=0;
 /* suwaki głośności: 'm' = muzyka, 's' = efekty */
-const MAPN=['PIWNICA','FARMA','ŁÓDŹ'];
+const MAPN=['PIWNICA','FARMA','ŁÓDŹ','NAWALON'];
 function volGet(k){return k==='map'?MAPN[mapIdx()]:k==='m'?MVOL:VOL;}function volStep(k,d){if(k==='map'){cyclePreview(d);S.blip();}else if(k==='m')setMVol(MVOL+d);else setVol(VOL+d);}
 const MENU=[{t:'START GRY',a:()=>showSelect()},{t:'MAPA',vol:'map',a:()=>{volStep('map',1);renderMenu();}},{t:'MUZYKA',vol:'m',a:()=>{volStep('m',MVOL>=10?-MVOL:1);renderMenu();}},{t:'EFEKTY',vol:'s',a:()=>{volStep('s',VOL>=10?-VOL:1);renderMenu();}},{t:'STEROWANIE',a:()=>panel('ctrl')},{t:'AUTORZY',a:()=>panel('cred')}];
 /* menu budowane raz; przy zmianach tylko aktualizujemy klasy i tekst (wcześniej przebudowa DOM gubiła kliknięcia) */

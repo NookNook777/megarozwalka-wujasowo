@@ -23,10 +23,13 @@ function buildDeco(SZ,K){
 const decoF=buildDeco(DECOF_SZ,['strach','placek2','krasnal','labedz','placek1','wanna','ul','placek3','tv','buda','rower','placek2','wiadro','gasior','placek1','butla','krasnal','labedz','placek3','strach','wanna','buda','placek2','rower','ul','tv','placek1','wiadro']);
 /* dekoracje New Łódź City (podgląd) */
 const DECOL_SZ={robot:[50,30],automat:[52,64],auto:[69,50],holo:[39,48],smieci:[68,40],hulajnoga:[40,44],serwery:[67,50],wozek:[68,54],strzalka:[59,26],kosz:[34,46]};
+/* dekoracje Fundacji Nawalon (podgląd) */
+const DECON_SZ={dystrybutor:[19,44],ksero:[45,46],wozek:[53,44],kroplowka:[26,52],szafka:[40,56],krzeslo:[28,40],fikus:[34,42],reanimacja:[34,44],niszczarka:[33,40],znak:[50,34],lozko:[69,40]};
+const decoN=buildDeco(DECON_SZ,['fikus','dystrybutor','krzeslo','lozko','znak','kroplowka','szafka','ksero','wozek','niszczarka','reanimacja','krzeslo','fikus','znak','lozko','dystrybutor','szafka','kroplowka','ksero','wozek','reanimacja','niszczarka']);
 const decoL=buildDeco(DECOL_SZ,['automat','robot','auto','kosz','holo','smieci','strzalka','hulajnoga','serwery','wozek','kosz','robot','automat','smieci','holo','auto','strzalka','hulajnoga','serwery','wozek']);
 const deco=[['car',3480],['tires',3640],['pallet',3980],['shelf',4120],['cabinet',4620],['can',4700],['rubble',4880],['car',5320],['shelf',5480],['tires',5900],['cabinet',6240],['rubble',6400],['pallet',6620],['can',6780],['car',40],['tires',300],['shelf',420],['pallet',760],['cabinet',1120],['can',1200],['rubble',1430],['shelf',1980],['tires',2100],['car',2850],['cabinet',3060]];
 let G_={};
-function startGame(k){beamStop();musPlay(LODZ?'lodz':FARMA?'farma':'piwnica');
+function startGame(k){beamStop();musPlay(LODZ?'lodz':FARMA?'farma':'piwnica');/* Nawalon: na razie muzyka Piwnicy */
   state='play';const h=HEROES[k];
   G_={st:{deadE:[],deadB:[],gotC:[],enTotal:SPAWN.length,time:0,kills:0,deaths:0,dmg:0,shots:0,hits:0,bossT0:-1,bossEnd:-1},hero:k,h,t:0,lives:3,hp:100,dmgFlash:0,cpDone:false,cp2Done:false,coins:0,wl:1,armor:0,barrier:0,ult:0,ultT:0,magnet:false,fast:false,msg:'',msgT:0,flash:0,shake:0,banner:0,
     P:{x:120,y:G,vx:0,vy:0,face:1,ground:true,coyote:0,buf:0,cd:0,anim:'idle',fr:0,fi:0,ft:0,inv:60,shotT:0,flashT:0,hitT:0,kb:0,dead:false},
@@ -39,7 +42,7 @@ function startGame(k){beamStop();musPlay(LODZ?'lodz':FARMA?'farma':'piwnica');
   row(3500,G-30,5);row(3905,170,5);row(4335,120,5);row(5205,140,5);row(5795,116,5);row(6505,166,5);row(6800,G-30,6);
   row(260,G-30,5);row(580,170,5);row(1050,G-60,6);row(1725,184,5);row(2255,166,5);row(2445,110,5);row(2760,G-30,6);row(3000,G-70,5);
   G_.coinsL.forEach((c,i)=>c.id=i);G_.barrels.forEach((b,i)=>b.id=i);/* id-ki do statystyk i kontynuacji */
-  msgShow(h.name+(FARMA?' NA FARMIE BADZIEJA!':LODZ?' W NEW ŁÓDŹ CITY!':' W PIWNICY MAREWIKA!'),120);
+  msgShow(h.name+(NAWA?' W FUNDACJI NAWALON!':FARMA?' NA FARMIE BADZIEJA!':LODZ?' W NEW ŁÓDŹ CITY!':' W PIWNICY MAREWIKA!'),120);
 }
 function continueGame(){const o=G_;const k=o.hero,c1=o.cpDone,c2=o.cp2Done,coins=o.coins,ds=o.dialogSeen,stt=o.st;startGame(k);const g=G_;g.coins=coins;g.dialogSeen=ds;g.st=stt;g.st.bossT0=-1;
   const x=c2?CP2+30:c1?CPX+30:120;g.P.x=x;g.camX=Math.max(0,x-256);g.cpDone=c1||c2;g.cp2Done=c2;

@@ -3,10 +3,11 @@
 const W=640,H=360,G=280,FW=A.FW,GRAV=0.34;
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
 const img=s=>{const i=new Image();i.src=s;return i;};
-const IM={far:img(A.far),LZ:Object.fromEntries(Object.entries(A.lodz).map(([k,v])=>[k,img(v)])),FM:Object.fromEntries(Object.entries(A.farma).map(([k,v])=>[k,img(v)])),wall:img(A.wall),wall2:img(A.wall2),wall3:img(A.wall3),tiles:img(A.tiles),plat:img(A.plat),boss:img(A.boss)};
+const IM={far:img(A.far),NW:Object.fromEntries(Object.entries(A.nawalon).map(([k,v])=>[k,img(v)])),LZ:Object.fromEntries(Object.entries(A.lodz).map(([k,v])=>[k,img(v)])),FM:Object.fromEntries(Object.entries(A.farma).map(([k,v])=>[k,img(v)])),wall:img(A.wall),wall2:img(A.wall2),wall3:img(A.wall3),tiles:img(A.tiles),plat:img(A.plat),boss:img(A.boss)};
 const PR={};for(const k in A.props)PR[k]=img(A.props[k]);
 const PF={};for(const k in A.propsF)PF[k]=img(A.propsF[k]);
 const PL={};for(const k in A.propsL)PL[k]=img(A.propsL[k]);
+const PN={};for(const k in A.propsN)PN[k]=img(A.propsN[k]);
 const PU={};for(const k in A.pu)PU[k]=img(A.pu[k]);
 const HS={};for(const k in A.heroes){HS[k]={};for(const n of ['idle','run','jump','shoot','up','down','hit','die','victory'])HS[k][n]=img(A.heroes[k][n]);}
 const BUL={};for(const k in A.bul)BUL[k]=img(A.bul[k]);

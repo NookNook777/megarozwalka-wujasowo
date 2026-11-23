@@ -4,23 +4,25 @@
 /* ściana: kilka paneli na zmianę (A B A C), żeby tło się nie powtarzało; każdy łączy się filarem z panelem A */
 function wallSeq(){return [IM.wall,IM.wall2,IM.wall,IM.wall3];}
 /* PODGLĄD Farmy Badzieja (adres z ?farma albo klawisz F na ekranie tytułowym): tylko tła i barwa ziemi, rozgrywka dalej z Piwnicy */
-let FARMA=/farma/i.test(location.search+location.hash),LODZ=/lodz/i.test(location.search+location.hash);
+let FARMA=/farma/i.test(location.search+location.hash),LODZ=/lodz/i.test(location.search+location.hash),NAWA=/nawalon/i.test(location.search+location.hash);
 /* klawisz F na ekranie tytułowym przełącza podgląd: Piwnica → Farma → New Łódź City */
-function mapIdx(){return LODZ?2:FARMA?1:0;}
-function setMap(i){i=((i%3)+3)%3;FARMA=i===1;LODZ=i===2;try{localStorage.setItem('megarozwalka_map',i);}catch(e){}
+function mapIdx(){return NAWA?3:LODZ?2:FARMA?1:0;}
+function setMap(i){i=((i%4)+4)%4;FARMA=i===1;LODZ=i===2;NAWA=i===3;try{localStorage.setItem('megarozwalka_map',i);}catch(e){}
   if(state==='title')st=i*TCYC+(st%TCYC<TCYC-TFADE?st%TCYC:0);/* tło tytułowe od razu pokazuje wybraną mapę */}
 function cyclePreview(d){setMap(mapIdx()+(d||1));}
-try{const m=+localStorage.getItem('megarozwalka_map');if(!/farma|lodz/i.test(location.search+location.hash)&&m>0&&m<3){FARMA=m===1;LODZ=m===2;}}catch(e){}
+try{const m=+localStorage.getItem('megarozwalka_map');if(!/farma|lodz|nawalon/i.test(location.search+location.hash)&&m>0&&m<4){FARMA=m===1;LODZ=m===2;NAWA=m===3;}}catch(e){}
 function lodzSeq(){const L=IM.LZ;return [L.a1,L.b1,L.a2,L.c1,L.a3,L.b2,L.a4,L.c2];}
 function farmSeq(){const F=IM.FM;return [F.a1,F.b1,F.a2,F.c1,F.a1,F.b2,F.a2,F.c2];}
-function bgLayers(camX){if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX,8);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX,8);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
+function nawSeq(){const N=IM.NW;return [N.a,N.b,N.a,N.c];}
+function bgLayers(camX){if(NAWA){ctx.fillStyle='#101218';ctx.fillRect(0,0,W,H);layer(IM.NW.far,.25,camX);layerSeq(nawSeq(),.6,camX,8);}else if(LODZ){ctx.fillStyle='#0c0a24';ctx.fillRect(0,0,W,H);layer(IM.LZ.far,.25,camX);layerSeq(lodzSeq(),.6,camX,8);}else if(FARMA){ctx.fillStyle='#86bff0';ctx.fillRect(0,0,W,H);layer(IM.FM.far,.25,camX);layerSeq(farmSeq(),.6,camX,8);}else{layer(IM.far,.25,camX);layerSeq(wallSeq(),.6,camX);}}
 /* platforma: w Farmie na zmianę bele siana i palety (górna krawędź tam, gdzie zwykła platforma) */
 const FPL=['plat_siano','plat_palety'],LPL=['plat_hover','plat_rusztowanie','plat_skrzynie','plat_klimy'];
-function drawPlat(p){if(FARMA||LODZ){const L=FARMA?FPL:LPL,im=(FARMA?PF:PL)[L[(plats.indexOf(p))%L.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
+const NPL=['plat_biurka','plat_regal','plat_nosze','plat_kanal'];
+function drawPlat(p){if(FARMA||LODZ||NAWA){const L=FARMA?FPL:LODZ?LPL:NPL,im=(FARMA?PF:LODZ?PL:PN)[L[(plats.indexOf(p))%L.length]];if(im.complete){ctx.drawImage(im,p.x,p.y-4);return;}}ctx.drawImage(IM.plat,p.x,p.y-4,PLW,PLH);}
 /* kafle ziemi przebarwione RAZ do osobnego płótna (filtr na każdym kaflu co klatkę zabijał wydajność) */
 const TILEC={};
 function tintTiles(k,f){if(TILEC[k])return TILEC[k];if(!IM.tiles.complete||!IM.tiles.width)return IM.tiles;const c=document.createElement('canvas');c.width=IM.tiles.width;c.height=IM.tiles.height;const x=c.getContext('2d');x.filter=f;x.drawImage(IM.tiles,0,0);return TILEC[k]=c;}
-function tilesImg(){return FARMA?tintTiles('f','sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)'):LODZ?tintTiles('l','sepia(1) hue-rotate(215deg) saturate(2.2) brightness(.8)'):IM.tiles;}
+function tilesImg(){return NAWA?tintTiles('n','grayscale(1) brightness(1.15) contrast(1.05)'):FARMA?tintTiles('f','sepia(1) saturate(1.6) hue-rotate(-12deg) brightness(1.35)'):LODZ?tintTiles('l','sepia(1) hue-rotate(215deg) saturate(2.2) brightness(.8)'):IM.tiles;}
 function tileFx(on){}
 /* Farma i Łódź: własny pas ziemi (Sorceress) zamiast kafli — rysowany kolumnami 32 px, z zawijaniem */
 function groundCol(x){if(!FARMA&&!LODZ)return false;const im=FARMA?IM.FM.ziemia:IM.LZ.ziemia;if(!im||!im.complete||!im.width)return false;
@@ -34,17 +36,17 @@ function layer(im,f,camX){if(!im.complete||!im.width)return;const w=im.width,o=-
 const sh=(s,x,y,c,al)=>{ctx.textAlign=al||'left';ctx.fillStyle='#000';ctx.fillText(s,x+1,y+1);ctx.fillStyle=c||'#f2ead8';ctx.fillText(s,x,y);};
 /* ekran tytułowy: wszystkie trzy mapy na zmianę, kamera jedzie bez przerwy, mapy przenikają się płynnie */
 const TCYC=720,TFADE=90;let TBUF=null;
-function titleMap(i,t,nt){const f=FARMA,l=LODZ;FARMA=i===1;LODZ=i===2;try{drawTitle(t,nt);}finally{FARMA=f;LODZ=l;}}
-function drawTitleCycle(t,nt){const i=Math.floor(t/TCYC)%3,ph=t%TCYC;
+function titleMap(i,t,nt){const f=FARMA,l=LODZ,n=NAWA;FARMA=i===1;LODZ=i===2;NAWA=i===3;try{drawTitle(t,nt);}finally{FARMA=f;LODZ=l;NAWA=n;}}
+function drawTitleCycle(t,nt){const i=Math.floor(t/TCYC)%4,ph=t%TCYC;
   if(ph<TCYC-TFADE){titleMap(i,t,nt);return;}
   const a=(ph-(TCYC-TFADE))/TFADE;
-  titleMap((i+1)%3,t,nt);if(!TBUF){TBUF=document.createElement('canvas');TBUF.width=cv.width;TBUF.height=cv.height;}
+  titleMap((i+1)%4,t,nt);if(!TBUF){TBUF=document.createElement('canvas');TBUF.width=cv.width;TBUF.height=cv.height;}
   const b=TBUF.getContext('2d');b.setTransform(1,0,0,1,0,0);b.clearRect(0,0,TBUF.width,TBUF.height);b.drawImage(cv,0,0);
   titleMap(i,t,nt);ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=a;ctx.drawImage(TBUF,0,0,cv.width,cv.height,0,0,W,H);ctx.globalAlpha=1;}
 function drawTitle(t,noTrio){ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#050408';ctx.fillRect(0,0,W,H);
   const span=2700,camX=(t*1.6)%span;bgLayers(camX);
   const cx=Math.round(camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:NAWA?decoN:deco)){const p=(FARMA?PF:LODZ?PL:NAWA?PN:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;const top=(tx*7)%4;if(!groundCol(x)){ctx.drawImage(TI,top*32,0,32,32,x,G,32,32);ctx.drawImage(TI,(6+(tx%4))*32,0,32,32,x,G+32,32,32);ctx.drawImage(TI,(6+((tx+1)%4))*32,0,32,32,x,G+64,32,32);}}
   for(const p of plats)if(p.x>cx-150&&p.x<cx+W)drawPlat(p);
@@ -61,9 +63,9 @@ function draw(){
   if(!g.P)return;
   const sx0=g.shake>0?Math.round(Math.random()*4-2):0;
   ctx.save();ctx.translate(sx0,0);
-  bgLayers(g.camX);if(!FARMA&&!LODZ)plinth(g.camX*.6);
+  bgLayers(g.camX);if(!FARMA&&!LODZ&&!NAWA)plinth(g.camX*.6);
   const cx=Math.round(g.camX);ctx.save();ctx.translate(-cx,0);
-  for(const [k,x] of (FARMA?decoF:LODZ?decoL:deco)){const p=(FARMA?PF:LODZ?PL:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
+  for(const [k,x] of (FARMA?decoF:LODZ?decoL:NAWA?decoN:deco)){const p=(FARMA?PF:LODZ?PL:NAWA?PN:PR)[k];if(p.complete&&x>cx-200&&x<cx+W+50&&!isPit(x+p.width/2)){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(x+p.width/2,G+3,p.width*.5,4,0,0,6.3);ctx.fill();ctx.drawImage(p,x,G-p.height+4);}}
   const t0=Math.floor(cx/32)-1,TI=tilesImg();tileFx(1);
   for(let tx=Math.max(0,t0);tx<=t0+22;tx++){const x=tx*32;
     if(isPit(x+16)){drawPitCol(x,tx,g.t,isPit(x-16),isPit(x+48));continue;}
@@ -73,7 +75,7 @@ function draw(){
   tileFx(0);if(FARMA)drawSplash(g);
   for(const p of plats)drawPlat(p);
   [[CPX,g.cpDone],[CP2,g.cp2Done]].forEach(([X,done])=>{if(X>cx-40&&X<cx+W+40){ctx.fillStyle='#2a2a2a';ctx.fillRect(X,G-70,3,70);ctx.fillStyle=done?'#4ade5a':'#e8203a';const wv=Math.sin(g.t*.15)*2;ctx.beginPath();ctx.moveTo(X+3,G-70);ctx.lineTo(X+26,G-62+wv);ctx.lineTo(X+3,G-54);ctx.fill();}});
-  for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:LODZ?PL.toksyk:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
+  for(const b of g.barrels){if(b.dead)continue;const p=FARMA?PF.kapusta:LODZ?PL.toksyk:NAWA?PN.butla:PR.slimebarrel;if(!p.complete)continue;if(b.y===G){ctx.fillStyle='rgba(0,0,0,.45)';ctx.beginPath();ctx.ellipse(b.x,G+3,p.width*.5,4,0,0,6.3);ctx.fill();}ctx.save();if(b.flash&1)ctx.filter='brightness(3)';ctx.drawImage(p,Math.round(b.x-p.width/2),b.y-p.height+4);ctx.restore();}
   for(const e of g.en){if(e.dead||!e.active)continue;const T=ET[e.k];const atk=e.at>=0&&T.atk;const key=atk?T.atk:T.walk,M=A.enemies[key],im=EN[key];if(!im.complete)continue;
     let f;if(atk)f=Math.min(3,Math.floor(e.at/6));else if(e.k==='barrel')f=e.ground?(e.cd<12?1:0):(e.vy<0?3:5);else f=Math.floor(e.t/(e.k==='rat'?3:6))%M.n;
     ctx.save();ctx.translate(Math.round(e.x),Math.round(e.y));ctx.scale(-e.face,1);if(e.flash&1)ctx.filter='brightness(3)';ctx.drawImage(im,f*M.fw,0,M.fw,M.fh,-M.fw/2,-M.fh+1,M.fw,M.fh);ctx.restore();}
@@ -203,11 +205,17 @@ function drawPitColS(x,tx,t,lp,rp){
     while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,sy,w,im.height);dx+=w;left-=w;sx=0;}}
   const ph=(t+tx*37)%90;if(ph<60){const bx=x+8+((tx*13)%16),by=H-28-Math.floor(ph/8);ctx.fillStyle='#ffd0fa';ctx.fillRect(bx,by,3,3);ctx.fillStyle='#7a1870';ctx.fillRect(bx+1,by+1,1,1);}
   if(!lp||!rp){const ex=!lp?x+1:x+29,d=(t+tx*19)%70;ctx.fillStyle='#e03ad0';ctx.fillRect(ex,G+2,2,4);if(d<50){ctx.fillStyle='#ff9af0';ctx.fillRect(ex,G+6+Math.floor(d*d/30),2,3);}}}
+/* Nawalon: zalana serwerownia — statyczny przekrój piętro niżej, iskry i łuki prądu na wodzie */
+function drawPitColN(x,tx,t,lp,rp){ctx.fillStyle='#06080e';ctx.fillRect(x,G,32,H-G);
+  const im=PN.serwerownia;if(im.complete&&im.width){const sw=im.width;let sx=((x%sw)+sw)%sw,dx=x,left=32;
+    while(left>0){const w=Math.min(left,sw-sx);ctx.drawImage(im,sx,0,w,im.height,dx,G,w,im.height);dx+=w;left-=w;sx=0;}}
+  const wy=G+30;if(((t>>2)+tx*7)%9<3){ctx.fillStyle='rgba(180,230,255,.9)';let y=wy;for(let i=0;i<32;i+=2){y+=((i*13+t+tx)%5)-2;ctx.fillRect(x+i,Math.max(wy-6,Math.min(wy+2,y)),2,1);}}
+  if((t+tx*31)%120<4){ctx.fillStyle='rgba(200,240,255,.25)';ctx.fillRect(x,G,32,H-G);}}
 function drawSplash(g){if(!g.spl)return;for(const s of g.spl){s.t++;const im=s.t<12?PF.bryzg:PF.bryzg2;if(im.complete){ctx.globalAlpha=Math.max(0,1-s.t/30);ctx.drawImage(im,Math.round(s.x-im.width/2),H-26-im.height+6);ctx.globalAlpha=1;}}g.spl=g.spl.filter(s=>s.t<30);}
 /* kolory dziury: Piwnica = zielony ślim, New Łódź City = różowy neonowy ściek */
 const PITC_P={g:['#000','#04140a','#1d6a16'],a:'#3cc42a',h:'#9aff5a',b:'#d8ff90',d:'#1e7a18'},PITC_L={g:['#000','#14041a','#6a1660'],a:'#e03ad0',h:'#ff9af0',b:'#ffd0fa',d:'#7a1870'};
 const PITGRC={};
-function drawPitCol(x,tx,t,lp,rp){if(FARMA||LODZ)return drawPitColF(x,tx,t,lp,rp);const C=LODZ?PITC_L:PITC_P,K=LODZ?'l':'p';
+function drawPitCol(x,tx,t,lp,rp){if(NAWA)return drawPitColN(x,tx,t,lp,rp);if(FARMA||LODZ)return drawPitColF(x,tx,t,lp,rp);const C=LODZ?PITC_L:PITC_P,K=LODZ?'l':'p';
   if(!PITGRC[K]){const gr=ctx.createLinearGradient(0,G,0,H);gr.addColorStop(0,C.g[0]);gr.addColorStop(.55,C.g[1]);gr.addColorStop(1,C.g[2]);PITGRC[K]=gr;}
   ctx.fillStyle=PITGRC[K];ctx.fillRect(x,G,32,H-G);
   const sy=H-22;
@@ -218,7 +226,7 @@ function drawPitCol(x,tx,t,lp,rp){if(FARMA||LODZ)return drawPitColF(x,tx,t,lp,rp
 
 /* czysta pionowa krawędź urwiska przy dziurze (zamiast klinowatego kafla) */
 function pitEdge(ex,dir){const o=dir>0?0:-1;
-  if(FARMA||LODZ){ctx.fillStyle=FARMA?'#1a0c04':'#06040e';ctx.fillRect(ex+o*3,G,3,H-G);ctx.fillStyle=FARMA?'#7a5428':'#7a5ab0';ctx.fillRect(ex+(dir>0?3:-4),G,1,H-G);return;}
+  if(FARMA||LODZ||NAWA){ctx.fillStyle=FARMA?'#1a0c04':NAWA?'#0c0e14':'#06040e';ctx.fillRect(ex+o*3,G,3,H-G);ctx.fillStyle=FARMA?'#7a5428':NAWA?'#8a90a0':'#7a5ab0';ctx.fillRect(ex+(dir>0?3:-4),G,1,H-G);return;}
   ctx.fillStyle='#101014';ctx.fillRect(ex+o*4,G+3,4,H-G);           // cień ściany
   ctx.fillStyle='#55555e';ctx.fillRect(ex+(dir>0?4:-5),G+3,1,H-G);    // światło na krawędzi
   ctx.fillStyle='#8a8a94';ctx.fillRect(ex+(dir>0?0:-5),G,5,2);         // obłamany brzeg płyty
@@ -241,7 +249,7 @@ function drawVictory(g){const t=g.t,k=g.hero,M=A.heroes[k].meta.victory,im=HS[k]
   {const ga=ctx.globalAlpha;drawHeart(M,t,x0,y0,S2,1);ctx.globalAlpha=ga;}
   if(M.flash&&f===M.flash[2]){const fx=x0+M.flash[0]*S2,fy2=y0+M.flash[1]*S2,ph=(t%8);const r=3+ph*1.6;ctx.fillStyle='rgba(255,255,255,.9)';ctx.beginPath();ctx.arc(fx,fy2,r,0,6.3);ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.75)';ctx.fillRect(fx-r*2.2,fy2-1,r*4.4,3);ctx.fillRect(fx-1,fy2-r*2.2,3,r*4.4);if(ph===0){ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(0,0,W,H);}}
-  ctx.font='14px "Wujas Pixel",monospace';sh(FARMA?'FARMA ZALICZONA!':LODZ?'NEW ŁÓDŹ CITY ZALICZONE!':'PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
+  ctx.font='14px "Wujas Pixel",monospace';sh(NAWA?'NAWALON ZALICZONY!':FARMA?'FARMA ZALICZONA!':LODZ?'NEW ŁÓDŹ CITY ZALICZONE!':'PIWNICA ZALICZONA!',W/2,58,'#ffd040','center');
   ctx.font='8px "Wujas Pixel",monospace';sh(HEROES[k].name+' WYGRYWA!',W/2,80,HEROES[k].c,'center');/* kolor postaci jak na ekranie wyboru */
   drawStats(g,t);
   if(t>60&&(t>>4)&1)sh('Enter: menu  ·  C: kopiuj wynik',W/2,318,'#c8c0d8','center');
@@ -265,7 +273,7 @@ function drawStats(g,t){if(t<30)return;const {L,R}=statRows(g);ctx.font='8px "Wu
   for(const [bx,bw,bh] of [[18,140,112],[W-178,160,112]]){ctx.fillStyle='rgba(6,4,14,.72)';ctx.fillRect(bx,114,bw,bh);ctx.fillStyle=HEROES[g.hero].c;ctx.fillRect(bx,114,bw,2);}
   const row=(r,i,x,al)=>{const y=122+i*21,[k,v]=r,big=k==='RANGA';sh(k,x,y,'#b8b0cc',al);if(big){ctx.font='16px "Wujas Pixel",monospace';sh(String(v),x,y+10,RANKC[v],al);ctx.font='8px "Wujas Pixel",monospace';sh(RANKN[v],x,y+30,RANKC[v],al);}else sh(String(v),x,y+10,'#fff3dc',al);};
   L.forEach((r,i)=>row(r,i,28,'left'));R.forEach((r,i)=>row(r,i,W-28,'right'));}
-function statsText(g){const {L,R}=statRows(g),map=FARMA?'Farma Badzieja':LODZ?'New Łódź City':'Piwnica Marewika',v=(document.getElementById('ver')||{}).textContent||'';
+function statsText(g){const {L,R}=statRows(g),map=NAWA?'Fundacja „Nawalon”':FARMA?'Farma Badzieja':LODZ?'New Łódź City':'Piwnica Marewika',v=(document.getElementById('ver')||{}).textContent||'';
   const o=Object.fromEntries(L.concat(R));
   return '🏆 Megarozwałka w Wujasowie '+v+'\n'+map+' zaliczona — '+g.h.name+' · ranga '+o.RANGA+' — '+RANKN[o.RANGA].charAt(0)+RANKN[o.RANGA].slice(1).toLowerCase().replace(/ (\S)/g,(m,c)=>' '+c.toUpperCase())+'\n'
    +'⏱ czas '+o.CZAS+' · boss '+o.BOSS+'\n💀 wrogowie '+o.WROGOWIE+' · 🪵 deseczki '+o.DESECZKI+'\n❤️ obrażenia '+o['OBRAŻENIA']+' · 🎯 celność '+o['CELNOŚĆ']+'\n💰 złotówki '+o['ZŁOTÓWKI']+' · 🏅 punkty '+o.PUNKTY;}

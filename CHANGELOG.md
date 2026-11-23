@@ -8,6 +8,16 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.37.0] — 2026-11-23
+### Dodane
+- **Nowa mapa (podgląd): Fundacja „Nawalon”** — biurowiec korporacji skrzyżowany z oddziałem psychiatrycznym.
+  Wybór w menu **MAPA → NAWALON**, klawiszem **F** albo adresem `?nawalon`. Ekran tytułowy krąży teraz po czterech mapach.
+  - tło: open space z kolumnami, oddział z izolatkami i pokój socjalny, w oddali korytarz z kratami;
+  - dziury to **zalana serwerownia** piętro niżej — iskry i łuki prądu na wodzie;
+  - beczki zastąpiły **butle z tlenem**; platformy: biurka, nosze, kanały wentylacyjne, regały;
+  - dekoracje: dystrybutor wody, ksero, wózek inwalidzki, kroplówka, szafka na akta, fikus, defibrylator, niszczarka, znak „mokra podłoga”, łóżko z pasami.
+  - Na razie wrogowie, boss i muzyka jak w Piwnicy — zombiaki i boss Fundacji w następnej części.
+
 ## [0.36.3] — 2026-11-23
 ### Poprawione
 - **Złotówki z bossa**: po pokonaniu B.R.S. ekran wygranej nie wyskakuje już od razu. Po wybuchach jest czas na
@@ -561,7 +571,9 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.36.3...HEAD
+[Unreleased]: ../../compare/v0.37.0...HEAD
+[0.37.0]: ../../releases/tag/v0.37.0
+[0.37.0]: ../../releases/tag/v0.37.0
 [0.36.3]: ../../releases/tag/v0.36.3
 [0.36.2]: ../../releases/tag/v0.36.2
 [0.36.1]: ../../releases/tag/v0.36.1
