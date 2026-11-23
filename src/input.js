@@ -20,3 +20,15 @@ function poll(){let gp={};try{for(const g of navigator.getGamepads?navigator.get
   I.j=kb('j')||K.Space||T.j||gp.j;I.f=kb('f')||T.f||gp.f;I.x=kb('x')||T.x||gp.x;I.p=K.Enter||K.Escape||K.KeyP||gp.p;I.v=kb('v')||gp.v;
   I.jp=(kt('j')||tap.Space||T.tj||(I.j&&!pj))?1:0;I.xp=(kt('x')||T.tx||(I.x&&!px))?1:0;I.pp=(tap.Enter||tap.Escape||tap.KeyP||T.tp||(I.p&&!pp))?1:0;I.vp=(kt('v')||T.tv||(I.v&&!pv))?1:0;
   for(const k in tap)tap[k]=0;T.tj=T.tx=T.tp=T.tv=0;}
+
+/* Telefony: blokada przypadkowego przybliżania (pinch / podwójne tapnięcie) i powrót do skali 1, gdy jednak się przybliży */
+(function(){const stop=e=>{if(e.cancelable)e.preventDefault();},o={passive:false};
+  ['gesturestart','gesturechange','gestureend','dblclick'].forEach(t=>document.addEventListener(t,stop,o));
+  document.addEventListener('touchmove',e=>{if(e.touches.length>1||(e.scale&&e.scale!==1))stop(e);},o);
+  document.addEventListener('wheel',e=>{if(e.ctrlKey)stop(e);},o);
+  const vp=document.querySelector('meta[name=viewport]'),V=window.visualViewport;
+  function unzoom(){if(!V||V.scale<=1.01||!vp)return;const c=vp.content;vp.content=c.replace(/maximum-scale=[^,]*/,'maximum-scale=1.01');
+    requestAnimationFrame(()=>{vp.content=c;window.scrollTo(0,0);});}
+  if(V)V.addEventListener('resize',()=>setTimeout(unzoom,150));
+  window.addEventListener('orientationchange',()=>setTimeout(unzoom,300));
+})();

@@ -8,6 +8,8 @@
 html,body{height:100%;margin:0}
 /* czcionka ma wyższe metryki (miejsce na polskie akcenty nad wielkimi literami) — trzymamy dawną wysokość linii */
 body{line-height:1}
+html,body,canvas,*{touch-action:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:"Wujas Pixel",ui-monospace,monospace;user-select:none;-webkit-user-select:none;touch-action:none}
 #scr{position:relative;width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;overflow:hidden;background:#000;--u:calc(min(100vw,calc(100dvh*16/9))/100)}
 canvas#c{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}

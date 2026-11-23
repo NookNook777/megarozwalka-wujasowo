@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.37.1] — 2026-11-23
+### Poprawione
+- **Telefony: przypadkowe przybliżanie ekranu.** Szczypanie dwoma palcami i podwójne tapnięcie nie powiększają już gry
+  (blokada w ustawieniach strony, w stylach i w obsłudze dotyku, także na iPhonach). Gdyby przeglądarka i tak przybliżyła
+  widok, gra sama wraca do normalnej skali.
+
 ## [0.37.0] — 2026-11-23
 ### Dodane
 - **Nowa mapa (podgląd): Fundacja „Nawalon”** — biurowiec korporacji skrzyżowany z oddziałem psychiatrycznym.
@@ -571,7 +577,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.37.0...HEAD
+[Unreleased]: ../../compare/v0.37.1...HEAD
+[0.37.1]: ../../releases/tag/v0.37.1
 [0.37.0]: ../../releases/tag/v0.37.0
 [0.37.0]: ../../releases/tag/v0.37.0
 [0.36.3]: ../../releases/tag/v0.36.3
