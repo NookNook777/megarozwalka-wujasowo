@@ -70,7 +70,7 @@ function update(){
   if(state==='dialog'){updDialog();return;}
   if(state!=='play')return;
   if(I.pp){state='pause';return;}
-  g.st.time++;
+  if(!g.boss.dead)g.st.time++;/* zbieranie złotówek po bossie nie liczy się do czasu */
   const P=g.P,h=g.h;
   if(P.dead){P.deathT++;P.vy=Math.min(9,P.vy+GRAV);const py0=P.y;P.x+=P.kb;P.kb*=.92;P.y+=P.vy;if(P.vy>=0){const gy=groundAt(P.x,py0,P.y,false);if(gy!==null){P.y=gy;P.vy=0;}}
     if(P.y>H+60)P.deathT=Math.max(P.deathT,80);
@@ -176,7 +176,9 @@ function update(){
   if(g.banner>0)g.banner--;
   if(bs.active&&!bs.dead&&g.banner<=0&&!slowNow)bossAI(g,bs,P);
   if(bs.dead&&bs.yo<0){bs.vy=(bs.vy||0)+.5;bs.yo=Math.min(0,bs.yo+bs.vy);if(bs.yo>=0){bs.yo=0;bs.vy=0;}} // pokonany w powietrzu też spada
-  if(bs.dead&&bs.t<170){bs.t++;if(bs.t%6===0&&bs.t<110){boom(bs.x+20+Math.random()*140,G-20-Math.random()*140,2);}if(bs.t===170){state='win';g.t=0;}}
+  if(bs.dead&&bs.t<170){bs.t++;if(bs.t%6===0&&bs.t<110){boom(bs.x+20+Math.random()*140,G-20-Math.random()*140,2);}}
+  /* po wybuchach: czas na zebranie złotówek (do ~6 s; od razu, gdy nic nie zostało na ekranie) */
+  if(bs.dead&&bs.t>=170){bs.t++;const left=g.coinsL.some(c=>!c.got&&c.x>g.camX-10&&c.x<g.camX+W+10);if(bs.t===171&&left)msgShow('ZBIERAJ ZŁOTÓWKI!',90);if(!left||bs.t>=170+360){state='win';g.t=0;}}
   if(bs.flash>0)bs.flash--;
   for(const e of (slowNow?[]:g.eb)){e.vy+=e.g;e.x+=e.vx;e.y+=e.vy;
     if(e.k==='wave'){e.life--;if(e.life<=0||isPit(e.x)||e.x<g.camX-20||e.x>LEN)e.dead=1;if((g.t&1)===0)g.parts.push({x:e.x+(Math.random()-.5)*10,y:G-2,vx:(Math.random()-.5),vy:-Math.random()*2.5,life:14,c:Math.random()<.5?'#ff8ad0':'#fff',s:2});

@@ -8,6 +8,12 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - Repozytorium: podział kodu na moduły (`src/`), grafiki jako osobne pliki (`assets/`),
   skrypt budujący jeden plik HTML (`tools/build.py`), deploy na GitHub Pages.
 
+## [0.36.3] — 2026-11-23
+### Poprawione
+- **Złotówki z bossa**: po pokonaniu B.R.S. ekran wygranej nie wyskakuje już od razu. Po wybuchach jest czas na
+  zebranie monet (napis „ZBIERAJ ZŁOTÓWKI!”) — wygrana pojawia się, gdy na ekranie nie zostanie żadna moneta,
+  najpóźniej po ok. 6 s. Ten czas nie liczy się do czasu przejścia w statystykach.
+
 ## [0.36.2] — 2026-11-23
 ### Poprawione
 - **Badziejek: „pusty obrys” nad włosami.** W kilku klatkach biegu, stania, skoku, strzału i trafienia nad fryzurą
@@ -555,7 +561,8 @@ Numer wersji widać w prawym dolnym rogu ekranu tytułowego (`tools/bump.py`).
 - HP 100 + 3 życia, kamizelka, mikroeksplozje pocisków, cienie kontaktowe, sterowanie dotykowe i pad.
 - Arena bossa z platformami, Agent B.R.S z animacjami (chód, strzał, gwizdek, śmierć) i mechanicznymi ramionami.
 
-[Unreleased]: ../../compare/v0.36.2...HEAD
+[Unreleased]: ../../compare/v0.36.3...HEAD
+[0.36.3]: ../../releases/tag/v0.36.3
 [0.36.2]: ../../releases/tag/v0.36.2
 [0.36.1]: ../../releases/tag/v0.36.1
 [0.36.0]: ../../releases/tag/v0.36.0
